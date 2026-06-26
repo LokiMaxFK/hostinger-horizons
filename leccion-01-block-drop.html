@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Block Drop Game | Hostinger Horizons</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple:       #673DE6;
+      --purple-light: #9B72F2;
+      --bg-dark:      #0D0118;
+      --bg-card:      #160428;
+      --muted:        rgba(255,255,255,0.62);
+      --faint:        rgba(255,255,255,0.08);
+      --green:        #22C55E;
+      --red:          #F87171;
+      --yellow:       #FBBF24;
+      --cyan:         #22D3EE;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg-dark);
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      user-select: none;
+    }
+
+    /* ── Scaler (contain) ── */
+    #scaler {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 1920px; height: 1080px;
+      transform-origin: center center;
+    }
+    #deck { width: 1920px; height: 1080px; position: relative; }
+
+    /* ── Slide base ── */
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.45s ease;
+      overflow: hidden;
+    }
+    .slide.active { opacity: 1; pointer-events: all; }
+
+    /* ── Shared background ── */
+    .bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 140% 90% at 85% 50%, #1E0650 0%, var(--bg-dark) 62%);
+    }
+    .bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle 700px at 88% 20%, rgba(103,61,230,0.22) 0%, transparent 70%),
+        radial-gradient(circle 500px at 5%  88%, rgba(155,114,242,0.10) 0%, transparent 70%);
+    }
+    .bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(103,61,230,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(103,61,230,0.05) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); pointer-events: none;
+    }
+    .o1 { width: 720px; height: 720px; right: -140px; top: -140px; background: rgba(103,61,230,0.22); }
+    .o2 { width: 400px; height: 400px; left: -70px; bottom: -70px; background: rgba(155,114,242,0.12); }
+
+    /* ── Logo ── */
+    .logo {
+      position: absolute; top: 48px; left: 72px;
+      display: flex; align-items: center; gap: 14px; z-index: 10;
+    }
+    .logo-img {
+      height: 22px; width: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+      opacity: 0.85;
+    }
+    .logo-text { display: none; }
+
+    /* ── Progress ── */
+    .pbar {
+      position: absolute; bottom: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--purple-light));
+      box-shadow: 0 0 14px rgba(103,61,230,0.8);
+      transition: width 0.4s ease; z-index: 20;
+    }
+    .pcounter {
+      position: absolute; bottom: 36px; right: 72px;
+      font-size: 13px; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.08em; z-index: 10;
+    }
+
+    /* ── Nav arrows ── */
+    .nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 54px; height: 54px;
+      background: rgba(103,61,230,0.28);
+      border: 1px solid rgba(155,114,242,0.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0;
+      transition: opacity 0.3s, background 0.2s;
+      z-index: 200; backdrop-filter: blur(8px);
+    }
+    body:hover .nav { opacity: 1; }
+    .nav:hover { background: rgba(103,61,230,0.55); }
+    .nav svg { width: 22px; height: 22px; fill: white; }
+    .nav-l { left: 20px; } .nav-r { right: 20px; }
+
+    /* ── Animations ── */
+    @keyframes fade-up  { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fade-in  { from { opacity:0; } to { opacity:1; } }
+    @keyframes slide-r  { from { opacity:0; transform:translateX(28px); } to { opacity:1; transform:translateX(0); } }
+    @keyframes pop      { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
+
+    .afu { opacity:0; animation: fade-up  0.5s ease forwards; }
+    .afi { opacity:0; animation: fade-in  0.4s ease forwards; }
+    .asr { opacity:0; animation: slide-r  0.45s ease forwards; }
+    .api { opacity:0; animation: pop      0.4s ease forwards; }
+
+    /* ── Helpers ── */
+    .gradient-text {
+      background: linear-gradient(135deg, var(--purple-light), #C4B5FD);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 20px; border-radius: 40px;
+      font-size: 18px; font-weight: 600; letter-spacing: 0.04em;
+    }
+    .pill-p { background: rgba(103,61,230,0.22); color: var(--purple-light); border: 1px solid rgba(103,61,230,0.4); }
+    .pill-o { background: transparent; color: var(--muted); border: 1px solid rgba(255,255,255,0.18); }
+    .divider { width: 68px; height: 4px; background: linear-gradient(90deg, var(--purple), var(--purple-light)); border-radius: 2px; }
+
+
+    /* ════════════════════════════════
+       SLIDE 1 — PORTADA
+    ════════════════════════════════ */
+    #s1 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding-left: 120px; padding-right: 560px;
+    }
+    #s1 .eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 19px; font-weight: 600;
+      color: var(--purple-light); letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+    #s1 .eyebrow::before { content:''; width:32px; height:2px; background:var(--purple-light); }
+    #s1 h1 {
+      font-size: 110px; font-weight: 900;
+      line-height: 0.94; letter-spacing: -0.03em;
+      margin-bottom: 38px;
+    }
+    #s1 .subtitle {
+      font-size: 31px; font-weight: 400;
+      color: var(--muted); line-height: 1.6;
+      max-width: 720px; margin-bottom: 56px;
+    }
+    #s1 .tags { display: flex; gap: 12px; }
+
+    /* Tetris deco portada */
+    #s1 .deco {
+      position: absolute; right: 0; top: 0;
+      width: 500px; height: 100%;
+      border-left: 1px solid rgba(103,61,230,0.14);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tboard {
+      display: grid;
+      grid-template-columns: repeat(6, 44px);
+      grid-template-rows: repeat(10, 44px);
+      gap: 5px;
+      opacity: 0; animation: fade-in 0.7s ease 0.5s forwards;
+    }
+    .tc  { border-radius: 7px; }
+    .t0  { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+    .tp  { background: #7C3AED; box-shadow: 0 0 14px rgba(124,58,237,0.6); }
+    .tc2 { background: #0891B2; box-shadow: 0 0 14px rgba(8,145,178,0.6); }
+    .tg  { background: #16A34A; box-shadow: 0 0 14px rgba(22,163,74,0.6); }
+    .tr  { background: #DC2626; box-shadow: 0 0 14px rgba(220,38,38,0.6); }
+    .ty  { background: #CA8A04; box-shadow: 0 0 14px rgba(202,138,4,0.6); }
+    .to  { background: #EA580C; box-shadow: 0 0 14px rgba(234,88,12,0.6); }
+
+
+    /* ════════════════════════════════
+       SLIDE 2 — EL PROYECTO
+    ════════════════════════════════ */
+    #s2 .content {
+      position: absolute; inset: 0;
+      display: flex; align-items: center;
+      padding: 0 110px; gap: 100px;
+    }
+    #s2 .left { flex: 1; }
+    #s2 h2 { font-size: 66px; font-weight: 900; letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 24px; }
+    #s2 .desc { font-size: 27px; color: var(--muted); line-height: 1.65; margin-bottom: 44px; max-width: 660px; }
+    #s2 .stat-row { display: flex; gap: 40px; }
+    .stat {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .stat-val { font-size: 54px; font-weight: 900; color: var(--purple-light); line-height: 1; }
+    .stat-label { font-size: 19px; color: var(--muted); font-weight: 500; }
+
+    /* right panel: big game preview card */
+    #s2 .right {
+      flex-shrink: 0; width: 560px;
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .game-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,0.3);
+      border-radius: 20px;
+      padding: 32px;
+      opacity: 0; animation: pop 0.5s ease forwards;
+    }
+    .game-card:nth-child(1) { animation-delay: 0.15s; }
+    .game-card:nth-child(2) { animation-delay: 0.3s;  }
+    .game-card:nth-child(3) { animation-delay: 0.45s; }
+
+    .gc-label { font-size: 15px; font-weight: 700; letter-spacing: 0.12em; color: var(--purple-light); text-transform: uppercase; margin-bottom: 10px; }
+    .gc-title { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    .gc-desc  { font-size: 19px; color: var(--muted); line-height: 1.5; }
+
+
+    /* ════════════════════════════════
+       SLIDES 3–6 — SECCIONES (columna única)
+    ════════════════════════════════ */
+    .section-slide .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 70px 160px;
+      gap: 28px;
+    }
+
+    /* Header — número watermark + texto apilado */
+    .sec-header {
+      position: relative;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(103,61,230,0.18);
+      overflow: hidden;
+    }
+
+    .sec-watermark {
+      position: absolute;
+      right: -20px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 300px; font-weight: 900;
+      letter-spacing: -0.06em; line-height: 1;
+      color: rgba(103,61,230,0.07);
+      pointer-events: none; user-select: none;
+    }
+
+    .sec-label {
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 10px;
+    }
+    .sec-title {
+      font-size: 74px; font-weight: 900;
+      letter-spacing: -0.03em; line-height: 0.95;
+      margin-bottom: 16px;
+    }
+    .sec-desc {
+      font-size: 22px; color: var(--muted); line-height: 1.6;
+      max-width: 900px;
+    }
+
+    /* Accent watermark color per section */
+    .accent-1 .sec-watermark { color: rgba(34,211,238,0.07); }
+    .accent-2 .sec-watermark { color: rgba(251,191,36,0.07); }
+    .accent-3 .sec-watermark { color: rgba(34,197,94,0.07);  }
+    .accent-4 .sec-watermark { color: rgba(103,61,230,0.09); }
+
+    /* Items — timeline numerado */
+    .sec-items {
+      counter-reset: sec-counter;
+      display: flex; flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    /* Línea vertical conectora */
+    .sec-items::before {
+      content: '';
+      position: absolute;
+      left: 29px; top: 68px; bottom: 68px;
+      width: 2px;
+      background: linear-gradient(to bottom,
+        rgba(103,61,230,0.35) 0%,
+        rgba(103,61,230,0.12) 100%);
+      z-index: 0;
+    }
+
+    .sec-item {
+      counter-increment: sec-counter;
+      display: flex; align-items: center; gap: 36px;
+      padding: 18px 0;
+      background: none; border: none; border-radius: 0;
+      position: relative; z-index: 1;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .sec-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Número como pseudo-elemento (flex item) */
+    .sec-item::before {
+      content: counter(sec-counter, decimal-leading-zero);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      width: 60px; height: 60px;
+      border-radius: 14px;
+      border: 1px solid rgba(103,61,230,0.4);
+      background: var(--bg-dark);
+      font-size: 20px; font-weight: 800;
+      color: var(--purple-light);
+      letter-spacing: -0.02em;
+    }
+
+    .si-icon  { display: none; }
+    .si-body  { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .si-title { font-size: 26px; font-weight: 700; }
+    .si-desc  { font-size: 19px; color: var(--muted); line-height: 1.5; }
+
+    /* Accent colors por sección */
+    .accent-1 .sec-label        { color: var(--cyan); }
+    .accent-1 .sec-items::before{ background: linear-gradient(to bottom, rgba(34,211,238,0.35), rgba(34,211,238,0.08)); }
+    .accent-1 .sec-item::before { border-color: rgba(34,211,238,0.45); color: var(--cyan); }
+
+    .accent-2 .sec-label        { color: var(--yellow); }
+    .accent-2 .sec-items::before{ background: linear-gradient(to bottom, rgba(251,191,36,0.35), rgba(251,191,36,0.08)); }
+    .accent-2 .sec-item::before { border-color: rgba(251,191,36,0.45); color: var(--yellow); }
+
+    .accent-3 .sec-label        { color: var(--green); }
+    .accent-3 .sec-items::before{ background: linear-gradient(to bottom, rgba(34,197,94,0.35), rgba(34,197,94,0.08)); }
+    .accent-3 .sec-item::before { border-color: rgba(34,197,94,0.45); color: var(--green); }
+
+    .accent-4 .sec-label        { color: var(--purple-light); }
+    .accent-4 .sec-items::before{ background: linear-gradient(to bottom, rgba(103,61,230,0.4), rgba(103,61,230,0.08)); }
+    .accent-4 .sec-item::before { border-color: rgba(103,61,230,0.5); color: var(--purple-light); }
+
+    /* ════════════════════════════════
+       SLIDE 7 — CIERRE
+    ════════════════════════════════ */
+    #s7 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 0 180px;
+    }
+    #s7 .badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 24px;
+      background: rgba(103,61,230,0.2);
+      border: 1px solid rgba(103,61,230,0.4);
+      border-radius: 40px;
+      font-size: 19px; font-weight: 600; color: var(--purple-light);
+      letter-spacing: 0.06em; margin-bottom: 40px;
+    }
+    #s7 h2 {
+      font-size: 88px; font-weight: 900;
+      line-height: 1.0; letter-spacing: -0.025em; margin-bottom: 28px;
+    }
+    #s7 .subtitle {
+      font-size: 29px; color: var(--muted);
+      line-height: 1.65; margin-bottom: 64px; max-width: 920px;
+    }
+    .road-row {
+      display: flex; align-items: center; gap: 0;
+    }
+    .road-step {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      padding: 22px 36px;
+      background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,0.22);
+      border-radius: 16px;
+      min-width: 200px;
+      opacity: 0; animation: pop 0.4s ease forwards;
+    }
+    .road-step:nth-child(1) { animation-delay: 0.1s; }
+    .road-step:nth-child(3) { animation-delay: 0.22s; }
+    .road-step:nth-child(5) { animation-delay: 0.34s; }
+    .road-step:nth-child(7) { animation-delay: 0.46s; }
+    .rs-icon  { font-size: 44px; }
+    .rs-num   { font-size: 15px; font-weight: 700; letter-spacing: 0.12em; color: var(--purple-light); text-transform: uppercase; }
+    .rs-title { font-size: 22px; font-weight: 700; }
+    .road-arrow {
+      width: 56px; display: flex; align-items: center; justify-content: center;
+      opacity: 0; animation: fade-in 0.3s ease 0.55s forwards;
+    }
+    .road-arrow svg { width: 28px; height: 28px; fill: rgba(103,61,230,0.6); }
+  </style>
+</head>
+<body>
+
+<div class="nav nav-l" onclick="prevSlide()">
+  <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+</div>
+<div class="nav nav-r" onclick="nextSlide()">
+  <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+</div>
+
+<div id="scaler">
+<div id="deck">
+
+<!-- ══════════════════════════════════
+     SLIDE 1 — PORTADA
+══════════════════════════════════ -->
+<section class="slide active" id="s1">
+  <div class="bg"></div>
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+
+  <div class="content">
+    <div class="eyebrow afu" style="animation-delay:.1s">Proyecto · Hostinger Horizons</div>
+    <h1 class="afu" style="animation-delay:.2s">Block<br/><span class="gradient-text">Drop Game</span></h1>
+    <p class="subtitle afu" style="animation-delay:.35s">
+      Creamos un juego de bloques estilo arcade completo usando Hostinger Horizons — sin escribir una sola línea de código.
+    </p>
+    <div class="tags afu" style="animation-delay:.5s">
+      <span class="pill pill-p">Sin código</span>
+      <span class="pill pill-o">4 secciones</span>
+      <span class="pill pill-o">Arcade retro</span>
+      <span class="pill pill-o">Responsive</span>
+    </div>
+  </div>
+
+  <div class="deco">
+    <div class="tboard">
+      <div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div>
+      <div class="tc t0"></div><div class="tc tc2"></div><div class="tc tc2"></div><div class="tc tc2"></div><div class="tc tc2"></div><div class="tc t0"></div>
+      <div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc tp"></div><div class="tc t0"></div><div class="tc t0"></div>
+      <div class="tc t0"></div><div class="tc t0"></div><div class="tc tp"></div><div class="tc tp"></div><div class="tc tp"></div><div class="tc t0"></div>
+      <div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div>
+      <div class="tc t0"></div><div class="tc tg"></div><div class="tc tg"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div>
+      <div class="tc t0"></div><div class="tc t0"></div><div class="tc tg"></div><div class="tc tg"></div><div class="tc t0"></div><div class="tc t0"></div>
+      <div class="tc to"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc t0"></div><div class="tc tr"></div><div class="tc tr"></div>
+      <div class="tc to"></div><div class="tc to"></div><div class="tc to"></div><div class="tc t0"></div><div class="tc tr"></div><div class="tc t0"></div>
+      <div class="tc ty"></div><div class="tc ty"></div><div class="tc ty"></div><div class="tc ty"></div><div class="tc ty"></div><div class="tc ty"></div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">1 / 7</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 2 — EL PROYECTO
+══════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+
+  <div class="content">
+    <div class="left">
+      <div class="eyebrow afu" style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--purple-light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:28px;">
+        <span style="display:block;width:32px;height:2px;background:var(--purple-light);"></span>
+        El proyecto
+      </div>
+      <h2 class="afu" style="animation-delay:.1s">
+        Un juego completo<br/>creado con <span class="gradient-text">IA</span>
+      </h2>
+      <p class="desc afu" style="animation-delay:.22s">
+        Block Drop Game es un juego de bloques que caen inspirado en los clásicos arcade. Lo construiremos desde cero en 4 secciones, usando solo prompts en Hostinger Horizons.
+      </p>
+      <div class="stat-row afu" style="animation-delay:.34s">
+        <div class="stat">
+          <span class="stat-val">10×20</span>
+          <span class="stat-label">Tablero de juego</span>
+        </div>
+        <div class="stat">
+          <span class="stat-val">7</span>
+          <span class="stat-label">Tipos de piezas</span>
+        </div>
+        <div class="stat">
+          <span class="stat-val">4</span>
+          <span class="stat-label">Secciones del proyecto</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="game-card">
+        <div class="gc-label">Plataforma</div>
+        <div class="gc-title">Hostinger Horizons</div>
+        <div class="gc-desc">Generador de aplicaciones web con IA. Describe lo que quieres y lo construye automáticamente.</div>
+      </div>
+      <div class="game-card">
+        <div class="gc-label">Tipo de proyecto</div>
+        <div class="gc-title">Juego web (navegador)</div>
+        <div class="gc-desc">Funciona en cualquier dispositivo sin instalación. Solo abre el enlace y juega.</div>
+      </div>
+      <div class="game-card">
+        <div class="gc-label">Diseño</div>
+        <div class="gc-title">Arcade oscuro + responsive</div>
+        <div class="gc-desc">Estética retro moderna que se adapta a escritorio y móvil automáticamente.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">2 / 7</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 3 — SECCIÓN 1: LA BASE
+══════════════════════════════════ -->
+<section class="slide section-slide accent-1" id="s3">
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+
+  <div class="content">
+    <div class="sec-header afu">
+      <div class="sec-watermark">01</div>
+      <div class="sec-label">Sección 1 de 4</div>
+      <div class="sec-title">Crear la base</div>
+      <p class="sec-desc">Construimos la estructura completa del juego: tablero, piezas, movimiento y pantalla de Game Over.</p>
+    </div>
+    <div class="sec-items">
+      <div class="sec-item">
+        <div class="si-icon">🎮</div>
+        <div class="si-body">
+          <span class="si-title">Tablero de juego 10 × 20</span>
+          <span class="si-desc">La cuadrícula estándar de los juegos de bloques: 10 columnas de ancho, 20 filas de alto.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">🧩</div>
+        <div class="si-body">
+          <span class="si-title">Piezas de diferentes formas</span>
+          <span class="si-desc">Los 7 tetrominos clásicos (I, O, T, S, Z, L, J), cada uno con su color identificativo.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">⌨️</div>
+        <div class="si-body">
+          <span class="si-title">Controles con teclado</span>
+          <span class="si-desc">Mover a los lados con ← →, rotar con ↑ y acelerar la caída con ↓.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">💀</div>
+        <div class="si-body">
+          <span class="si-title">Pantalla de Game Over + reinicio</span>
+          <span class="si-desc">Cuando el tablero se llena, aparece la pantalla final con botón para volver a empezar.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">3 / 7</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 4 — SECCIÓN 2: LÓGICA
+══════════════════════════════════ -->
+<section class="slide section-slide accent-2" id="s4">
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+
+  <div class="content">
+    <div class="sec-header afu">
+      <div class="sec-watermark">02</div>
+      <div class="sec-label">Sección 2 de 4</div>
+      <div class="sec-title">Corregir la lógica</div>
+      <p class="sec-desc">Revisamos y ajustamos todo el comportamiento del juego para que funcione de forma correcta y fluida.</p>
+    </div>
+    <div class="sec-items">
+      <div class="sec-item">
+        <div class="si-icon">🧱</div>
+        <div class="si-body">
+          <span class="si-title">Las piezas no atraviesan paredes</span>
+          <span class="si-desc">Detección de límites izquierdo y derecho: ninguna pieza puede salirse del tablero.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">⬇️</div>
+        <div class="si-body">
+          <span class="si-title">Las piezas no atraviesan bloques</span>
+          <span class="si-desc">Colisión correcta con bloques ya colocados: la pieza se detiene donde corresponde.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">🔄</div>
+        <div class="si-body">
+          <span class="si-title">Rotación sin errores</span>
+          <span class="si-desc">Las piezas rotan correctamente sin salirse del tablero ni superponerse a otros bloques.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">📌</div>
+        <div class="si-body">
+          <span class="si-title">Las piezas se fijan al tocar el fondo</span>
+          <span class="si-desc">Al llegar al suelo o chocar con una pieza fija, la pieza queda bloqueada y aparece una nueva.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">4 / 7</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 5 — SECCIÓN 3: PUNTAJE
+══════════════════════════════════ -->
+<section class="slide section-slide accent-3" id="s5">
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+
+  <div class="content">
+    <div class="sec-header afu">
+      <div class="sec-watermark">03</div>
+      <div class="sec-label">Sección 3 de 4</div>
+      <div class="sec-title">Sistema de puntaje</div>
+      <p class="sec-desc">Le damos sentido competitivo al juego: cada línea completada suma puntos y se muestra en pantalla.</p>
+    </div>
+    <div class="sec-items">
+      <div class="sec-item">
+        <div class="si-icon">💥</div>
+        <div class="si-body">
+          <span class="si-title">Eliminación de líneas completas</span>
+          <span class="si-desc">Cuando una fila se llena completamente, desaparece limpiamente del tablero.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">⬆️</div>
+        <div class="si-body">
+          <span class="si-title">Las filas superiores bajan</span>
+          <span class="si-desc">Al eliminar una línea, todo lo que estaba encima desciende una posición correctamente.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">📊</div>
+        <div class="si-body">
+          <span class="si-title">Puntaje visible en pantalla</span>
+          <span class="si-desc">El score se actualiza en tiempo real cada vez que el jugador completa una o más líneas.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">📋</div>
+        <div class="si-body">
+          <span class="si-title">Contador de líneas eliminadas</span>
+          <span class="si-desc">Se muestra cuántas líneas lleva eliminadas el jugador durante la partida.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">5 / 7</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 6 — SECCIÓN 4: UX/UI
+══════════════════════════════════ -->
+<section class="slide section-slide accent-4" id="s6">
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+
+  <div class="content">
+    <div class="sec-header afu">
+      <div class="sec-watermark">04</div>
+      <div class="sec-label">Sección 4 de 4</div>
+      <div class="sec-title">Pulir la experiencia</div>
+      <p class="sec-desc">El juego ya funciona. Ahora lo hacemos bonito, cómodo y listo para jugarse en cualquier dispositivo.</p>
+    </div>
+    <div class="sec-items">
+      <div class="sec-item">
+        <div class="si-icon">📱</div>
+        <div class="si-body">
+          <span class="si-title">Diseño responsive</span>
+          <span class="si-desc">El juego se adapta al tamaño de la pantalla, funciona bien en escritorio y en móvil.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">🕹️</div>
+        <div class="si-body">
+          <span class="si-title">Controles táctiles para móvil</span>
+          <span class="si-desc">Botones visibles en pantalla para mover y rotar las piezas desde el celular.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">🎨</div>
+        <div class="si-body">
+          <span class="si-title">Diseño arcade moderno</span>
+          <span class="si-desc">Estética oscura con colores vibrantes, tipografía clara y una interfaz limpia y atractiva.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">🏁</div>
+        <div class="si-body">
+          <span class="si-title">Pantalla final con puntaje</span>
+          <span class="si-desc">Al terminar la partida, se muestra el puntaje conseguido y un botón para jugar de nuevo.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">6 / 7</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 7 — CIERRE
+══════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="bg"></div>
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+
+  <div class="content">
+    <div class="badge afu" style="animation-delay:.1s">🎮 ¡Empezamos a construir!</div>
+    <h2 class="afu" style="animation-delay:.2s">
+      De 0 a juego<br/><span class="gradient-text">en 4 secciones</span>
+    </h2>
+    <p class="subtitle afu" style="animation-delay:.35s">
+      En los siguientes videos ejecutamos cada sección en Hostinger Horizons y vemos el juego tomar forma paso a paso.
+    </p>
+
+    <div class="road-row afu" style="animation-delay:.5s">
+      <div class="road-step">
+        <div class="rs-icon">🏗️</div>
+        <div class="rs-num">Sección 01</div>
+        <div class="rs-title">Crear la base</div>
+      </div>
+      <div class="road-arrow">
+        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </div>
+      <div class="road-step">
+        <div class="rs-icon">🔧</div>
+        <div class="rs-num">Sección 02</div>
+        <div class="rs-title">Corregir lógica</div>
+      </div>
+      <div class="road-arrow">
+        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </div>
+      <div class="road-step">
+        <div class="rs-icon">📊</div>
+        <div class="rs-num">Sección 03</div>
+        <div class="rs-title">Sistema de puntaje</div>
+      </div>
+      <div class="road-arrow">
+        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </div>
+      <div class="road-step">
+        <div class="rs-icon">🎨</div>
+        <div class="rs-num">Sección 04</div>
+        <div class="rs-title">Pulir la UX</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">7 / 7</div>
+</section>
+
+</div><!-- /deck -->
+</div><!-- /scaler -->
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const pbars  = document.querySelectorAll('.pbar');
+  const total  = slides.length;
+  let cur = 0;
+
+  function animateItems(slide) {
+    const items = slide.querySelectorAll('.sec-item');
+    items.forEach(el => el.classList.remove('visible'));
+    items.forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 200 + i * 180);
+    });
+  }
+
+  function go(n) {
+    // Reset ítems del slide actual
+    slides[cur].querySelectorAll('.sec-item')
+      .forEach(el => el.classList.remove('visible'));
+
+    slides[cur].classList.remove('active');
+    cur = ((n % total) + total) % total;
+    slides[cur].classList.add('active');
+
+    const pct = ((cur + 1) / total * 100) + '%';
+    pbars.forEach(b => b.style.width = pct);
+
+    animateItems(slides[cur]);
+  }
+
+  function nextSlide() { go(cur + 1); }
+  function prevSlide() { go(cur - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); nextSlide(); }
+    if (['ArrowLeft','ArrowUp'].includes(e.key))        { e.preventDefault(); prevSlide(); }
+  });
+
+  function scaleToFit() {
+    const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.getElementById('scaler').style.transform =
+      `translate(-50%, -50%) scale(${scale})`;
+  }
+  window.addEventListener('resize', scaleToFit);
+  scaleToFit();
+
+  pbars.forEach(b => b.style.width = (1 / total * 100) + '%');
+</script>
+</body>
+</html>
