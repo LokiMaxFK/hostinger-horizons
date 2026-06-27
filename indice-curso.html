@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Índice del Curso | Hostinger Horizons</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple:       #673DE6;
+      --purple-light: #9B72F2;
+      --bg-dark:      #0D0118;
+      --bg-card:      #160428;
+      --muted:        rgba(255,255,255,0.62);
+      --faint:        rgba(255,255,255,0.08);
+      --green:        #22C55E;
+      --red:          #F87171;
+      --yellow:       #FBBF24;
+      --cyan:         #22D3EE;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg-dark);
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      user-select: none;
+    }
+
+    /* ── Scaler ── */
+    #scaler {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 1920px; height: 1080px;
+      transform-origin: center center;
+    }
+    #deck { width: 1920px; height: 1080px; position: relative; }
+
+    /* ── Slide base ── */
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.45s ease;
+      overflow: hidden;
+    }
+    .slide.active { opacity: 1; pointer-events: all; }
+
+    /* ── Background ── */
+    .bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 140% 90% at 85% 50%, #1E0650 0%, var(--bg-dark) 62%);
+    }
+    .bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle 700px at 88% 20%, rgba(103,61,230,0.22) 0%, transparent 70%),
+        radial-gradient(circle 500px at 5%  88%, rgba(155,114,242,0.10) 0%, transparent 70%);
+    }
+    .bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(103,61,230,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(103,61,230,0.05) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); pointer-events: none;
+    }
+    .o1 { width: 720px; height: 720px; right: -140px; top: -140px; background: rgba(103,61,230,0.22); }
+    .o2 { width: 400px; height: 400px; left: -70px; bottom: -70px; background: rgba(155,114,242,0.12); }
+
+    /* ── Logo ── */
+    .logo {
+      position: absolute; top: 48px; left: 72px;
+      display: flex; align-items: center; gap: 14px; z-index: 10;
+    }
+    .logo-img {
+      height: 22px; width: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+      opacity: 0.85;
+    }
+
+    /* ── Progress & counter ── */
+    .pbar {
+      position: absolute; bottom: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--purple-light));
+      box-shadow: 0 0 14px rgba(103,61,230,0.8);
+      transition: width 0.4s ease; z-index: 20;
+    }
+    .pcounter {
+      position: absolute; bottom: 36px; right: 72px;
+      font-size: 13px; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.08em; z-index: 10;
+    }
+
+    /* ── Nav arrows ── */
+    .nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 54px; height: 54px;
+      background: rgba(103,61,230,0.28);
+      border: 1px solid rgba(155,114,242,0.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0;
+      transition: opacity 0.3s, background 0.2s;
+      z-index: 200; backdrop-filter: blur(8px);
+    }
+    body:hover .nav { opacity: 1; }
+    .nav:hover { background: rgba(103,61,230,0.55); }
+    .nav svg { width: 22px; height: 22px; fill: white; }
+    .nav-l { left: 20px; } .nav-r { right: 20px; }
+
+    /* ── Animations ── */
+    @keyframes fade-up { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+    @keyframes pop     { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
+    @keyframes card-in { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+    .afu { opacity:0; animation: fade-up  0.5s ease forwards; }
+    .afi { opacity:0; animation: fade-in  0.4s ease forwards; }
+    .api { opacity:0; animation: pop      0.4s ease forwards; }
+
+    /* ── Helpers ── */
+    .gradient-text {
+      background: linear-gradient(135deg, var(--purple-light), #C4B5FD);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 20px; border-radius: 40px;
+      font-size: 18px; font-weight: 600; letter-spacing: 0.04em;
+    }
+    .pill-p { background: rgba(103,61,230,0.22); color: var(--purple-light); border: 1px solid rgba(103,61,230,0.4); }
+    .pill-o { background: transparent; color: var(--muted); border: 1px solid rgba(255,255,255,0.18); }
+
+    /* ════════════════════════════════
+       SLIDE 1 — PORTADA
+    ════════════════════════════════ */
+    #s1 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding-left: 120px; padding-right: 540px;
+    }
+    #s1 .eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 19px; font-weight: 600;
+      color: var(--purple-light); letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+    #s1 .eyebrow::before { content:''; width:32px; height:2px; background:var(--purple-light); }
+    #s1 h1 {
+      font-size: 100px; font-weight: 900;
+      line-height: 0.95; letter-spacing: -0.03em;
+      margin-bottom: 38px;
+    }
+    #s1 .subtitle {
+      font-size: 29px; font-weight: 400;
+      color: var(--muted); line-height: 1.6;
+      max-width: 740px; margin-bottom: 56px;
+    }
+    #s1 .tags { display: flex; gap: 12px; }
+
+    /* Deco derecha S1 — grid de módulos flotantes */
+    #s1 .deco {
+      position: absolute; right: 0; top: 0;
+      width: 480px; height: 100%;
+      border-left: 1px solid rgba(103,61,230,0.14);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mod-stack {
+      display: flex; flex-direction: column; gap: 14px;
+      opacity: 0; animation: fade-in 0.7s ease 0.5s forwards;
+    }
+    .mod-chip {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 20px;
+      background: rgba(103,61,230,0.12);
+      border: 1px solid rgba(103,61,230,0.28);
+      border-radius: 14px;
+      min-width: 340px;
+    }
+    .mod-chip .mc-icon { font-size: 28px; }
+    .mod-chip .mc-num {
+      font-size: 12px; font-weight: 700;
+      color: var(--purple-light); letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .mod-chip .mc-title { font-size: 18px; font-weight: 700; }
+
+    /* ════════════════════════════════
+       SLIDE 2 — MÓDULOS 0–4
+    ════════════════════════════════ */
+    .cards-slide .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 60px 100px;
+    }
+    .cards-slide h2 {
+      font-size: 58px; font-weight: 900;
+      letter-spacing: -0.025em; line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    .cards-slide .lead {
+      font-size: 22px; color: var(--muted); margin-bottom: 44px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 22px;
+    }
+    .mod-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,0.22);
+      border-radius: 18px;
+      padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 12px;
+      opacity: 0;
+      animation: card-in 0.4s ease forwards;
+    }
+    .mod-card:nth-child(1) { animation-delay: 0.10s; }
+    .mod-card:nth-child(2) { animation-delay: 0.18s; }
+    .mod-card:nth-child(3) { animation-delay: 0.26s; }
+    .mod-card:nth-child(4) { animation-delay: 0.34s; }
+    .mod-card:nth-child(5) { animation-delay: 0.42s; }
+
+    .mod-card:hover {
+      border-color: rgba(103,61,230,0.5);
+      transform: translateY(-4px);
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .mc-num-badge {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.12em; color: var(--purple-light);
+      text-transform: uppercase;
+    }
+    .mc-emoji { font-size: 36px; }
+    .mc-card-title { font-size: 20px; font-weight: 800; line-height: 1.2; }
+    .mc-card-concept {
+      font-size: 15px; color: var(--muted); line-height: 1.5;
+      flex: 1;
+    }
+    .mc-card-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px; font-weight: 600;
+      background: rgba(103,61,230,0.2);
+      color: var(--purple-light);
+      border: 1px solid rgba(103,61,230,0.35);
+      align-self: flex-start;
+    }
+
+    /* Tags de acento para cada módulo */
+    .mod-card.m0 { border-color: rgba(34,211,238,0.2); }
+    .mod-card.m0 .mc-num-badge { color: var(--cyan); }
+    .mod-card.m0 .mc-card-tag { background: rgba(34,211,238,0.15); color: var(--cyan); border-color: rgba(34,211,238,0.3); }
+
+    .mod-card.m1 { border-color: rgba(155,114,242,0.28); }
+    .mod-card.m1 .mc-card-tag { background: rgba(155,114,242,0.18); color: var(--purple-light); border-color: rgba(155,114,242,0.35); }
+
+    .mod-card.m2 .mc-num-badge { color: var(--green); }
+    .mod-card.m2 .mc-card-tag { background: rgba(34,197,94,0.15); color: var(--green); border-color: rgba(34,197,94,0.3); }
+
+    .mod-card.m3 .mc-num-badge { color: var(--yellow); }
+    .mod-card.m3 .mc-card-tag { background: rgba(251,191,36,0.15); color: var(--yellow); border-color: rgba(251,191,36,0.3); }
+
+    .mod-card.m4 .mc-num-badge { color: #FB923C; }
+    .mod-card.m4 .mc-card-tag { background: rgba(251,146,60,0.15); color: #FB923C; border-color: rgba(251,146,60,0.3); }
+
+    .mod-card.m5 .mc-num-badge { color: var(--red); }
+    .mod-card.m5 .mc-card-tag { background: rgba(248,113,113,0.15); color: var(--red); border-color: rgba(248,113,113,0.3); }
+
+    .mod-card.m6 .mc-num-badge { color: #34D399; }
+    .mod-card.m6 .mc-card-tag { background: rgba(52,211,153,0.15); color: #34D399; border-color: rgba(52,211,153,0.3); }
+
+    .mod-card.m7 .mc-num-badge { color: #F472B6; }
+    .mod-card.m7 .mc-card-tag { background: rgba(244,114,182,0.15); color: #F472B6; border-color: rgba(244,114,182,0.3); }
+
+    .mod-card.m8 .mc-num-badge { color: var(--purple-light); }
+    .mod-card.m8 .mc-card-tag { background: rgba(103,61,230,0.22); color: var(--purple-light); border-color: rgba(103,61,230,0.4); }
+
+    /* Segunda fila de cards — slide 3 */
+    #s3 .mod-card:nth-child(1) { animation-delay: 0.10s; }
+    #s3 .mod-card:nth-child(2) { animation-delay: 0.18s; }
+    #s3 .mod-card:nth-child(3) { animation-delay: 0.26s; }
+    #s3 .mod-card:nth-child(4) { animation-delay: 0.34s; }
+
+    /* ════════════════════════════════
+       SLIDE 4 — TIMELINE / RUTA
+    ════════════════════════════════ */
+    #s4 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 0 80px;
+    }
+    #s4 .badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 24px;
+      background: rgba(103,61,230,0.2);
+      border: 1px solid rgba(103,61,230,0.4);
+      border-radius: 40px;
+      font-size: 18px; font-weight: 600; color: var(--purple-light);
+      letter-spacing: 0.06em; margin-bottom: 36px;
+    }
+    #s4 h2 {
+      font-size: 78px; font-weight: 900;
+      line-height: 1.0; letter-spacing: -0.025em; margin-bottom: 24px;
+    }
+    #s4 .subtitle {
+      font-size: 25px; color: var(--muted);
+      line-height: 1.6; margin-bottom: 64px; max-width: 860px;
+    }
+
+    .road-row {
+      display: flex; align-items: center; gap: 0;
+      flex-wrap: nowrap; overflow: hidden;
+    }
+    .road-step {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 18px 22px;
+      background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,0.22);
+      border-radius: 14px;
+      min-width: 148px;
+      opacity: 0; animation: pop 0.4s ease forwards;
+    }
+    .road-step:nth-child(1)  { animation-delay: 0.08s; }
+    .road-step:nth-child(3)  { animation-delay: 0.16s; }
+    .road-step:nth-child(5)  { animation-delay: 0.24s; }
+    .road-step:nth-child(7)  { animation-delay: 0.32s; }
+    .road-step:nth-child(9)  { animation-delay: 0.40s; }
+    .road-step:nth-child(11) { animation-delay: 0.48s; }
+    .road-step:nth-child(13) { animation-delay: 0.56s; }
+    .road-step:nth-child(15) { animation-delay: 0.64s; }
+    .road-step:nth-child(17) { animation-delay: 0.72s; }
+    .rs-icon  { font-size: 34px; }
+    .rs-num   { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--purple-light); text-transform: uppercase; }
+    .rs-title { font-size: 15px; font-weight: 700; text-align: center; line-height: 1.3; }
+    .road-arrow {
+      width: 32px; display: flex; align-items: center; justify-content: center;
+      opacity: 0; animation: fade-in 0.3s ease 0.75s forwards;
+      flex-shrink: 0;
+    }
+    .road-arrow svg { width: 20px; height: 20px; fill: rgba(103,61,230,0.55); }
+
+    /* ════════════════════════════════
+       SLIDE 5 — MÓDULO 1 DETALLE (Google Stitch)
+    ════════════════════════════════ */
+    #s5 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 60px 110px;
+      gap: 28px;
+    }
+    #s5 .sec-header {
+      position: relative;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(103,61,230,0.18);
+      overflow: hidden;
+    }
+    #s5 .sec-watermark {
+      position: absolute;
+      right: -20px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 280px; font-weight: 900;
+      letter-spacing: -0.06em; line-height: 1;
+      color: rgba(155,114,242,0.06);
+      pointer-events: none;
+    }
+    #s5 .sec-label {
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 10px;
+    }
+    #s5 .sec-title {
+      font-size: 68px; font-weight: 900;
+      letter-spacing: -0.03em; line-height: 0.95;
+      margin-bottom: 14px;
+    }
+    #s5 .sec-desc {
+      font-size: 22px; color: var(--muted); line-height: 1.6;
+      max-width: 900px;
+    }
+    #s5 .stitch-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 16px;
+      background: rgba(155,114,242,0.18);
+      border: 1px solid rgba(155,114,242,0.35);
+      border-radius: 20px;
+      font-size: 14px; font-weight: 700;
+      color: var(--purple-light);
+      letter-spacing: 0.06em;
+      margin-top: 10px;
+      align-self: flex-start;
+    }
+
+    /* Secciones items para S5 */
+    .sec-items {
+      counter-reset: sec-counter;
+      display: flex; flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+    .sec-items::before {
+      content: '';
+      position: absolute;
+      left: 29px; top: 68px; bottom: 68px;
+      width: 2px;
+      background: linear-gradient(to bottom,
+        rgba(155,114,242,0.35) 0%,
+        rgba(155,114,242,0.08) 100%);
+      z-index: 0;
+    }
+    .sec-item {
+      counter-increment: sec-counter;
+      display: flex; align-items: center; gap: 36px;
+      padding: 16px 0;
+      background: none; border: none; border-radius: 0;
+      position: relative; z-index: 1;
+      opacity: 0; transform: translateX(-20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .sec-item.visible { opacity: 1; transform: translateX(0); }
+    .sec-item::before {
+      content: counter(sec-counter, decimal-leading-zero);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      width: 60px; height: 60px;
+      border-radius: 14px;
+      border: 1px solid rgba(155,114,242,0.4);
+      background: var(--bg-dark);
+      font-size: 20px; font-weight: 800;
+      color: var(--purple-light);
+    }
+    .si-body  { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .si-title { font-size: 24px; font-weight: 700; }
+    .si-title .stitch-tag {
+      display: inline-block;
+      margin-left: 10px;
+      padding: 2px 10px;
+      background: rgba(155,114,242,0.2);
+      border: 1px solid rgba(155,114,242,0.4);
+      border-radius: 10px;
+      font-size: 13px; font-weight: 700;
+      color: var(--purple-light);
+      vertical-align: middle;
+    }
+    .si-desc  { font-size: 18px; color: var(--muted); line-height: 1.5; }
+
+    /* ════════════════════════════════
+       SLIDE 6 — CIERRE
+    ════════════════════════════════ */
+    #s6 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 0 180px;
+    }
+    #s6 .badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 24px;
+      background: rgba(103,61,230,0.2);
+      border: 1px solid rgba(103,61,230,0.4);
+      border-radius: 40px;
+      font-size: 19px; font-weight: 600; color: var(--purple-light);
+      letter-spacing: 0.06em; margin-bottom: 40px;
+    }
+    #s6 h2 {
+      font-size: 88px; font-weight: 900;
+      line-height: 1.0; letter-spacing: -0.025em; margin-bottom: 28px;
+    }
+    #s6 .subtitle {
+      font-size: 29px; color: var(--muted);
+      line-height: 1.65; margin-bottom: 64px; max-width: 920px;
+    }
+    .next-up {
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+      padding: 36px 60px;
+      background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,0.3);
+      border-radius: 20px;
+      opacity: 0; animation: pop 0.5s ease 0.4s forwards;
+    }
+    .next-up .nu-label {
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--purple-light);
+    }
+    .next-up .nu-title {
+      font-size: 36px; font-weight: 900;
+    }
+    .next-up .nu-sub {
+      font-size: 20px; color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav nav-l" onclick="prevSlide()">
+  <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+</div>
+<div class="nav nav-r" onclick="nextSlide()">
+  <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+</div>
+
+<div id="scaler">
+<div id="deck">
+
+<!-- ══════════════════════════════════
+     SLIDE 1 — PORTADA
+══════════════════════════════════ -->
+<section class="slide active" id="s1">
+  <div class="bg"></div>
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+
+  <div class="content">
+    <div class="eyebrow afu" style="animation-delay:.1s">Hostinger Horizons · Curso Completo</div>
+    <h1 class="afu" style="animation-delay:.2s">La ruta<br/>del <span class="gradient-text">curso</span></h1>
+    <p class="subtitle afu" style="animation-delay:.35s">
+      9 módulos para ir de cero a construir apps web reales con IA, sin escribir una línea de código.
+    </p>
+    <div class="tags afu" style="animation-delay:.5s">
+      <span class="pill pill-p">9 módulos</span>
+      <span class="pill pill-o">Sin código</span>
+      <span class="pill pill-o">Proyectos reales</span>
+      <span class="pill pill-o">IA integrada</span>
+    </div>
+  </div>
+
+  <div class="deco">
+    <div class="mod-stack">
+      <div class="mod-chip"><span class="mc-icon">🎮</span><div><div class="mc-num">Módulo 0</div><div class="mc-title">Block Drop Game</div></div></div>
+      <div class="mod-chip"><span class="mc-icon">🎨</span><div><div class="mc-num">Módulo 1</div><div class="mc-title">Landing Personal + Stitch</div></div></div>
+      <div class="mod-chip"><span class="mc-icon">✂️</span><div><div class="mc-num">Módulo 2</div><div class="mc-title">Landing con Reservas</div></div></div>
+      <div class="mod-chip"><span class="mc-icon">🏋️</span><div><div class="mc-num">Módulo 3</div><div class="mc-title">Tracker de Ejercicios</div></div></div>
+      <div class="mod-chip"><span class="mc-icon">☕</span><div><div class="mc-num">Módulo 4</div><div class="mc-title">POS para Cafés</div></div></div>
+      <div class="mod-chip"><span class="mc-icon">💳</span><div><div class="mc-num">Módulo 5</div><div class="mc-title">Vender Suscripciones</div></div></div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">1 / 6</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 2 — MÓDULOS 0–4
+══════════════════════════════════ -->
+<section class="slide cards-slide" id="s2">
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+
+  <div class="content">
+    <h2 class="afu">Módulos <span class="gradient-text">del curso</span></h2>
+    <p class="lead afu" style="animation-delay:.1s">Del juego más simple a proyectos con pagos, IA y más</p>
+    <div class="cards-grid">
+
+      <div class="mod-card m0">
+        <div class="mc-num-badge">Módulo 0 · Ya disponible</div>
+        <div class="mc-emoji">🎮</div>
+        <div class="mc-card-title">Block Drop Game</div>
+        <div class="mc-card-concept">Generar una app completa con prompts e iterar por secciones hasta tener un juego arcade funcional.</div>
+        <span class="mc-card-tag">Juego web</span>
+      </div>
+
+      <div class="mod-card m1">
+        <div class="mc-num-badge">Módulo 1</div>
+        <div class="mc-emoji">🎨</div>
+        <div class="mc-card-title">Landing Personal + Diseño con IA</div>
+        <div class="mc-card-concept">Flujo Google Stitch → Horizons: diseñar el wireframe con IA antes de construir la landing.</div>
+        <span class="mc-card-tag">Google Stitch</span>
+      </div>
+
+      <div class="mod-card m2">
+        <div class="mc-num-badge">Módulo 2</div>
+        <div class="mc-emoji">✂️</div>
+        <div class="mc-card-title">Landing con Reservas (Barbería)</div>
+        <div class="mc-card-concept">Formularios de citas, captura de datos y confirmaciones automáticas por email.</div>
+        <span class="mc-card-tag">Formularios</span>
+      </div>
+
+      <div class="mod-card m3">
+        <div class="mc-num-badge">Módulo 3</div>
+        <div class="mc-emoji">🏋️</div>
+        <div class="mc-card-title">Tracker de Ejercicios</div>
+        <div class="mc-card-concept">App con estado persistente, CRUD completo y dashboard de progreso con gráficas.</div>
+        <span class="mc-card-tag">Datos + CRUD</span>
+      </div>
+
+      <div class="mod-card m4">
+        <div class="mc-num-badge">Módulo 4</div>
+        <div class="mc-emoji">☕</div>
+        <div class="mc-card-title">Punto de Venta para Cafés</div>
+        <div class="mc-card-concept">Catálogo de productos, carrito de compras, flujo de cobro y ticket de caja.</div>
+        <span class="mc-card-tag">Carrito + cobro</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">2 / 6</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 3 — MÓDULOS 5–8
+══════════════════════════════════ -->
+<section class="slide cards-slide" id="s3">
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+
+  <div class="content">
+    <h2 class="afu">Proyectos <span class="gradient-text">avanzados</span></h2>
+    <p class="lead afu" style="animation-delay:.1s">Pagos recurrentes, IA conversacional, generación de imágenes y más</p>
+    <div class="cards-grid" style="grid-template-columns: repeat(4, 1fr);">
+
+      <div class="mod-card m5">
+        <div class="mc-num-badge">Módulo 5</div>
+        <div class="mc-emoji">💳</div>
+        <div class="mc-card-title">Vender Suscripciones</div>
+        <div class="mc-card-concept">Pagos recurrentes, área privada para miembros y gestión de acceso por plan activo.</div>
+        <span class="mc-card-tag">Membresías</span>
+      </div>
+
+      <div class="mod-card m6">
+        <div class="mc-num-badge">Módulo 6</div>
+        <div class="mc-emoji">🤖</div>
+        <div class="mc-card-title">Chatbot con IA</div>
+        <div class="mc-card-concept">Asistente conversacional embebido con system prompt y base de conocimiento del negocio.</div>
+        <span class="mc-card-tag">IA conversacional</span>
+      </div>
+
+      <div class="mod-card m7">
+        <div class="mc-num-badge">Módulo 7</div>
+        <div class="mc-emoji">🖼️</div>
+        <div class="mc-card-title">Creador de Imágenes con IA</div>
+        <div class="mc-card-concept">Generador visual con galería persistente, opciones de estilo y descarga de resultados.</div>
+        <span class="mc-card-tag">Generación IA</span>
+      </div>
+
+      <div class="mod-card m8">
+        <div class="mc-num-badge">Módulo 8 · Cierre</div>
+        <div class="mc-emoji">🚀</div>
+        <div class="mc-card-title">IA Integrada a Fondo</div>
+        <div class="mc-card-concept">Casos avanzados de IA, técnicas de prompting profesional y cómo seguir construyendo.</div>
+        <span class="mc-card-tag">Prompting pro</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">3 / 6</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 4 — RUTA COMPLETA (TIMELINE)
+══════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="bg"></div>
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+
+  <div class="content">
+    <div class="badge afu" style="animation-delay:.1s">🗺️ La ruta completa</div>
+    <h2 class="afu" style="animation-delay:.2s">De cero a <span class="gradient-text">experto</span></h2>
+    <p class="subtitle afu" style="animation-delay:.32s">Cada módulo construye sobre el anterior. Empieza en el M0 y llega al M8 con 9 proyectos reales publicados.</p>
+
+    <div class="road-row afu" style="animation-delay:.44s">
+      <div class="road-step">
+        <div class="rs-icon">🎮</div>
+        <div class="rs-num">M0</div>
+        <div class="rs-title">Block Drop</div>
+      </div>
+      <div class="road-arrow"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
+      <div class="road-step">
+        <div class="rs-icon">🎨</div>
+        <div class="rs-num">M1</div>
+        <div class="rs-title">Landing + Stitch</div>
+      </div>
+      <div class="road-arrow"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
+      <div class="road-step">
+        <div class="rs-icon">✂️</div>
+        <div class="rs-num">M2</div>
+        <div class="rs-title">Reservas</div>
+      </div>
+      <div class="road-arrow"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
+      <div class="road-step">
+        <div class="rs-icon">🏋️</div>
+        <div class="rs-num">M3</div>
+        <div class="rs-title">Tracker</div>
+      </div>
+      <div class="road-arrow"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
+      <div class="road-step">
+        <div class="rs-icon">☕</div>
+        <div class="rs-num">M4</div>
+        <div class="rs-title">POS Café</div>
+      </div>
+      <div class="road-arrow"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
+      <div class="road-step">
+        <div class="rs-icon">💳</div>
+        <div class="rs-num">M5</div>
+        <div class="rs-title">Suscripciones</div>
+      </div>
+      <div class="road-arrow"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
+      <div class="road-step">
+        <div class="rs-icon">🤖</div>
+        <div class="rs-num">M6</div>
+        <div class="rs-title">Chatbot IA</div>
+      </div>
+      <div class="road-arrow"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
+      <div class="road-step">
+        <div class="rs-icon">🖼️</div>
+        <div class="rs-num">M7</div>
+        <div class="rs-title">Imágenes IA</div>
+      </div>
+      <div class="road-arrow"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></div>
+      <div class="road-step">
+        <div class="rs-icon">🚀</div>
+        <div class="rs-num">M8</div>
+        <div class="rs-title">IA a Fondo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">4 / 6</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 5 — MÓDULO 1 DETALLE (GOOGLE STITCH)
+══════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+
+  <div class="content">
+    <div class="sec-header afu">
+      <div class="sec-watermark">01</div>
+      <div class="sec-label">Módulo 1 — Primero que viene</div>
+      <div class="sec-title">Landing Personal<br/>+ Diseño con IA</div>
+      <p class="sec-desc">Aprende a diseñar antes de construir: usamos Google Stitch para crear el wireframe con IA y luego lo ejecutamos en Horizons.</p>
+      <span class="stitch-badge">✨ Google Stitch integrado en Sección 1</span>
+    </div>
+
+    <div class="sec-items">
+      <div class="sec-item">
+        <div class="si-body">
+          <span class="si-title">Diseñar con Google Stitch <span class="stitch-tag">Stitch</span></span>
+          <span class="si-desc">Describir la landing en Stitch, generar el mockup visual y exportar la estructura como referencia.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-body">
+          <span class="si-title">Construir la base en Horizons</span>
+          <span class="si-desc">Tomar el mockup como guía y construir en Horizons: hero, sobre mí, proyectos y contacto.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-body">
+          <span class="si-title">Contenido y estilo</span>
+          <span class="si-desc">Personalizar copy, fotos, paleta de colores y tipografía para que coincida con el diseño de Stitch.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-body">
+          <span class="si-title">Pulir y publicar</span>
+          <span class="si-desc">Revisar responsive, agregar animaciones, SEO básico y conectar el dominio personalizado.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">5 / 6</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 6 — CIERRE
+══════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="bg"></div>
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+
+  <div class="content">
+    <div class="badge afu" style="animation-delay:.1s">🎯 ¡Empezamos!</div>
+    <h2 class="afu" style="animation-delay:.2s">
+      Siguiente:<br/><span class="gradient-text">Módulo 1</span>
+    </h2>
+    <p class="subtitle afu" style="animation-delay:.35s">
+      En el próximo video arrancamos con la Landing Page Personal y conocemos Google Stitch para diseñar con IA desde el principio.
+    </p>
+    <div class="next-up afu" style="animation-delay:.5s">
+      <div class="nu-label">Próximo módulo</div>
+      <div class="nu-title">🎨 Landing Personal + Diseño con IA</div>
+      <div class="nu-sub">Google Stitch → Horizons · 4 secciones</div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">6 / 6</div>
+</section>
+
+</div><!-- /deck -->
+</div><!-- /scaler -->
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const pbars  = document.querySelectorAll('.pbar');
+  const total  = slides.length;
+  let cur = 0;
+
+  function animateItems(slide) {
+    const items = slide.querySelectorAll('.sec-item');
+    items.forEach(el => el.classList.remove('visible'));
+    items.forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 200 + i * 180);
+    });
+  }
+
+  function go(n) {
+    slides[cur].querySelectorAll('.sec-item')
+      .forEach(el => el.classList.remove('visible'));
+    slides[cur].classList.remove('active');
+    cur = ((n % total) + total) % total;
+    slides[cur].classList.add('active');
+
+    const pct = ((cur + 1) / total * 100) + '%';
+    pbars.forEach(b => b.style.width = pct);
+
+    animateItems(slides[cur]);
+  }
+
+  function nextSlide() { go(cur + 1); }
+  function prevSlide() { go(cur - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); nextSlide(); }
+    if (['ArrowLeft','ArrowUp'].includes(e.key))        { e.preventDefault(); prevSlide(); }
+  });
+
+  function scaleToFit() {
+    const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.getElementById('scaler').style.transform =
+      `translate(-50%, -50%) scale(${scale})`;
+  }
+  window.addEventListener('resize', scaleToFit);
+  scaleToFit();
+
+  pbars.forEach(b => b.style.width = (1 / total * 100) + '%');
+</script>
+</body>
+</html>
