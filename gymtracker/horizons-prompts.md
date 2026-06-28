@@ -2,232 +2,186 @@
 
 > **Cómo usar estos prompts:**
 > - Pégalos en orden, uno a la vez
-> - Adjunta las imágenes indicadas en cada prompt antes de enviar
-> - Espera que Horizons termine de construir antes de pasar al siguiente
-> - Si algo no queda bien, corrígelo antes de continuar al siguiente prompt
+> - Adjunta las imágenes indicadas antes de enviar
+> - Espera que Horizons termine antes de pasar al siguiente
+> - Si algo no queda bien, corrígelo antes de continuar
 
 > **Sobre el estilo visual:**
-> No necesitas agregar nada extra. Los prompts 2 al 6 ya incluyen la frase "Mantén el estilo visual ya establecido" al inicio. El Prompt 1 es el que define el estilo — los demás lo heredan automáticamente.
+> La imagen hace el trabajo. Solo describe comportamiento, desktop y datos — no el diseño visual.
+> Los prompts 2 en adelante ya incluyen "Mantén el estilo visual ya establecido".
 
 ---
 
-## PROMPT 1 — Fundación visual + Dashboard
+## PROMPT 1 — Fundación + Dashboard
 
-📎 **Imagen a adjuntar:** `dashboard.png`
+📎 **Adjuntar:** `dashboard.png`
 
 ```
-Construye una app web llamada GymTracker para seguimiento de entrenamientos personales. Usa la imagen adjunta como referencia visual exacta para colores, tipografía y layout.
-
-ESTILO VISUAL (extraído de la imagen):
-- Fondo principal: negro #0D0D0D
-- Fondo de tarjetas: #1A1A1A
-- Acento principal: verde neón #AAFF00
-- Texto principal: blanco #FFFFFF
-- Texto secundario: gris #888888
-- Tipografía: sans-serif geométrica, bold para títulos, tamaños generosos
-- Sin bordes redondeados exagerados, estilo oscuro y energético
+Construye una app web llamada GymTracker para seguimiento de entrenamientos personales. Replica el diseño de la imagen adjunta de forma exacta.
 
 NAVEGACIÓN:
-- Móvil: barra de navegación inferior con 4 tabs — Dashboard, Hoy, Historial, Rutinas — con íconos y etiquetas de texto. Tab activo en verde neón.
-- Desktop: sidebar izquierdo fijo con el logo GYMTRACKER arriba, los mismos 4 tabs en vertical con íconos y texto, y el contenido principal a la derecha ocupando el resto del ancho.
+- Móvil: barra inferior con 4 tabs — Dashboard, Hoy, Historial, Rutinas.
+- Desktop: sidebar izquierdo fijo con los mismos 4 tabs en vertical. Contenido principal a la derecha.
 
-PANTALLA — DASHBOARD:
-Construye la pantalla Dashboard con estos elementos en orden:
+INTERACCIONES DEL DASHBOARD:
+- El botón "EMPEZAR ENTRENAMIENTO" navega a la pantalla Hoy.
+- Las dos tarjetas inferiores son solo informativas, sin acción.
 
-1. Header superior: ícono de rayo a la izquierda, logo "GYMTRACKER" en verde neón centrado, ícono de perfil a la derecha.
+DESKTOP: contenido centrado con ancho máximo de 700px dentro del área principal.
 
-2. Número grande "15" en verde neón con el texto "DÍAS SEGUIDOS" debajo en gris mayúscula. Centrado, con espacio generoso arriba y abajo.
-
-3. Tarjeta oscura con borde izquierdo verde neón: título "Día 12 — Pecho y Tríceps" en blanco bold. Lista de 3 ejercicios con ícono de flecha pequeño: "Press de banca 4×10", "Fondos 3×12", "Extensión de tríceps 3×15". Botón texto "EMPEZAR ENTRENAMIENTO" en la parte inferior de la tarjeta.
-
-4. Dos tarjetas pequeñas lado a lado:
-   - Izquierda: etiqueta "ESTA SEMANA" en gris pequeño, texto "3 / 5 sesiones" en blanco bold, barra de progreso verde neón debajo.
-   - Derecha: etiqueta "ÚLTIMO PR" en gris pequeño, nombre "Sentadilla" en blanco, valor "100 kg" en verde neón bold.
-
-LAYOUT DESKTOP del Dashboard: el número de racha y las tarjetas se organizan en una columna central con ancho máximo de 700px, centrada en el área de contenido. Las dos tarjetas pequeñas se muestran lado a lado igual que en móvil.
+ESTADO VACÍO (primera vez que el usuario abre la app):
+- Racha: mostrar "0 DÍAS SEGUIDOS"
+- Tarjeta de hoy: mostrar "No hay rutina activa — ve a Rutinas para comenzar"
+- Tarjetas inferiores: "0 / 0 sesiones" y "Sin registros aún"
 ```
 
 ---
 
 ## PROMPT 2 — Entrenamiento del día
 
-📎 **Imagen a adjuntar:** `entrenamiento_del_dia.png`
+📎 **Adjuntar:** `entrenamiento_del_dia.png`
 
 ```
-Mantén el estilo visual ya establecido. Construye la pantalla "Hoy" usando la imagen adjunta como referencia exacta.
+Mantén el estilo visual ya establecido. Construye la pantalla "Hoy" replicando la imagen adjunta de forma exacta.
 
-PANTALLA — ENTRENAMIENTO DEL DÍA:
+INTERACCIONES:
+- Al hacer clic en el botón circular de un ejercicio, se marca como completado: nombre tachado, botón verde con check, el siguiente ejercicio pasa a estado activo (borde izquierdo verde).
+- El contador "X / 6 ejercicios completados" se actualiza en tiempo real con cada check.
+- El botón "FINALIZAR ENTRENAMIENTO" solo se activa cuando al menos 1 ejercicio fue completado. Al presionarlo, guarda la sesión y navega al Dashboard.
 
-Header: mismo header de la app con logo GYMTRACKER.
+DESKTOP: columna central de 750px máximo. En pantallas mayores a 1200px, mostrar un panel lateral derecho con un timer de cuenta regresiva que se activa automáticamente al completar un ejercicio, mostrando los segundos de descanso indicados en el chip.
 
-Título de la sesión: "Día 12 — Pecho y Tríceps" en blanco bold grande. Debajo: "2 / 6 ejercicios completados" en gris. Separador horizontal verde neón debajo del subtítulo.
-
-Lista de ejercicios, uno debajo del otro. Cada ejercicio es una tarjeta con:
-- Nombre del ejercicio en blanco bold (tachado si está completado)
-- Detalle en gris: "4 series × 10 reps — 60 kg"
-- Chip de tiempo: ícono de reloj + "90 seg"
-- Chip de músculo: texto con fondo oscuro borde sutil, ejemplo "Pecho" o "Tríceps"
-- Botón circular a la derecha: vacío si pendiente, verde neón con check si completado
-- Ejercicio activo (en progreso): borde izquierdo verde neón y texto del detalle en verde
-- Ejercicio completado: nombre tachado, botón check verde
-
-Usar estos 4 ejercicios de ejemplo:
-1. Press de banca — 4 series × 10 reps — 60 kg — 90 seg — Pecho (completado)
-2. Fondos en paralelas — 3 series × 12 reps — Peso corporal — 60 seg — Pecho (completado)
-3. Extensión de tríceps en polea — 3 series × 15 reps — 20 kg — 60 seg — Tríceps (activo)
-4. Press inclinado con mancuernas — 4 series × 8 reps — 25 kg — 90 seg — Pecho (pendiente)
-
-Al final de la lista:
-- Campo de texto con placeholder "Notas de la sesión..."
-- Botón primario ancho completo "FINALIZAR ENTRENAMIENTO" en blanco sobre fondo oscuro con borde
-
-LAYOUT DESKTOP: columna central de máximo 750px centrada. La lista de ejercicios ocupa todo el ancho de esa columna. En pantallas muy anchas (1200px+), mostrar un panel lateral derecho con un timer de descanso grande cuando el usuario marca un ejercicio como completado.
+ESTADO VACÍO: si no hay rutina activa, mostrar mensaje centrado "No tienes un entrenamiento programado para hoy" con botón "Ver rutinas" que navega a Rutinas.
 ```
 
 ---
 
-## PROMPT 3 — Historial de entrenamientos
+## PROMPT 3 — Historial + Progreso
 
-📎 **Imagen a adjuntar:** `historial_de_entrenamientos.png`
+📎 **Adjuntar:** `historial_de_entrenamientos.png` y `progreso_por_ejercicio.png`
 
 ```
-Mantén el estilo visual ya establecido. Construye la pantalla "Historial" usando la imagen adjunta como referencia exacta.
+Mantén el estilo visual ya establecido. Construye la pantalla "Historial" replicando la primera imagen adjunta. Dentro de esta misma sección, agrega una sub-pantalla "Progreso" replicando la segunda imagen adjunta.
 
-PANTALLA — HISTORIAL:
+NAVEGACIÓN INTERNA:
+- La pantalla Historial tiene dos vistas accesibles desde tabs o toggle en la parte superior: "Sesiones" y "Progreso".
+- "Sesiones" muestra la lista del historial.
+- "Progreso" muestra las gráficas por ejercicio.
+- Ambas vistas comparten el tab "Historial" activo en la barra de navegación.
 
-Header: mismo header de la app.
+INTERACCIONES — SESIONES:
+- Al hacer clic en una sesión, se abre el detalle con todos los ejercicios, pesos y notas de esa sesión.
+- El ícono de filtro permite filtrar por mes.
 
-Título "Historial" en blanco bold grande. Subtítulo "28 sesiones registradas" en gris debajo. Ícono de filtro alineado a la derecha del título.
+INTERACCIONES — PROGRESO:
+- Al seleccionar un chip de ejercicio, la gráfica y la lista de últimos registros se actualizan mostrando los datos de ese ejercicio.
 
-Lista vertical de sesiones pasadas, ordenadas de la más reciente a la más antigua. Cada sesión es una tarjeta con:
-- Borde izquierdo verde neón si la sesión fue completada al 100%, gris si fue parcial
-- Fila superior: fecha en gris pequeño mayúscula (ejemplo: "LUN 23 JUN") a la izquierda, duración con ícono de reloj a la derecha (ejemplo: "52 min")
-- Nombre de la sesión en blanco bold (ejemplo: "Día 11 — Espalda y Bíceps")
-- Fila inferior: texto de ejercicios completados (ejemplo: "6 / 6 ejercicios completados") con ícono de check verde si completo, o ícono neutral si parcial
-- Flecha "›" a la derecha para ver el detalle
+DESKTOP: columna central de 750px máximo. En Sesiones, al hacer clic en una sesión, el detalle se abre en un panel lateral derecho en lugar de navegar a otra página.
 
-Usar estas 3 sesiones de ejemplo:
-1. LUN 23 JUN — 52 min — Día 11 — Espalda y Bíceps — 6/6 completados ✓ (borde verde)
-2. SÁB 21 JUN — 35 min — Día 10 — Pecho y Tríceps — 4/6 ejercicios (borde gris)
-3. JUE 19 JUN — 65 min — Día 09 — Pierna y Core pesado — 8/8 completados ✓ (borde verde)
-
-LAYOUT DESKTOP: columna central de máximo 750px centrada. En desktop mostrar también un panel de detalle a la derecha que se abre al hacer clic en una sesión, mostrando todos los ejercicios de esa sesión con los pesos registrados.
+ESTADO VACÍO — SESIONES: "Aún no has registrado ningún entrenamiento. ¡Empieza hoy!"
+ESTADO VACÍO — PROGRESO: "Completa al menos un entrenamiento para ver tu progreso."
 ```
 
 ---
 
-## PROMPT 4 — Progreso por ejercicio
+## PROMPT 4 — Rutinas
 
-📎 **Imagen a adjuntar:** `progreso_por_ejercicio.png`
+📎 **Adjuntar:** `biblioteca_de_rutinas.png`
 
 ```
-Mantén el estilo visual ya establecido. Construye la pantalla "Progreso" (que aparece dentro del tab Historial o como sub-sección) usando la imagen adjunta como referencia exacta.
+Mantén el estilo visual ya establecido. Construye la pantalla "Rutinas" replicando la imagen adjunta de forma exacta.
 
-PANTALLA — PROGRESO POR EJERCICIO:
+INTERACCIONES:
+- El botón "CONTINUAR DÍA X" de la rutina activa navega a la pantalla Hoy con esa sesión cargada.
+- Al hacer clic en una rutina disponible, se muestra un modal de confirmación: "¿Activar esta rutina? Esto reemplazará tu rutina actual." con botones Cancelar y Confirmar.
+- El botón "IMPORTAR" abre un modal con un campo de texto para pegar el contenido markdown de una rutina. Al confirmar, la parsea y la agrega a la biblioteca.
+- El botón "COPIAR PROMPT" copia al portapapeles el texto definido en el Prompt 6B.
 
-Header: mismo header de la app.
+DESKTOP: columna central de 750px máximo. Al hacer clic en una rutina disponible, el detalle se despliega en un panel lateral derecho mostrando los días y ejercicios de la rutina.
 
-Selector de ejercicio: fila horizontal de chips desplazable. Chip activo con fondo verde neón y texto negro bold. Chips inactivos con fondo oscuro y borde sutil. Ejercicios de ejemplo: "PRESS BANCA" (activo), "SENTADILLA", "PESO MUERTO", "DOMINADAS".
-
-Tarjeta de progreso: fondo #1A1A1A, bordes redondeados suaves.
-- Título: "Progreso — Press de banca" en blanco bold
-- Línea 1: "Empezaste con 60 kg" en gris con punto separador
-- Línea 2: "Ahora levantas 80 kg" en gris, badge "+33%" en verde neón con fondo oscuro
-- Gráfica de línea: fondo oscuro dentro de la tarjeta, línea verde neón, puntos circulares en los valores, eje X con "HACE 8 SEM" a la izquierda y "HOY" a la derecha, líneas de guía horizontales en gris muy sutil
-
-Sección "ÚLTIMOS 5 REGISTROS" en gris mayúscula como subtítulo.
-Lista de 5 filas, cada fila separada por línea sutil:
-- Punto de color a la izquierda (verde si es el más reciente, gris los anteriores)
-- Fecha en gris (ejemplo: "HOY", "18 OCT", "11 OCT")
-- Peso en blanco bold (ejemplo: "80 kg")
-- Reps en gris (ejemplo: "x 4 reps")
-
-Datos de ejemplo para la gráfica y registros: HOY 80kg×4, 18 OCT 77.5kg×5, 11 OCT 75kg×5, 04 OCT 75kg×4, 27 SEP 72.5kg×6.
-
-LAYOUT DESKTOP: columna central de máximo 800px centrada. La gráfica ocupa todo el ancho de esa columna con más altura (350px en desktop vs 200px en móvil). El selector de chips puede mostrar todos los ejercicios sin scroll horizontal.
+ESTADO VACÍO: si no hay ninguna rutina, mostrar solo la tarjeta "¿Quieres una rutina personalizada?" con el botón "COPIAR PROMPT".
 ```
 
 ---
 
-## PROMPT 5 — Biblioteca de rutinas
+## PROMPT 5 — Datos de ejemplo
 
-📎 **Imagen a adjuntar:** `biblioteca_de_rutinas.png`
+📎 **Sin imágenes**
 
 ```
-Mantén el estilo visual ya establecido. Construye la pantalla "Rutinas" usando la imagen adjunta como referencia exacta.
+Mantén el estilo visual ya establecido. Agrega datos de ejemplo al backend para que la app se vea funcional desde el primer momento.
 
-PANTALLA — RUTINAS:
+RUTINAS A CREAR:
 
-Header: mismo header de la app.
+Rutina 1 — "Rutina Full Body 30 días" (marcarla como ACTIVA en Día 12):
+- Estructura: 5 días de entrenamiento + 2 de descanso por semana, durante 30 días
+- Grupos alternados: Pecho/Tríceps, Espalda/Bíceps, Piernas/Core, repetir
+- Cada día: 5 a 8 ejercicios con series, reps y peso sugerido en kg
+- Incluir días de descanso activo marcados claramente
 
-Título "Rutinas" en blanco bold grande. Botón "↓ IMPORTAR" alineado a la derecha del título, con borde, fondo oscuro y texto blanco pequeño.
+Rutina 2 — "Rutina Upper/Lower" (DISPONIBLE):
+- 4 días por semana, enfoque hipertrofia, nivel avanzado
+- 2 días upper body + 2 días lower body
 
-Lista de rutinas, una tarjeta por rutina:
+Rutina 3 — "Rutina Fuerza 5×5" (DISPONIBLE):
+- 3 días por semana, enfoque fuerza base, nivel principiante
+- Basada en los 5 levantamientos compuestos principales
 
-TARJETA RUTINA ACTIVA (primera):
-- Nombre "Rutina Full Body 30 días" en blanco bold + chip "ACTIVA" en verde neón con fondo oscuro a la derecha del nombre
-- Descripción: "30 días · 5 días por semana · Intermedio" en gris
-- Etiqueta "Progreso" en gris + "Día 12 de 30" alineado a la derecha, ambos pequeños
-- Barra de progreso verde neón (~40% completado)
-- Botón "CONTINUAR DÍA 12 →" ancho completo, fondo oscuro con borde blanco
+HISTORIAL A CREAR:
+- 12 sesiones pasadas distribuidas en las últimas 6 semanas
+- Al menos 2 sesiones incompletas (4/6 ejercicios) para que el historial se vea realista
+- Pesos progresivos en cada sesión para que las gráficas de progreso muestren una curva ascendente
+- La racha actual debe quedar en 15 días consecutivos
 
-TARJETA RUTINA DISPONIBLE (segunda):
-- Nombre "Rutina Upper/Lower" en blanco bold + chip "DISPONIBLE" en gris
-- Descripción: "4 días por semana · Hipertrofia · Avanzado" en gris
-- Sin barra de progreso, sin botón interno
-
-TARJETA RUTINA DISPONIBLE (tercera):
-- Nombre "Rutina Fuerza 5×5" en blanco bold + chip "DISPONIBLE" en gris
-- Descripción: "3 días por semana · Fuerza Base · Principiante" en gris
-
-TARJETA ESPECIAL al final (ligeramente diferente, fondo con transparencia o borde sutil):
-- Ícono cuadrado centrado con fondo verde oscuro
-- Título "¿Quieres una rutina personalizada?" en verde neón centrado
-- Texto: "Usa este prompt con ChatGPT o Claude para generar tu rutina en el formato correcto para importarla al tracker." en gris centrado
-- Botón "📋 COPIAR PROMPT" con borde verde neón, al hacer clic copia al portapapeles el texto del prompt para generar rutinas en IA
-
-LAYOUT DESKTOP: columna central de máximo 750px centrada. Las tarjetas de rutinas se mantienen en lista vertical. En desktop, al hacer clic en una rutina disponible, se abre un panel lateral derecho con el detalle de la rutina (días, ejercicios por día).
+EJERCICIOS EN LA BIBLIOTECA:
+Press de banca, Fondos en paralelas, Extensión de tríceps en polea, Press inclinado con mancuernas, Dominadas, Remo con barra, Curl de bíceps, Sentadilla, Peso muerto, Prensa de pierna, Extensión de cuádriceps, Curl femoral, Plancha.
 ```
 
 ---
 
-## PROMPT 6 — Datos de ejemplo + Funcionalidad final
+## PROMPT 6 — Funcionalidad y conexiones
 
-📎 **Sin imágenes — solo texto**
+📎 **Sin imágenes**
 
 ```
-Mantén el estilo visual ya establecido. Agrega los datos de ejemplo y conecta la funcionalidad de la app usando el backend de Horizons.
+Mantén el estilo visual ya establecido. Conecta toda la funcionalidad de la app.
 
-DATOS DE EJEMPLO A CREAR EN EL BACKEND:
+FLUJO PRINCIPAL:
+1. Dashboard → botón "EMPEZAR ENTRENAMIENTO" → carga el día actual de la rutina activa en la pantalla Hoy.
+2. Pantalla Hoy → marcar ejercicios → botón "FINALIZAR ENTRENAMIENTO" → guarda la sesión en el historial con fecha, ejercicios completados, pesos y notas → navega al Dashboard → actualiza la racha.
+3. Rutinas → botón "CONTINUAR DÍA X" → misma pantalla Hoy con esa sesión.
 
-Rutina activa: "Rutina Full Body 30 días" con 30 días de entrenamiento. Días alternando grupos musculares: Pecho/Tríceps, Espalda/Bíceps, Piernas/Core, repetir. Cada día con 5-8 ejercicios, cada uno con series, reps y peso sugerido.
+LÓGICA DE RACHA:
+- Aumenta en 1 cada vez que se finaliza un entrenamiento en un día nuevo.
+- Si pasan más de 36 horas sin finalizar un entrenamiento, la racha vuelve a 0.
+- El número en el Dashboard siempre refleja la racha actual en tiempo real.
 
-Ejercicios base en la biblioteca: Press de banca, Fondos en paralelas, Extensión de tríceps en polea, Press inclinado con mancuernas, Dominadas, Remo con barra, Curl de bíceps, Sentadilla, Peso muerto, Prensa de pierna, Extensión de cuádriceps, Curl femoral, Plancha.
+LÓGICA DE PROGRESO:
+- Cada vez que se finaliza un entrenamiento, los pesos registrados se guardan en el historial de ese ejercicio.
+- La gráfica de Progreso usa esos datos para mostrar la evolución.
+- El "Último PR" del Dashboard muestra el ejercicio donde el usuario superó su peso máximo más recientemente.
 
-Historial de ejemplo: 12 sesiones pasadas con pesos y fechas reales distribuidas en las últimas 6 semanas. Al menos 2 sesiones incompletas para que el historial se vea realista.
+TEXTO DEL BOTÓN "COPIAR PROMPT" EN RUTINAS:
+"Eres un entrenador personal experto. Crea una rutina de entrenamiento en formato Markdown con esta estructura exacta por cada día:
 
-FUNCIONALIDAD A CONECTAR:
-
-1. El botón "EMPEZAR ENTRENAMIENTO" del Dashboard lleva a la pantalla Hoy con la sesión del día actual cargada.
-
-2. Al marcar un ejercicio como completado en la pantalla Hoy, el contador "X / 6 ejercicios completados" se actualiza en tiempo real.
-
-3. El botón "FINALIZAR ENTRENAMIENTO" guarda la sesión en el historial con la fecha actual, los pesos registrados y las notas, y actualiza la racha del Dashboard.
-
-4. El botón "COPIAR PROMPT" en Rutinas copia este texto al portapapeles:
-"Eres un entrenador personal experto. Crea una rutina de entrenamiento de 30 días en formato Markdown con esta estructura exacta por cada día:
 ## Día [N] — [Nombre del grupo muscular]
 - [Nombre del ejercicio] | [Series]×[Reps] | [Peso sugerido] kg | Descanso: [X] seg | Foco: [músculo]
-La rutina debe ser [nivel: principiante/intermedio/avanzado], [X] días por semana, con objetivo de [objetivo]. Incluye días de descanso marcados como ## Día [N] — Descanso activo."
 
-5. La racha del Dashboard se incrementa automáticamente cada vez que se finaliza un entrenamiento. Si pasan más de 36 horas sin entrenar, la racha vuelve a 0.
+Incluye días de descanso marcados como:
+## Día [N] — Descanso activo
+
+Parámetros de mi rutina:
+- Duración: [30/60/90] días
+- Días por semana: [3/4/5]
+- Nivel: [principiante/intermedio/avanzado]
+- Objetivo: [fuerza/hipertrofia/resistencia/pérdida de grasa]"
 ```
 
 ---
 
 ## Notas de uso
 
-- **Orden es importante:** no saltes prompts, cada uno asume que el anterior ya fue construido
-- **Si Horizons no replica exactamente la imagen:** describe el elemento específico que no quedó bien y pide corrección antes de continuar
-- **Desktop:** todos los prompts ya incluyen instrucciones de layout desktop, no necesitas un prompt separado para eso
-- **El prompt del portapapeles (Prompt 6):** puedes personalizar el texto del prompt para IA según el tipo de rutina que quieras generar
+- **No saltes prompts** — cada uno asume que el anterior fue construido correctamente
+- **Si Horizons no replica la imagen** — describe el elemento específico que falló y pide corrección antes de continuar
+- **Prompt 3 lleva dos imágenes** — adjunta ambas a la vez antes de enviar
+- **El texto del prompt de IA (Prompt 6)** — puedes editarlo según el tipo de rutina que uses
