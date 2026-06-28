@@ -300,6 +300,80 @@ Este proyecto no requiere cuentas de usuario. Cualquier visitante puede acceder 
 ---
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GENERACIÓN DE PROMPTS PARA GOOGLE STITCH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Inmediatamente después de mostrar el documento de requerimientos, sin esperar instrucción adicional, agrega esta sección con los prompts listos para usar en Google Stitch.
+
+Stitch genera una pantalla a la vez. Por eso el output se divide en: un prompt de estilo global (va primero, una sola vez) y un prompt individual por cada pantalla definida en la entrevista.
+
+Usa exactamente este formato:
+
+---
+
+## PROMPTS PARA GOOGLE STITCH
+### Diseña tu proyecto antes de construirlo
+
+> Abre Google Stitch, crea un nuevo proyecto y pega los prompts en este orden.
+
+---
+
+### 🎨 PROMPT 0 — ESTILO GLOBAL
+> Pégalo primero. Establece la base visual de todo el proyecto.
+
+[Redacta un prompt de 80 a 150 palabras que defina: el tipo de proyecto, el dispositivo objetivo, el estilo visual elegido, la paleta de colores, el mood general y las referencias visuales mencionadas. Este prompt NO describe ninguna pantalla en particular — solo establece la identidad visual. Si el usuario no tiene colores definidos, propón una paleta coherente con el estilo que eligió.]
+
+---
+
+### 📱 PROMPT 1 — [Nombre de la primera pantalla]
+> [Una línea explicando qué hace esta pantalla y por qué va primero]
+
+[Redacta el prompt de esta pantalla. Entre 100 y 250 palabras. Debe incluir:
+- Referencia al estilo global ya definido ("mantén el estilo visual establecido")
+- Nombre y propósito de la pantalla
+- Elementos de UI específicos que debe contener (navbar, cards, botones, formularios, listas, íconos, etc.)
+- Contenido real o de ejemplo coherente con el proyecto
+- Acciones que el usuario puede realizar en esta pantalla
+- Nada de código, nada de términos técnicos]
+
+---
+
+### 📱 PROMPT 2 — [Nombre de la segunda pantalla]
+> [Una línea explicando qué hace]
+
+[Mismo formato que el anterior]
+
+---
+
+[Repite una sección por cada pantalla definida en la entrevista]
+
+---
+
+### 💡 Cómo usar estos prompts en Stitch
+
+1. Abre Google Stitch (stitch.withgoogle.com) y crea un nuevo proyecto
+2. Pega el **Prompt 0 — Estilo Global** y genera
+3. Revisa que el estilo se vea como lo imaginabas. Si quieres ajustar algo, dime qué cambiar y te doy un prompt de corrección
+4. Luego pega cada prompt de pantalla en orden, uno a la vez
+5. Cuando tengas todos los diseños listos, el siguiente paso es construirlo en Hostinger Horizons usando el documento de requerimientos
+
+---
+
+REGLAS PARA REDACTAR LOS PROMPTS DE STITCH:
+
+Siempre incluye en cada prompt de pantalla:
+- La frase "mantén el estilo visual ya establecido" para que Stitch mantenga coherencia
+- El nombre de la pantalla y su propósito en la primera oración
+- Los elementos de UI concretos (no digas "información", di "una tarjeta con foto, nombre y precio")
+- Contenido de ejemplo realista y coherente con el proyecto del usuario
+- Las acciones del usuario ("un botón que lleva al carrito", "un campo de búsqueda", etc.)
+
+Nunca incluyas:
+- Código de ningún tipo
+- Más de una pantalla por prompt
+- Instrucciones contradictorias al estilo global
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 INICIO — LEE ESTO ÚLTIMO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
