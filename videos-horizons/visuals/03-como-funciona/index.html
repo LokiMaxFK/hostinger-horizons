@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;">
+<div data-hf-id="hf-16hd" id="visual-03-como-funciona" data-composition-id="visual-03-como-funciona" data-start="0" data-width="1920" data-height="1080">
+
+<style>
+#visual-03-como-funciona {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  background: #1A0533;
+  overflow: hidden;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+/* ---------- Background ---------- */
+.bg-glow-pos {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  pointer-events: none;
+}
+#bg-glow {
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(103,61,230,0.28) 0%, rgba(103,61,230,0.0) 65%);
+  top: -500px;
+  left: -500px;
+}
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(103,61,230,0.045) 1px, rgba(103,61,230,0.0) 1px),
+    linear-gradient(90deg, rgba(103,61,230,0.045) 1px, rgba(103,61,230,0.0) 1px);
+  background-size: 120px 120px;
+  pointer-events: none;
+}
+.bg-ghost {
+  position: absolute;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 440px;
+  font-weight: 800;
+  color: rgba(103,61,230,0.04);
+  right: 40px;
+  bottom: -80px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ---------- Structural ---------- */
+#line-top {
+  position: absolute;
+  top: 58px;
+  left: 80px;
+  right: 80px;
+  height: 2px;
+  background: #673DE6;
+  transform-origin: left center;
+}
+#line-bottom {
+  position: absolute;
+  bottom: 58px;
+  left: 80px;
+  right: 80px;
+  height: 1px;
+  background: rgba(103,61,230,0.30);
+  transform-origin: left center;
+}
+
+/* ---------- Header ---------- */
+#section-tag {
+  position: absolute;
+  top: 72px;
+  left: 80px;
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(155,114,242,0.65);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#page-title {
+  position: absolute;
+  top: 118px;
+  left: 80px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 72px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.title-accent { color: #673DE6; }
+
+/* ---------- Process connector line ---------- */
+#connector-line {
+  position: absolute;
+  top: 530px;
+  left: 320px;
+  right: 320px;
+  height: 2px;
+  background: rgba(103,61,230,0.30);
+  transform-origin: left center;
+}
+
+/* ---------- Steps ---------- */
+.steps-row {
+  position: absolute;
+  top: 268px;
+  left: 80px;
+  right: 80px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.step-card {
+  flex: 1;
+  background: rgba(103,61,230,0.06);
+  border: 1.5px solid rgba(103,61,230,0.22);
+  border-radius: 10px;
+  padding: 40px 44px;
+  position: relative;
+}
+.step-card.active { border-color: rgba(103,61,230,0.55); }
+
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 300;
+  color: #673DE6;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+
+.step-icon {
+  font-size: 52px;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.step-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  line-height: 0.92;
+  margin-bottom: 22px;
+}
+
+.step-body {
+  font-family: 'DM Mono', monospace;
+  font-size: 21px;
+  font-weight: 300;
+  color: #9B72F2;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+.step-body strong {
+  color: #C4A8FF;
+  font-weight: 400;
+}
+
+/* Accent glow behind active card */
+.step-active-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: 10px;
+  background: rgba(103,61,230,0.08);
+  pointer-events: none;
+}
+
+/* Prompt example box (inside step 1) */
+.prompt-example {
+  margin-top: 28px;
+  background: rgba(26,5,51,0.6);
+  border: 1px solid rgba(103,61,230,0.35);
+  border-radius: 6px;
+  padding: 18px 22px;
+}
+.prompt-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  color: rgba(155,114,242,0.55);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.prompt-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 19px;
+  color: #C4A8FF;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+.prompt-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 22px;
+  background: #673DE6;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+/* Arrow connectors between steps */
+.step-arrow {
+  position: absolute;
+  right: -38px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+.sarrow-line {
+  width: 16px;
+  height: 3px;
+  background: #673DE6;
+  transform-origin: left center;
+}
+.sarrow-head {
+  width: 0;
+  height: 0;
+  border-top: 9px solid rgba(103,61,230,0);
+  border-bottom: 9px solid rgba(103,61,230,0);
+  border-left: 14px solid #673DE6;
+}
+
+/* What's possible tags (step 3) */
+.result-tags {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.result-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 17px;
+  color: #9B72F2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tag-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #673DE6;
+  flex-shrink: 0;
+}
+
+/* ---------- Bottom bar ---------- */
+.bottom-bar {
+  position: absolute;
+  bottom: 70px;
+  left: 80px;
+  right: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#brand-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(155,114,242,0.65);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  color: rgba(196,168,255,0.35);
+  letter-spacing: 0.05em;
+}
+</style>
+
+<!-- BG -->
+<div data-hf-id="hf-gycn" class="grid-overlay"></div>
+<div data-hf-id="hf-cyws" class="bg-glow-pos"><div data-hf-id="hf-isbq" id="bg-glow"></div></div>
+<div data-hf-id="hf-dz8b" class="bg-ghost">→</div>
+
+<!-- Structure -->
+<div data-hf-id="hf-vsjt" id="line-top"></div>
+<div data-hf-id="hf-un41" id="line-bottom"></div>
+<div data-hf-id="hf-avca" id="section-tag">Cómo funciona</div>
+<div data-hf-id="hf-xra8" id="page-title">El <span data-hf-id="hf-ehj5" class="title-accent">proceso</span></div>
+
+<!-- Connector -->
+<div data-hf-id="hf-4qzx" id="connector-line"></div>
+
+<!-- Steps -->
+<div data-hf-id="hf-oexm" class="steps-row">
+
+  <!-- Step 1: Escribes -->
+  <div data-hf-id="hf-nmyn" class="step-card active" id="step-1">
+    <div data-hf-id="hf-2qtl" class="step-active-glow"></div>
+    <div data-hf-id="hf-pfme" class="step-num">01</div>
+    <div data-hf-id="hf-ql25" class="step-title">Escribes<br data-hf-id="hf-x5px">tu idea</div>
+    <div data-hf-id="hf-8dy7" class="step-body">
+      Describes lo que<br data-hf-id="hf-rsrt">necesitas en <strong data-hf-id="hf-8qv8">lenguaje natural</strong>
+    </div>
+    <div data-hf-id="hf-tgpb" class="prompt-example" id="prompt-box">
+      <div data-hf-id="hf-x51y" class="prompt-label">Tu prompt</div>
+      <div data-hf-id="hf-l8g1" class="prompt-text">"Crea una landing page para mi barbería con agenda"<span data-hf-id="hf-cg8y" class="prompt-cursor" id="cursor"></span></div>
+    </div>
+    <!-- arrow to next -->
+    <div data-hf-id="hf-pql1" class="step-arrow" id="arrow-1">
+      <div data-hf-id="hf-dy19" class="sarrow-line"></div>
+      <div data-hf-id="hf-7jrl" class="sarrow-head"></div>
+    </div>
+  </div>
+
+  <!-- Step 2: IA Procesa -->
+  <div data-hf-id="hf-5x8c" class="step-card" id="step-2">
+    <div data-hf-id="hf-ptxf" class="step-num">02</div>
+    <div data-hf-id="hf-c6wu" class="step-title">La IA<br data-hf-id="hf-szow">construye</div>
+    <div data-hf-id="hf-1l50" class="step-body">
+      Horizons genera<br data-hf-id="hf-sldv"><strong data-hf-id="hf-eqxv">código real</strong> en segundos
+    </div>
+    <div data-hf-id="hf-0rxs" class="prompt-example" id="gen-box" style="margin-top:28px;">
+      <div data-hf-id="hf-w7ny" class="prompt-label">Generando</div>
+      <div data-hf-id="hf-4o7v" class="prompt-text" style="color:#9B72F2;">
+        ▸ HTML + CSS<br data-hf-id="hf-qluq">
+        ▸ Lógica de negocio<br data-hf-id="hf-q7jp">
+        ▸ Base de datos
+      </div>
+    </div>
+    <!-- arrow to next -->
+    <div data-hf-id="hf-top2" class="step-arrow" id="arrow-2">
+      <div data-hf-id="hf-pxvl" class="sarrow-line"></div>
+      <div data-hf-id="hf-ruit" class="sarrow-head"></div>
+    </div>
+  </div>
+
+  <!-- Step 3: App Lista -->
+  <div data-hf-id="hf-6ow5" class="step-card" id="step-3">
+    <div data-hf-id="hf-q88g" class="step-num">03</div>
+    <div data-hf-id="hf-62kx" class="step-title">App<br data-hf-id="hf-regs">lista</div>
+    <div data-hf-id="hf-jr4o" class="step-body">
+      Refinas con <strong data-hf-id="hf-74o6">chat o voz</strong>,<br data-hf-id="hf-r05r">publica en segundos
+    </div>
+    <div data-hf-id="hf-kuyw" class="result-tags" id="result-tags">
+      <div data-hf-id="hf-rr4r" class="result-tag" id="rt-1"><div data-hf-id="hf-oi7i" class="tag-dot"></div>Modifica colores</div>
+      <div data-hf-id="hf-e07g" class="result-tag" id="rt-2"><div data-hf-id="hf-ejaq" class="tag-dot"></div>Agrega funciones</div>
+      <div data-hf-id="hf-4wlr" class="result-tag" id="rt-3"><div data-hf-id="hf-exlr" class="tag-dot"></div>Publica online</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom -->
+<div data-hf-id="hf-tmht" class="bottom-bar">
+  <div data-hf-id="hf-4au3" id="brand-name">Hostinger Horizons</div>
+  <div data-hf-id="hf-en2v" id="section-num">02 / Proceso</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+const TOTAL = 16;
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+
+// BG glow
+tl.fromTo("#bg-glow",
+  { scale: 0.9 },
+  { scale: 1.2, duration: TOTAL / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+// Structural
+tl.fromTo("#line-top",    { scaleX: 0 }, { scaleX: 1, duration: 0.75, ease: "expo.out" }, 0.1);
+tl.fromTo("#line-bottom", { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "power3.out" }, 0.3);
+tl.fromTo("#section-tag", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.out" }, 0.5);
+tl.fromTo("#page-title",
+  { y: -25, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.65);
+
+// Connector line
+tl.fromTo("#connector-line", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power2.out" }, 1.0);
+
+// Step 1 slides in
+tl.fromTo("#step-1",
+  { y: 50, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 1.2);
+tl.fromTo("#prompt-box",
+  { y: 20, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" }, 1.9);
+
+// Cursor blink on prompt
+tl.to("#cursor", { opacity: 0, duration: 0.5, ease: "steps(1)", yoyo: true,
+  repeat: Math.ceil((TOTAL - 2.4) / 1) }, 2.4);
+
+// Arrow 1
+tl.fromTo("#arrow-1", { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 2.6);
+
+// Step 2 slides in
+tl.fromTo("#step-2",
+  { y: 50, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 3.0);
+tl.fromTo("#gen-box",
+  { y: 20, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" }, 3.7);
+
+// Arrow 2
+tl.fromTo("#arrow-2", { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 4.2);
+
+// Step 3 slides in
+tl.fromTo("#step-3",
+  { y: 50, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 4.6);
+
+// Result tags stagger
+tl.fromTo("#rt-1", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.32, ease: "power3.out" }, 5.5);
+tl.fromTo("#rt-2", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.32, ease: "power3.out" }, 5.7);
+tl.fromTo("#rt-3", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.32, ease: "power3.out" }, 5.9);
+
+// Brand bar
+tl.fromTo("#brand-name", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.45, ease: "sine.out" }, 6.4);
+tl.fromTo("#section-num",{ opacity: 0 },        { opacity: 1,       duration: 0.35, ease: "sine.out" }, 6.65);
+
+// Ambient: step cards subtle float
+tl.to("#step-1", { y: -6, duration: 3.5, ease: "sine.inOut", yoyo: true,
+  repeat: Math.ceil((TOTAL - 8) / 7) }, 8);
+tl.to("#step-3", { y:  6, duration: 4.0, ease: "sine.inOut", yoyo: true,
+  repeat: Math.ceil((TOTAL - 8.5) / 8) }, 8.5);
+
+window.__timelines["visual-03-como-funciona"] = tl;
+
+if (typeof window.__hyperframes === "undefined") tl.play();
+</script>
+</div>
+</body>
+</html>
