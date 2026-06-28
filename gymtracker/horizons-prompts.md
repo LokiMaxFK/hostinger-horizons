@@ -6,6 +6,9 @@
 > - Espera que Horizons termine de construir antes de pasar al siguiente
 > - Si algo no queda bien, corrígelo antes de continuar al siguiente prompt
 
+> **Sobre el estilo visual:**
+> No necesitas agregar nada extra. Los prompts 2 al 6 ya incluyen la frase "Mantén el estilo visual ya establecido" al inicio. El Prompt 1 es el que define el estilo — los demás lo heredan automáticamente.
+
 ---
 
 ## PROMPT 1 — Fundación visual + Dashboard
