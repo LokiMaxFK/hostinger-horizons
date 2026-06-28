@@ -1,0 +1,21 @@
+Y ahí, listar todos los proyectos y los módulos que podemos ir haciendo después del primer módulo, que es el módulo 0. Te voy a compartir mis ideas:
+
+Estas son algunas ideas:
+- Landing Page que hace reservas (Barbería)
+- Vender suscripciones
+- Punto de venta para cafés
+- Tracker de ejercicios
+- Landing Page personal
+- Creador de imágenes
+- Chatbot
+- Hablar de IA integrada
+
+But in the same way, I think we can start to cover the use of Google Stitch or design tools with AI to go more to horizons and not do it all at once. Maybe this could be a second option, or ideally include it in the first module.
+
+Contesta todo en español. Trabajemos todo en el repo de Hostinger Horizons.
+
+---
+
+Pregunta de seguimiento (Google Stitch):
+¿Dónde quieres incluir Google Stitch (o herramientas de diseño con IA)?
+→ Respuesta: El modulo 0 ya lo tengo, me gustaría implementarlo en el modulo 1 de manera orgánica.

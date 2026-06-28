@@ -29,68 +29,52 @@
       font-family: 'Inter', sans-serif;
       color: #fff;
       user-select: none;
+      position: relative;
     }
 
-    /* ── Scaler (contain) ── */
     #scaler {
-      position: fixed;
-      top: 50%; left: 50%;
+      position: absolute; top: 50%; left: 50%;
       width: 1920px; height: 1080px;
       transform-origin: center center;
+      background: var(--bg-dark);
     }
-    #deck { width: 1920px; height: 1080px; position: relative; }
+    #deck { width: 1920px; height: 1080px; position: relative; background: var(--bg-dark); }
 
-    /* ── Slide base ── */
     .slide {
       position: absolute; inset: 0;
       opacity: 0; pointer-events: none;
       transition: opacity 0.45s ease;
       overflow: hidden;
+      background: var(--bg-dark);
     }
     .slide.active { opacity: 1; pointer-events: all; }
 
-    /* ── Shared background ── */
     .bg {
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 140% 90% at 85% 50%, #1E0650 0%, var(--bg-dark) 62%);
+      background: var(--bg-dark);
     }
     .bg::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(circle 700px at 88% 20%, rgba(103,61,230,0.22) 0%, transparent 70%),
-        radial-gradient(circle 500px at 5%  88%, rgba(155,114,242,0.10) 0%, transparent 70%);
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 160% 110% at 50% 45%, rgba(103,61,230,0.13) 0%, transparent 55%);
     }
     .bg::after {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background-image:
         linear-gradient(rgba(103,61,230,0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(103,61,230,0.05) 1px, transparent 1px);
       background-size: 80px 80px;
     }
 
-    .orb {
-      position: absolute; border-radius: 50%;
-      filter: blur(90px); pointer-events: none;
-    }
-    .o1 { width: 720px; height: 720px; right: -140px; top: -140px; background: rgba(103,61,230,0.22); }
-    .o2 { width: 400px; height: 400px; left: -70px; bottom: -70px; background: rgba(155,114,242,0.12); }
+    .orb { position: absolute; border-radius: 50%; filter: blur(130px); pointer-events: none; }
+    .o1 { width: 700px; height: 700px; right: -100px; top: -100px; background: rgba(103,61,230,0.14); }
+    .o2 { width: 700px; height: 700px; left: -100px; bottom: -100px; background: rgba(103,61,230,0.14); }
 
-    /* ── Logo ── */
     .logo {
       position: absolute; top: 48px; left: 72px;
       display: flex; align-items: center; gap: 14px; z-index: 10;
     }
-    .logo-img {
-      height: 22px; width: auto;
-      display: block;
-      filter: brightness(0) invert(1);
-      opacity: 0.85;
-    }
-    .logo-text { display: none; }
+    .logo-img { height: 22px; width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.85; }
 
-    /* ── Progress ── */
     .pbar {
       position: absolute; bottom: 0; left: 0; height: 3px;
       background: linear-gradient(90deg, var(--purple), var(--purple-light));
@@ -103,7 +87,6 @@
       color: var(--muted); letter-spacing: 0.08em; z-index: 10;
     }
 
-    /* ── Nav arrows ── */
     .nav {
       position: fixed; top: 50%; transform: translateY(-50%);
       width: 54px; height: 54px;
@@ -120,23 +103,17 @@
     .nav svg { width: 22px; height: 22px; fill: white; }
     .nav-l { left: 20px; } .nav-r { right: 20px; }
 
-    /* ── Animations ── */
-    @keyframes fade-up  { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes fade-in  { from { opacity:0; } to { opacity:1; } }
-    @keyframes slide-r  { from { opacity:0; transform:translateX(28px); } to { opacity:1; transform:translateX(0); } }
-    @keyframes pop      { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
+    @keyframes fade-up { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+    @keyframes pop     { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
 
-    .afu { opacity:0; animation: fade-up  0.5s ease forwards; }
-    .afi { opacity:0; animation: fade-in  0.4s ease forwards; }
-    .asr { opacity:0; animation: slide-r  0.45s ease forwards; }
-    .api { opacity:0; animation: pop      0.4s ease forwards; }
+    .afu { opacity:0; animation: fade-up 0.5s ease forwards; }
+    .afi { opacity:0; animation: fade-in 0.4s ease forwards; }
+    .api { opacity:0; animation: pop     0.4s ease forwards; }
 
-    /* ── Helpers ── */
     .gradient-text {
       background: linear-gradient(135deg, var(--purple-light), #C4B5FD);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .pill {
       display: inline-flex; align-items: center; gap: 8px;
@@ -145,7 +122,6 @@
     }
     .pill-p { background: rgba(103,61,230,0.22); color: var(--purple-light); border: 1px solid rgba(103,61,230,0.4); }
     .pill-o { background: transparent; color: var(--muted); border: 1px solid rgba(255,255,255,0.18); }
-    .divider { width: 68px; height: 4px; background: linear-gradient(90deg, var(--purple), var(--purple-light)); border-radius: 2px; }
 
 
     /* ════════════════════════════════
@@ -153,8 +129,7 @@
     ════════════════════════════════ */
     #s1 .content {
       position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      justify-content: center;
+      display: flex; flex-direction: column; justify-content: center;
       padding-left: 120px; padding-right: 560px;
     }
     #s1 .eyebrow {
@@ -164,22 +139,12 @@
       margin-bottom: 30px;
     }
     #s1 .eyebrow::before { content:''; width:32px; height:2px; background:var(--purple-light); }
-    #s1 h1 {
-      font-size: 110px; font-weight: 900;
-      line-height: 0.94; letter-spacing: -0.03em;
-      margin-bottom: 38px;
-    }
-    #s1 .subtitle {
-      font-size: 31px; font-weight: 400;
-      color: var(--muted); line-height: 1.6;
-      max-width: 720px; margin-bottom: 56px;
-    }
+    #s1 h1 { font-size: 110px; font-weight: 900; line-height: 0.94; letter-spacing: -0.03em; margin-bottom: 38px; }
+    #s1 .subtitle { font-size: 31px; font-weight: 400; color: var(--muted); line-height: 1.6; max-width: 720px; margin-bottom: 56px; }
     #s1 .tags { display: flex; gap: 12px; }
 
-    /* Tetris deco portada */
     #s1 .deco {
-      position: absolute; right: 0; top: 0;
-      width: 500px; height: 100%;
+      position: absolute; right: 0; top: 0; width: 500px; height: 100%;
       border-left: 1px solid rgba(103,61,230,0.14);
       display: flex; align-items: center; justify-content: center;
     }
@@ -212,204 +177,123 @@
     #s2 h2 { font-size: 66px; font-weight: 900; letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 24px; }
     #s2 .desc { font-size: 27px; color: var(--muted); line-height: 1.65; margin-bottom: 44px; max-width: 660px; }
     #s2 .stat-row { display: flex; gap: 40px; }
-    .stat {
-      display: flex; flex-direction: column; gap: 4px;
-    }
-    .stat-val { font-size: 54px; font-weight: 900; color: var(--purple-light); line-height: 1; }
+    .stat { display: flex; flex-direction: column; gap: 4px; }
+    .stat-val   { font-size: 54px; font-weight: 900; color: var(--purple-light); line-height: 1; }
     .stat-label { font-size: 19px; color: var(--muted); font-weight: 500; }
-
-    /* right panel: big game preview card */
-    #s2 .right {
-      flex-shrink: 0; width: 560px;
-      display: flex; flex-direction: column; gap: 18px;
-    }
+    #s2 .right { flex-shrink: 0; width: 560px; display: flex; flex-direction: column; gap: 18px; }
     .game-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(103,61,230,0.3);
-      border-radius: 20px;
-      padding: 32px;
+      background: var(--bg-card); border: 1px solid rgba(103,61,230,0.3);
+      border-radius: 20px; padding: 32px;
       opacity: 0; animation: pop 0.5s ease forwards;
     }
     .game-card:nth-child(1) { animation-delay: 0.15s; }
-    .game-card:nth-child(2) { animation-delay: 0.3s;  }
+    .game-card:nth-child(2) { animation-delay: 0.3s; }
     .game-card:nth-child(3) { animation-delay: 0.45s; }
-
     .gc-label { font-size: 15px; font-weight: 700; letter-spacing: 0.12em; color: var(--purple-light); text-transform: uppercase; margin-bottom: 10px; }
     .gc-title { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
     .gc-desc  { font-size: 19px; color: var(--muted); line-height: 1.5; }
 
 
     /* ════════════════════════════════
-       SLIDES 3–6 — SECCIONES (columna única)
+       SLIDES 3–5 — SECCIONES PROMPTS
     ════════════════════════════════ */
     .section-slide .content {
       position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      justify-content: center;
-      padding: 70px 160px;
-      gap: 28px;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 70px 160px; gap: 28px;
     }
-
-    /* Header — número watermark + texto apilado */
     .sec-header {
-      position: relative;
-      padding-bottom: 32px;
-      border-bottom: 1px solid rgba(103,61,230,0.18);
-      overflow: hidden;
+      position: relative; padding-bottom: 32px;
+      border-bottom: 1px solid rgba(103,61,230,0.18); overflow: hidden;
     }
-
     .sec-watermark {
-      position: absolute;
-      right: -20px; top: 50%;
-      transform: translateY(-50%);
-      font-size: 300px; font-weight: 900;
-      letter-spacing: -0.06em; line-height: 1;
-      color: rgba(103,61,230,0.07);
-      pointer-events: none; user-select: none;
+      position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+      font-size: 300px; font-weight: 900; letter-spacing: -0.06em; line-height: 1;
+      color: rgba(103,61,230,0.07); pointer-events: none; user-select: none;
     }
+    .sec-label { font-size: 14px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple-light); margin-bottom: 10px; }
+    .sec-title { font-size: 74px; font-weight: 900; letter-spacing: -0.03em; line-height: 0.95; margin-bottom: 16px; }
+    .sec-desc  { font-size: 22px; color: var(--muted); line-height: 1.6; max-width: 900px; }
 
-    .sec-label {
-      font-size: 14px; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--purple-light);
-      margin-bottom: 10px;
-    }
-    .sec-title {
-      font-size: 74px; font-weight: 900;
-      letter-spacing: -0.03em; line-height: 0.95;
-      margin-bottom: 16px;
-    }
-    .sec-desc {
-      font-size: 22px; color: var(--muted); line-height: 1.6;
-      max-width: 900px;
-    }
-
-    /* Accent watermark color per section */
     .accent-1 .sec-watermark { color: rgba(34,211,238,0.07); }
     .accent-2 .sec-watermark { color: rgba(251,191,36,0.07); }
-    .accent-3 .sec-watermark { color: rgba(34,197,94,0.07);  }
-    .accent-4 .sec-watermark { color: rgba(103,61,230,0.09); }
+    .accent-3 .sec-watermark { color: rgba(34,197,94,0.07); }
 
-    /* Items — timeline numerado */
     .sec-items {
       counter-reset: sec-counter;
-      display: flex; flex-direction: column;
-      gap: 0;
-      position: relative;
+      display: flex; flex-direction: column; gap: 0; position: relative;
     }
-
-    /* Línea vertical conectora */
     .sec-items::before {
       content: '';
-      position: absolute;
-      left: 29px; top: 68px; bottom: 68px;
-      width: 2px;
-      background: linear-gradient(to bottom,
-        rgba(103,61,230,0.35) 0%,
-        rgba(103,61,230,0.12) 100%);
+      position: absolute; left: 29px; top: 68px; bottom: 68px; width: 2px;
+      background: linear-gradient(to bottom, rgba(103,61,230,0.35) 0%, rgba(103,61,230,0.12) 100%);
       z-index: 0;
     }
-
     .sec-item {
       counter-increment: sec-counter;
       display: flex; align-items: center; gap: 36px;
-      padding: 18px 0;
-      background: none; border: none; border-radius: 0;
-      position: relative; z-index: 1;
-      opacity: 0;
-      transform: translateX(-20px);
+      padding: 18px 0; position: relative; z-index: 1;
+      opacity: 0; transform: translateX(-20px);
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    .sec-item.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    /* Número como pseudo-elemento (flex item) */
+    .sec-item.visible { opacity: 1; transform: translateX(0); }
     .sec-item::before {
       content: counter(sec-counter, decimal-leading-zero);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      width: 60px; height: 60px;
-      border-radius: 14px;
-      border: 1px solid rgba(103,61,230,0.4);
-      background: var(--bg-dark);
-      font-size: 20px; font-weight: 800;
-      color: var(--purple-light);
-      letter-spacing: -0.02em;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      width: 60px; height: 60px; border-radius: 14px;
+      border: 1px solid rgba(103,61,230,0.4); background: var(--bg-dark);
+      font-size: 20px; font-weight: 800; color: var(--purple-light); letter-spacing: -0.02em;
     }
-
-    .si-icon  { display: none; }
+    .si-icon { display: none; }
     .si-body  { display: flex; flex-direction: column; gap: 6px; flex: 1; }
     .si-title { font-size: 26px; font-weight: 700; }
     .si-desc  { font-size: 19px; color: var(--muted); line-height: 1.5; }
 
-    /* Accent colors por sección */
-    .accent-1 .sec-label        { color: var(--cyan); }
-    .accent-1 .sec-items::before{ background: linear-gradient(to bottom, rgba(34,211,238,0.35), rgba(34,211,238,0.08)); }
-    .accent-1 .sec-item::before { border-color: rgba(34,211,238,0.45); color: var(--cyan); }
+    .accent-1 .sec-label         { color: var(--cyan); }
+    .accent-1 .sec-items::before { background: linear-gradient(to bottom, rgba(34,211,238,0.35), rgba(34,211,238,0.08)); }
+    .accent-1 .sec-item::before  { border-color: rgba(34,211,238,0.45); color: var(--cyan); }
 
-    .accent-2 .sec-label        { color: var(--yellow); }
-    .accent-2 .sec-items::before{ background: linear-gradient(to bottom, rgba(251,191,36,0.35), rgba(251,191,36,0.08)); }
-    .accent-2 .sec-item::before { border-color: rgba(251,191,36,0.45); color: var(--yellow); }
+    .accent-2 .sec-label         { color: var(--yellow); }
+    .accent-2 .sec-items::before { background: linear-gradient(to bottom, rgba(251,191,36,0.35), rgba(251,191,36,0.08)); }
+    .accent-2 .sec-item::before  { border-color: rgba(251,191,36,0.45); color: var(--yellow); }
 
-    .accent-3 .sec-label        { color: var(--green); }
-    .accent-3 .sec-items::before{ background: linear-gradient(to bottom, rgba(34,197,94,0.35), rgba(34,197,94,0.08)); }
-    .accent-3 .sec-item::before { border-color: rgba(34,197,94,0.45); color: var(--green); }
+    .accent-3 .sec-label         { color: var(--green); }
+    .accent-3 .sec-items::before { background: linear-gradient(to bottom, rgba(34,197,94,0.35), rgba(34,197,94,0.08)); }
+    .accent-3 .sec-item::before  { border-color: rgba(34,197,94,0.45); color: var(--green); }
 
-    .accent-4 .sec-label        { color: var(--purple-light); }
-    .accent-4 .sec-items::before{ background: linear-gradient(to bottom, rgba(103,61,230,0.4), rgba(103,61,230,0.08)); }
-    .accent-4 .sec-item::before { border-color: rgba(103,61,230,0.5); color: var(--purple-light); }
 
     /* ════════════════════════════════
-       SLIDE 7 — CIERRE
+       SLIDE 6 — CIERRE
     ════════════════════════════════ */
-    #s7 .content {
+    #s6 .content {
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center; padding: 0 180px;
     }
-    #s7 .badge {
+    #s6 .badge {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 10px 24px;
-      background: rgba(103,61,230,0.2);
-      border: 1px solid rgba(103,61,230,0.4);
-      border-radius: 40px;
-      font-size: 19px; font-weight: 600; color: var(--purple-light);
+      background: rgba(103,61,230,0.2); border: 1px solid rgba(103,61,230,0.4);
+      border-radius: 40px; font-size: 19px; font-weight: 600; color: var(--purple-light);
       letter-spacing: 0.06em; margin-bottom: 40px;
     }
-    #s7 h2 {
-      font-size: 88px; font-weight: 900;
-      line-height: 1.0; letter-spacing: -0.025em; margin-bottom: 28px;
-    }
-    #s7 .subtitle {
-      font-size: 29px; color: var(--muted);
-      line-height: 1.65; margin-bottom: 64px; max-width: 920px;
-    }
-    .road-row {
-      display: flex; align-items: center; gap: 0;
-    }
+    #s6 h2 { font-size: 88px; font-weight: 900; line-height: 1.0; letter-spacing: -0.025em; margin-bottom: 28px; }
+    #s6 .subtitle { font-size: 29px; color: var(--muted); line-height: 1.65; margin-bottom: 64px; max-width: 920px; }
+    .road-row { display: flex; align-items: center; gap: 0; }
     .road-step {
       display: flex; flex-direction: column; align-items: center; gap: 10px;
-      padding: 22px 36px;
-      background: var(--bg-card);
-      border: 1px solid rgba(103,61,230,0.22);
-      border-radius: 16px;
-      min-width: 200px;
-      opacity: 0; animation: pop 0.4s ease forwards;
+      padding: 22px 36px; background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,0.22); border-radius: 16px;
+      min-width: 220px; opacity: 0; animation: pop 0.4s ease forwards;
     }
     .road-step:nth-child(1) { animation-delay: 0.1s; }
-    .road-step:nth-child(3) { animation-delay: 0.22s; }
-    .road-step:nth-child(5) { animation-delay: 0.34s; }
-    .road-step:nth-child(7) { animation-delay: 0.46s; }
+    .road-step:nth-child(3) { animation-delay: 0.25s; }
+    .road-step:nth-child(5) { animation-delay: 0.4s; }
     .rs-icon  { font-size: 44px; }
     .rs-num   { font-size: 15px; font-weight: 700; letter-spacing: 0.12em; color: var(--purple-light); text-transform: uppercase; }
     .rs-title { font-size: 22px; font-weight: 700; }
-    .road-arrow {
-      width: 56px; display: flex; align-items: center; justify-content: center;
-      opacity: 0; animation: fade-in 0.3s ease 0.55s forwards;
-    }
+    .road-arrow { width: 56px; display: flex; align-items: center; justify-content: center; opacity: 0; animation: fade-in 0.3s ease 0.5s forwards; }
     .road-arrow svg { width: 28px; height: 28px; fill: rgba(103,61,230,0.6); }
   </style>
 </head>
@@ -431,7 +315,7 @@
 <section class="slide active" id="s1">
   <div class="bg"></div>
   <div class="orb o1"></div><div class="orb o2"></div>
-  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
 
   <div class="content">
     <div class="eyebrow afu" style="animation-delay:.1s">Proyecto · Hostinger Horizons</div>
@@ -441,7 +325,7 @@
     </p>
     <div class="tags afu" style="animation-delay:.5s">
       <span class="pill pill-p">Sin código</span>
-      <span class="pill pill-o">4 secciones</span>
+      <span class="pill pill-o">3 prompts</span>
       <span class="pill pill-o">Arcade retro</span>
       <span class="pill pill-o">Responsive</span>
     </div>
@@ -462,7 +346,7 @@
     </div>
   </div>
 
-  <div class="pbar"></div><div class="pcounter">1 / 7</div>
+  <div class="pbar"></div><div class="pcounter">1 / 6</div>
 </section>
 
 <!-- ══════════════════════════════════
@@ -471,7 +355,7 @@
 <section class="slide" id="s2">
   <div class="bg"></div>
   <div class="orb o1"></div>
-  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
 
   <div class="content">
     <div class="left">
@@ -483,7 +367,7 @@
         Un juego completo<br/>creado con <span class="gradient-text">IA</span>
       </h2>
       <p class="desc afu" style="animation-delay:.22s">
-        Block Drop Game es un juego de bloques que caen inspirado en los clásicos arcade. Lo construiremos desde cero en 4 secciones, usando solo prompts en Hostinger Horizons.
+        Block Drop Game es un juego de bloques que caen inspirado en los clásicos arcade. Lo construiremos desde cero en 3 prompts, usando solo texto en Hostinger Horizons.
       </p>
       <div class="stat-row afu" style="animation-delay:.34s">
         <div class="stat">
@@ -495,8 +379,8 @@
           <span class="stat-label">Tipos de piezas</span>
         </div>
         <div class="stat">
-          <span class="stat-val">4</span>
-          <span class="stat-label">Secciones del proyecto</span>
+          <span class="stat-val">3</span>
+          <span class="stat-label">Prompts en total</span>
         </div>
       </div>
     </div>
@@ -520,260 +404,202 @@
     </div>
   </div>
 
-  <div class="pbar"></div><div class="pcounter">2 / 7</div>
+  <div class="pbar"></div><div class="pcounter">2 / 6</div>
 </section>
 
 <!-- ══════════════════════════════════
-     SLIDE 3 — SECCIÓN 1: LA BASE
+     SLIDE 3 — PROMPT 1: CONSTRUIR
 ══════════════════════════════════ -->
 <section class="slide section-slide accent-1" id="s3">
   <div class="bg"></div>
   <div class="orb o1"></div>
-  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
 
   <div class="content">
     <div class="sec-header afu">
       <div class="sec-watermark">01</div>
-      <div class="sec-label">Sección 1 de 4</div>
-      <div class="sec-title">Crear la base</div>
-      <p class="sec-desc">Construimos la estructura completa del juego: tablero, piezas, movimiento y pantalla de Game Over.</p>
+      <div class="sec-label">Prompt 1 de 3</div>
+      <div class="sec-title">Construir el juego</div>
+      <p class="sec-desc">Con un solo prompt creamos la aplicación completa: tablero, piezas, controles, reglas y pantalla de resultados.</p>
     </div>
     <div class="sec-items">
       <div class="sec-item">
         <div class="si-icon">🎮</div>
         <div class="si-body">
-          <span class="si-title">Tablero de juego 10 × 20</span>
-          <span class="si-desc">La cuadrícula estándar de los juegos de bloques: 10 columnas de ancho, 20 filas de alto.</span>
-        </div>
-      </div>
-      <div class="sec-item">
-        <div class="si-icon">🧩</div>
-        <div class="si-body">
-          <span class="si-title">Piezas de diferentes formas</span>
-          <span class="si-desc">Los 7 tetrominos clásicos (I, O, T, S, Z, L, J), cada uno con su color identificativo.</span>
+          <span class="si-title">Tablero 10×20 con piezas de colores neón</span>
+          <span class="si-desc">Cuadrícula oscura con los 7 tetrominos clásicos (I, O, T, S, Z, L, J), cada uno con su color identificativo.</span>
         </div>
       </div>
       <div class="sec-item">
         <div class="si-icon">⌨️</div>
         <div class="si-body">
-          <span class="si-title">Controles con teclado</span>
-          <span class="si-desc">Mover a los lados con ← →, rotar con ↑ y acelerar la caída con ↓.</span>
+          <span class="si-title">Controles de teclado</span>
+          <span class="si-desc">← → para mover, ↑ para rotar y ↓ para acelerar la caída. Las piezas aparecen desde arriba al centro.</span>
         </div>
       </div>
-      <div class="sec-item">
-        <div class="si-icon">💀</div>
-        <div class="si-body">
-          <span class="si-title">Pantalla de Game Over + reinicio</span>
-          <span class="si-desc">Cuando el tablero se llena, aparece la pantalla final con botón para volver a empezar.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="pbar"></div><div class="pcounter">3 / 7</div>
-</section>
-
-<!-- ══════════════════════════════════
-     SLIDE 4 — SECCIÓN 2: LÓGICA
-══════════════════════════════════ -->
-<section class="slide section-slide accent-2" id="s4">
-  <div class="bg"></div>
-  <div class="orb o1"></div>
-  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
-
-  <div class="content">
-    <div class="sec-header afu">
-      <div class="sec-watermark">02</div>
-      <div class="sec-label">Sección 2 de 4</div>
-      <div class="sec-title">Corregir la lógica</div>
-      <p class="sec-desc">Revisamos y ajustamos todo el comportamiento del juego para que funcione de forma correcta y fluida.</p>
-    </div>
-    <div class="sec-items">
-      <div class="sec-item">
-        <div class="si-icon">🧱</div>
-        <div class="si-body">
-          <span class="si-title">Las piezas no atraviesan paredes</span>
-          <span class="si-desc">Detección de límites izquierdo y derecho: ninguna pieza puede salirse del tablero.</span>
-        </div>
-      </div>
-      <div class="sec-item">
-        <div class="si-icon">⬇️</div>
-        <div class="si-body">
-          <span class="si-title">Las piezas no atraviesan bloques</span>
-          <span class="si-desc">Colisión correcta con bloques ya colocados: la pieza se detiene donde corresponde.</span>
-        </div>
-      </div>
-      <div class="sec-item">
-        <div class="si-icon">🔄</div>
-        <div class="si-body">
-          <span class="si-title">Rotación sin errores</span>
-          <span class="si-desc">Las piezas rotan correctamente sin salirse del tablero ni superponerse a otros bloques.</span>
-        </div>
-      </div>
-      <div class="sec-item">
-        <div class="si-icon">📌</div>
-        <div class="si-body">
-          <span class="si-title">Las piezas se fijan al tocar el fondo</span>
-          <span class="si-desc">Al llegar al suelo o chocar con una pieza fija, la pieza queda bloqueada y aparece una nueva.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="pbar"></div><div class="pcounter">4 / 7</div>
-</section>
-
-<!-- ══════════════════════════════════
-     SLIDE 5 — SECCIÓN 3: PUNTAJE
-══════════════════════════════════ -->
-<section class="slide section-slide accent-3" id="s5">
-  <div class="bg"></div>
-  <div class="orb o1"></div>
-  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
-
-  <div class="content">
-    <div class="sec-header afu">
-      <div class="sec-watermark">03</div>
-      <div class="sec-label">Sección 3 de 4</div>
-      <div class="sec-title">Sistema de puntaje</div>
-      <p class="sec-desc">Le damos sentido competitivo al juego: cada línea completada suma puntos y se muestra en pantalla.</p>
-    </div>
-    <div class="sec-items">
       <div class="sec-item">
         <div class="si-icon">💥</div>
         <div class="si-body">
-          <span class="si-title">Eliminación de líneas completas</span>
-          <span class="si-desc">Cuando una fila se llena completamente, desaparece limpiamente del tablero.</span>
-        </div>
-      </div>
-      <div class="sec-item">
-        <div class="si-icon">⬆️</div>
-        <div class="si-body">
-          <span class="si-title">Las filas superiores bajan</span>
-          <span class="si-desc">Al eliminar una línea, todo lo que estaba encima desciende una posición correctamente.</span>
+          <span class="si-title">Reglas: líneas que desaparecen</span>
+          <span class="si-desc">Cuando una fila horizontal se llena, desaparece y todo lo de arriba baja. El juego termina cuando las piezas llegan hasta arriba.</span>
         </div>
       </div>
       <div class="sec-item">
         <div class="si-icon">📊</div>
         <div class="si-body">
-          <span class="si-title">Puntaje visible en pantalla</span>
-          <span class="si-desc">El score se actualiza en tiempo real cada vez que el jugador completa una o más líneas.</span>
-        </div>
-      </div>
-      <div class="sec-item">
-        <div class="si-icon">📋</div>
-        <div class="si-body">
-          <span class="si-title">Contador de líneas eliminadas</span>
-          <span class="si-desc">Se muestra cuántas líneas lleva eliminadas el jugador durante la partida.</span>
+          <span class="si-title">Puntaje en tiempo real + Game Over</span>
+          <span class="si-desc">Score y líneas eliminadas visibles durante el juego. Al terminar, pantalla final con puntaje y botón "Jugar de nuevo".</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="pbar"></div><div class="pcounter">5 / 7</div>
+  <div class="pbar"></div><div class="pcounter">3 / 6</div>
 </section>
 
 <!-- ══════════════════════════════════
-     SLIDE 6 — SECCIÓN 4: UX/UI
+     SLIDE 4 — PROMPT 2: CORREGIR LÓGICA
 ══════════════════════════════════ -->
-<section class="slide section-slide accent-4" id="s6">
+<section class="slide section-slide accent-2" id="s4">
   <div class="bg"></div>
   <div class="orb o1"></div>
-  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
 
   <div class="content">
     <div class="sec-header afu">
-      <div class="sec-watermark">04</div>
-      <div class="sec-label">Sección 4 de 4</div>
-      <div class="sec-title">Pulir la experiencia</div>
+      <div class="sec-watermark">02</div>
+      <div class="sec-label">Prompt 2 de 3</div>
+      <div class="sec-title">Corregir la lógica</div>
+      <p class="sec-desc">Sin tocar el diseño, revisamos y ajustamos todo el comportamiento del juego para que funcione de forma correcta y fluida.</p>
+    </div>
+    <div class="sec-items">
+      <div class="sec-item">
+        <div class="si-icon">⬇️</div>
+        <div class="si-body">
+          <span class="si-title">Caída constante sin pausas ni saltos</span>
+          <span class="si-desc">Las piezas caen solas a velocidad constante, sin interrupciones ni comportamientos erráticos.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">🧱</div>
+        <div class="si-body">
+          <span class="si-title">Límites y colisiones correctas</span>
+          <span class="si-desc">Las piezas no se salen por los lados ni atraviesan bloques ya colocados. Al tocar el fondo o una pieza fija, quedan bloqueadas de inmediato.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">🔄</div>
+        <div class="si-body">
+          <span class="si-title">Rotación con ajuste automático</span>
+          <span class="si-desc">Al rotar cerca de una pared, la pieza se desplaza automáticamente para no salirse del tablero.</span>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="si-icon">📌</div>
+        <div class="si-body">
+          <span class="si-title">Eliminación de líneas sin errores</span>
+          <span class="si-desc">Las filas llenas desaparecen correctamente y todo lo que estaba encima baja una posición sin glitches.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar"></div><div class="pcounter">4 / 6</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 5 — PROMPT 3: PULIR VISUAL Y MÓVIL
+══════════════════════════════════ -->
+<section class="slide section-slide accent-3" id="s5">
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+
+  <div class="content">
+    <div class="sec-header afu">
+      <div class="sec-watermark">03</div>
+      <div class="sec-label">Prompt 3 de 3</div>
+      <div class="sec-title">Pulir visual y móvil</div>
       <p class="sec-desc">El juego ya funciona. Ahora lo hacemos bonito, cómodo y listo para jugarse en cualquier dispositivo.</p>
     </div>
     <div class="sec-items">
       <div class="sec-item">
+        <div class="si-icon">🖥️</div>
+        <div class="si-body">
+          <span class="si-title">Escritorio: tablero centrado y espaciado</span>
+          <span class="si-desc">Tablero centrado en pantalla con el puntaje y las líneas eliminadas visibles a un lado. Diseño limpio y cómodo.</span>
+        </div>
+      </div>
+      <div class="sec-item">
         <div class="si-icon">📱</div>
         <div class="si-body">
-          <span class="si-title">Diseño responsive</span>
-          <span class="si-desc">El juego se adapta al tamaño de la pantalla, funciona bien en escritorio y en móvil.</span>
+          <span class="si-title">Móvil: 4 botones táctiles</span>
+          <span class="si-desc">Botones ← → ↻ ↓ visibles debajo del tablero para controlar el juego desde el celular con el dedo.</span>
         </div>
       </div>
       <div class="sec-item">
-        <div class="si-icon">🕹️</div>
+        <div class="si-icon">📐</div>
         <div class="si-body">
-          <span class="si-title">Controles táctiles para móvil</span>
-          <span class="si-desc">Botones visibles en pantalla para mover y rotar las piezas desde el celular.</span>
-        </div>
-      </div>
-      <div class="sec-item">
-        <div class="si-icon">🎨</div>
-        <div class="si-body">
-          <span class="si-title">Diseño arcade moderno</span>
-          <span class="si-desc">Estética oscura con colores vibrantes, tipografía clara y una interfaz limpia y atractiva.</span>
+          <span class="si-title">Tablero adaptable a cualquier pantalla</span>
+          <span class="si-desc">El tablero se ajusta al tamaño del dispositivo automáticamente, sin que se corte ni desborde.</span>
         </div>
       </div>
       <div class="sec-item">
         <div class="si-icon">🏁</div>
         <div class="si-body">
-          <span class="si-title">Pantalla final con puntaje</span>
-          <span class="si-desc">Al terminar la partida, se muestra el puntaje conseguido y un botón para jugar de nuevo.</span>
+          <span class="si-title">Pantalla de Game Over mejorada</span>
+          <span class="si-desc">Al terminar la partida, se muestra el puntaje obtenido y un botón grande y visible para "Jugar de nuevo".</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="pbar"></div><div class="pcounter">6 / 7</div>
+  <div class="pbar"></div><div class="pcounter">5 / 6</div>
 </section>
 
 <!-- ══════════════════════════════════
-     SLIDE 7 — CIERRE
+     SLIDE 6 — CIERRE
 ══════════════════════════════════ -->
-<section class="slide" id="s7">
+<section class="slide" id="s6">
   <div class="bg"></div>
   <div class="orb o1"></div><div class="orb o2"></div>
-  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /><span class="logo-text">Hostinger Horizons</span></div>
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
 
   <div class="content">
     <div class="badge afu" style="animation-delay:.1s">🎮 ¡Empezamos a construir!</div>
     <h2 class="afu" style="animation-delay:.2s">
-      De 0 a juego<br/><span class="gradient-text">en 4 secciones</span>
+      De 0 a juego<br/><span class="gradient-text">en 3 prompts</span>
     </h2>
     <p class="subtitle afu" style="animation-delay:.35s">
-      En los siguientes videos ejecutamos cada sección en Hostinger Horizons y vemos el juego tomar forma paso a paso.
+      En los siguientes videos ejecutamos cada prompt en Hostinger Horizons y vemos el juego tomar forma paso a paso.
     </p>
 
     <div class="road-row afu" style="animation-delay:.5s">
       <div class="road-step">
         <div class="rs-icon">🏗️</div>
-        <div class="rs-num">Sección 01</div>
-        <div class="rs-title">Crear la base</div>
+        <div class="rs-num">Prompt 01</div>
+        <div class="rs-title">Construir</div>
       </div>
       <div class="road-arrow">
         <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
       </div>
       <div class="road-step">
         <div class="rs-icon">🔧</div>
-        <div class="rs-num">Sección 02</div>
+        <div class="rs-num">Prompt 02</div>
         <div class="rs-title">Corregir lógica</div>
       </div>
       <div class="road-arrow">
         <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
       </div>
       <div class="road-step">
-        <div class="rs-icon">📊</div>
-        <div class="rs-num">Sección 03</div>
-        <div class="rs-title">Sistema de puntaje</div>
-      </div>
-      <div class="road-arrow">
-        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-      </div>
-      <div class="road-step">
         <div class="rs-icon">🎨</div>
-        <div class="rs-num">Sección 04</div>
-        <div class="rs-title">Pulir la UX</div>
+        <div class="rs-num">Prompt 03</div>
+        <div class="rs-title">Pulir visual</div>
       </div>
     </div>
   </div>
 
-  <div class="pbar"></div><div class="pcounter">7 / 7</div>
+  <div class="pbar"></div><div class="pcounter">6 / 6</div>
 </section>
 
 </div><!-- /deck -->
@@ -794,17 +620,12 @@
   }
 
   function go(n) {
-    // Reset ítems del slide actual
-    slides[cur].querySelectorAll('.sec-item')
-      .forEach(el => el.classList.remove('visible'));
-
+    slides[cur].querySelectorAll('.sec-item').forEach(el => el.classList.remove('visible'));
     slides[cur].classList.remove('active');
     cur = ((n % total) + total) % total;
     slides[cur].classList.add('active');
-
     const pct = ((cur + 1) / total * 100) + '%';
     pbars.forEach(b => b.style.width = pct);
-
     animateItems(slides[cur]);
   }
 

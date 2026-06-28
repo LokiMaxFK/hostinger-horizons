@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1.0" />
+  <title>Roadmap del Curso — Hostinger Horizons</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple:       #673DE6;
+      --purple-light: #9B72F2;
+      --bg-dark:      #0D0118;
+      --bg-card:      #1A0533;
+      --white-muted:  rgba(255,255,255,0.7);
+      --green:        #22C55E;
+      --yellow:       #FBBF24;
+      --pink:         #EC4899;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: #fff;
+      user-select: none;
+    }
+    body { display: flex; align-items: center; justify-content: center; }
+
+    #scaler {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 1920px; height: 1080px;
+      transform-origin: center center;
+    }
+    #deck { width: 1920px; height: 1080px; position: relative; }
+
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.5s ease;
+      overflow: hidden;
+    }
+    .slide.active { opacity: 1; pointer-events: all; }
+
+    /* ── Background ── */
+    .bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 120% 80% at 80% 50%, #2D0D6E 0%, var(--bg-dark) 60%);
+    }
+    .bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle 600px at 85% 30%, rgba(103,61,230,.18) 0%, transparent 70%),
+        radial-gradient(circle 400px at 10% 80%, rgba(155,114,242,.10) 0%, transparent 70%);
+    }
+    .bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(103,61,230,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(103,61,230,.06) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .bg-center::before {
+      background:
+        radial-gradient(circle 700px at 50% 20%, rgba(103,61,230,.18) 0%, transparent 70%),
+        radial-gradient(circle 500px at 50% 90%, rgba(155,114,242,.10) 0%, transparent 70%);
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); pointer-events: none;
+    }
+    .o1 { width: 700px; height: 700px; right: -100px; top: -100px; background: rgba(103,61,230,.25); }
+    .o2 { width: 400px; height: 400px; left: -50px; bottom: -50px; background: rgba(155,114,242,.15); }
+
+    /* ── Logo ── */
+    .logo {
+      position: absolute; top: 48px; left: 72px;
+      display: flex; align-items: center; gap: 12px; z-index: 10;
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+      background: var(--purple); border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900;
+      box-shadow: 0 0 20px rgba(103,61,230,.5);
+    }
+    .logo-name { font-size: 15px; font-weight: 600; color: var(--white-muted); }
+
+    /* ── Progress + Counter ── */
+    .pbar {
+      position: absolute; bottom: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--purple-light));
+      transition: width .4s ease;
+      box-shadow: 0 0 12px rgba(103,61,230,.8);
+      z-index: 20;
+    }
+    .pcnt {
+      position: absolute; bottom: 36px; right: 72px;
+      font-size: 13px; font-weight: 500;
+      color: var(--white-muted); letter-spacing: .08em; z-index: 10;
+    }
+
+    /* ── Nav Arrows ── */
+    .nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 54px; height: 54px;
+      background: rgba(103,61,230,.28);
+      border: 1px solid rgba(155,114,242,.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0;
+      transition: opacity .3s, background .2s;
+      z-index: 200; backdrop-filter: blur(8px);
+    }
+    body:hover .nav { opacity: 1; }
+    .nav:hover { background: rgba(103,61,230,.55); }
+    .nav svg { width: 22px; height: 22px; fill: white; }
+    .nav-l { left: 20px; } .nav-r { right: 20px; }
+
+    /* ── Animations ── */
+    @keyframes fade-up { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes card-in { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+    .afu { opacity:0; animation: fade-up .5s ease forwards; }
+
+    /* ── Utilities ── */
+    .grad {
+      background: linear-gradient(135deg, var(--purple-light), #C4B5FD);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .tag {
+      padding: 8px 22px; border-radius: 40px;
+      font-size: 14px; font-weight: 600; letter-spacing: .04em;
+    }
+    .tag-p { background: rgba(103,61,230,.25); color: var(--purple-light); border: 1px solid rgba(103,61,230,.4); }
+    .tag-o { background: transparent; color: var(--white-muted); border: 1px solid rgba(255,255,255,.2); }
+
+
+    /* ══════════════════════════════════════
+       SLIDE 1 — PORTADA
+    ══════════════════════════════════════ */
+    #s1 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-left: 120px; padding-right: 560px;
+    }
+    #s1 .eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 16px; font-weight: 600;
+      color: var(--purple-light); letter-spacing: .12em; text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    #s1 .eyebrow::before { content:''; width:32px; height:2px; background:var(--purple-light); }
+    #s1 h1 {
+      font-size: 112px; font-weight: 900;
+      line-height: .92; letter-spacing: -.03em;
+      margin-bottom: 36px;
+    }
+    #s1 .subtitle {
+      font-size: 26px; font-weight: 400;
+      color: var(--white-muted); line-height: 1.55;
+      max-width: 740px; margin-bottom: 52px;
+    }
+    #s1 .tags { display: flex; gap: 12px; }
+
+    /* Deco panel */
+    #s1 .deco-panel {
+      position: absolute; right: 0; top: 0;
+      width: 500px; height: 100%;
+      background: linear-gradient(160deg, rgba(103,61,230,.12) 0%, transparent 60%);
+      border-left: 1px solid rgba(103,61,230,.15);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 0 52px;
+    }
+    .module-mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .module-mini {
+      width: 168px; height: 94px;
+      background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,.22);
+      border-radius: 14px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 7px;
+      opacity: 0; animation: card-in .35s ease forwards;
+    }
+    .module-mini:nth-child(1) { animation-delay:.20s; }
+    .module-mini:nth-child(2) { animation-delay:.28s; }
+    .module-mini:nth-child(3) { animation-delay:.36s; }
+    .module-mini:nth-child(4) { animation-delay:.44s; }
+    .module-mini:nth-child(5) { animation-delay:.52s; }
+    .module-mini:nth-child(6) { animation-delay:.60s; }
+    .module-mini:nth-child(7) { animation-delay:.68s; }
+    .module-mini:nth-child(8) { animation-delay:.76s; }
+    .mm-emoji { font-size: 26px; }
+    .mm-name { font-size: 12px; font-weight: 600; color: var(--white-muted); }
+    .mm-num  { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.25); letter-spacing:.1em; }
+
+
+    /* ══════════════════════════════════════
+       SLIDE 2 — ROADMAP
+    ══════════════════════════════════════ */
+    #s2 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      padding: 72px 100px 56px;
+    }
+    #s2 h2 { font-size: 56px; font-weight: 800; letter-spacing:-.02em; margin-bottom: 8px; }
+    #s2 .lead { font-size: 19px; color: var(--white-muted); margin-bottom: 36px; }
+
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 18px 20px;
+      flex: 1;
+    }
+
+    .rm-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,.18);
+      border-left-width: 3px;
+      border-radius: 18px;
+      padding: 22px 26px;
+      display: flex; align-items: center; gap: 18px;
+      position: relative;
+      opacity: 0; animation: card-in .4s ease forwards;
+    }
+    .rm-card.basic    { border-left-color: var(--green); }
+    .rm-card.medium   { border-left-color: var(--yellow); }
+    .rm-card.advanced { border-left-color: var(--pink); }
+
+    .rm-card:nth-child(1) { animation-delay:.08s; }
+    .rm-card:nth-child(2) { animation-delay:.16s; }
+    .rm-card:nth-child(3) { animation-delay:.24s; }
+    .rm-card:nth-child(4) { animation-delay:.32s; }
+    .rm-card:nth-child(5) { animation-delay:.40s; }
+    .rm-card:nth-child(6) { animation-delay:.48s; }
+    .rm-card:nth-child(7) { animation-delay:.56s; }
+    .rm-card:nth-child(8) { animation-delay:.64s; }
+
+    .rm-num {
+      position: absolute; top: 14px; right: 18px;
+      font-size: 11px; font-weight: 700;
+      color: rgba(255,255,255,.22); letter-spacing:.1em;
+    }
+    .rm-icon {
+      width: 60px; height: 60px; border-radius: 14px;
+      background: rgba(103,61,230,.14);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; flex-shrink: 0;
+    }
+    .rm-info { display: flex; flex-direction: column; gap: 5px; }
+    .rm-title { font-size: 18px; font-weight: 700; }
+    .rm-sub { font-size: 13px; color: var(--white-muted); line-height: 1.4; }
+    .rm-level { display: flex; gap: 5px; margin-top: 8px; }
+    .lvl-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,.12);
+    }
+    .lvl-dot.on.basic    { background: var(--green); }
+    .lvl-dot.on.medium   { background: var(--yellow); }
+    .lvl-dot.on.advanced { background: var(--pink); }
+
+    .rm-legend {
+      display: flex; align-items: center; gap: 28px;
+      margin-top: 18px;
+    }
+    .leg-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--white-muted); }
+    .leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+
+    /* ══════════════════════════════════════
+       SLIDES 3 & 4 — DETALLE MÓDULOS
+    ══════════════════════════════════════ */
+    .detail-slide .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      padding: 62px 96px 52px;
+    }
+    .detail-slide h2 { font-size: 52px; font-weight: 800; letter-spacing:-.02em; margin-bottom: 6px; }
+    .detail-slide .lead { font-size: 19px; color: var(--white-muted); margin-bottom: 32px; }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 22px;
+      flex: 1;
+    }
+
+    .dc {
+      background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,.18);
+      border-radius: 20px;
+      padding: 30px 28px;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+      opacity: 0; animation: card-in .4s ease forwards;
+    }
+    .dc::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+    }
+    .dc.basic::before    { background: linear-gradient(90deg, var(--green), transparent); }
+    .dc.medium::before   { background: linear-gradient(90deg, var(--yellow), transparent); }
+    .dc.advanced::before { background: linear-gradient(90deg, var(--pink), transparent); }
+
+    .dc:nth-child(1) { animation-delay:.10s; }
+    .dc:nth-child(2) { animation-delay:.20s; }
+    .dc:nth-child(3) { animation-delay:.30s; }
+    .dc:nth-child(4) { animation-delay:.40s; }
+
+    .dc-head {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; margin-bottom: 16px;
+    }
+    .dc-icon {
+      width: 66px; height: 66px; border-radius: 16px;
+      background: rgba(103,61,230,.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+    .dc-num { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.22); letter-spacing:.1em; }
+
+    .dc-title { font-size: 24px; font-weight: 800; letter-spacing:-.01em; margin-bottom: 7px; }
+    .dc-sub {
+      font-size: 15px; color: var(--white-muted);
+      line-height: 1.5; margin-bottom: 20px;
+    }
+
+    .dc-features { display: flex; flex-direction: column; gap: 11px; flex: 1; }
+    .dc-feat { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--white-muted); line-height: 1.45; }
+    .dc-dot {
+      flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%;
+      margin-top: 6px;
+    }
+    .dc-dot.basic    { background: var(--green); }
+    .dc-dot.medium   { background: var(--yellow); }
+    .dc-dot.advanced { background: var(--pink); }
+    .dc-dot.accent   { background: var(--purple-light); }
+
+    .dc-feat.hl span { color: #fff; font-weight: 500; }
+
+    .dc-badge {
+      margin-top: auto; padding-top: 18px;
+      align-self: flex-start;
+    }
+    .dc-badge span {
+      padding: 5px 14px; border-radius: 20px;
+      font-size: 12px; font-weight: 700; letter-spacing:.04em;
+    }
+    .dc-badge.basic span    { background: rgba(34,197,94,.12); color: var(--green); border: 1px solid rgba(34,197,94,.3); }
+    .dc-badge.medium span   { background: rgba(251,191,36,.12); color: var(--yellow); border: 1px solid rgba(251,191,36,.3); }
+    .dc-badge.advanced span { background: rgba(236,72,153,.12); color: var(--pink); border: 1px solid rgba(236,72,153,.3); }
+
+
+    /* ══════════════════════════════════════
+       SLIDE 5 — FLUJO DE TRABAJO
+    ══════════════════════════════════════ */
+    #s5 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 72px 100px;
+      text-align: center;
+    }
+    #s5 h2 { font-size: 58px; font-weight: 800; letter-spacing:-.02em; margin-bottom: 10px; }
+    #s5 .lead { font-size: 20px; color: var(--white-muted); margin-bottom: 52px; }
+
+    .flow-steps { display: flex; align-items: center; gap: 24px; width: 100%; }
+
+    .flow-step {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid rgba(103,61,230,.2);
+      border-radius: 22px;
+      padding: 44px 36px;
+      display: flex; flex-direction: column; align-items: center;
+      opacity: 0; animation: card-in .4s ease forwards;
+    }
+    .flow-step:nth-child(1) { animation-delay:.15s; }
+    .flow-step:nth-child(3) { animation-delay:.30s; }
+    .flow-step:nth-child(5) { animation-delay:.45s; }
+
+    .flow-step.hl {
+      border-color: var(--purple);
+      background: rgba(103,61,230,.1);
+      box-shadow: 0 0 40px rgba(103,61,230,.2);
+    }
+
+    .flow-icon {
+      width: 88px; height: 88px; border-radius: 22px;
+      background: rgba(103,61,230,.2);
+      border: 1px solid rgba(103,61,230,.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 44px; margin-bottom: 22px;
+    }
+    .flow-step.hl .flow-icon {
+      background: rgba(103,61,230,.35);
+      border-color: var(--purple);
+      box-shadow: 0 0 30px rgba(103,61,230,.4);
+    }
+    .flow-step-num {
+      font-size: 12px; font-weight: 700;
+      color: var(--purple-light); letter-spacing:.12em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .flow-tool { font-size: 28px; font-weight: 800; letter-spacing:-.01em; margin-bottom: 10px; }
+    .flow-desc { font-size: 17px; color: var(--white-muted); line-height: 1.6; }
+
+    .flow-arrow {
+      font-size: 36px; color: var(--purple-light);
+      flex-shrink: 0;
+      opacity: 0; animation: fade-up .4s .5s ease forwards;
+    }
+
+    .flow-note {
+      margin-top: 40px;
+      padding: 16px 36px;
+      background: rgba(103,61,230,.1);
+      border: 1px solid rgba(103,61,230,.28);
+      border-radius: 40px;
+      font-size: 16px; font-weight: 600; color: var(--purple-light);
+      opacity: 0; animation: fade-up .4s .7s ease forwards;
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav nav-l" onclick="prev()">
+  <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+</div>
+<div class="nav nav-r" onclick="next()">
+  <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+</div>
+
+<div id="scaler">
+<div id="deck">
+
+  <!-- ═══════════════ SLIDE 1 — PORTADA ═══════════════ -->
+  <section class="slide active" id="s1">
+    <div class="bg"></div>
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+
+    <div class="logo"><div class="logo-icon">H</div><span class="logo-name">Hostinger Horizons</span></div>
+
+    <div class="content">
+      <div class="eyebrow afu" style="animation-delay:.1s">Roadmap del Curso</div>
+      <h1 class="afu" style="animation-delay:.2s">
+        8 Proyectos<br/><span class="grad">Reales</span>
+      </h1>
+      <p class="subtitle afu" style="animation-delay:.35s">
+        De una landing de barbería hasta un chatbot con IA.<br/>Aplicaciones reales de negocio, sin escribir código.
+      </p>
+      <div class="tags afu" style="animation-delay:.5s">
+        <span class="tag tag-p">Módulos 01 — 08</span>
+        <span class="tag tag-o">Sin código</span>
+        <span class="tag tag-o">Proyectos reales</span>
+      </div>
+    </div>
+
+    <div class="deco-panel">
+      <div class="module-mini-grid">
+        <div class="module-mini"><span class="mm-emoji">🪒</span><span class="mm-name">Barbería</span><span class="mm-num">01</span></div>
+        <div class="module-mini"><span class="mm-emoji">💳</span><span class="mm-name">Suscripciones</span><span class="mm-num">02</span></div>
+        <div class="module-mini"><span class="mm-emoji">☕</span><span class="mm-name">Café POS</span><span class="mm-num">03</span></div>
+        <div class="module-mini"><span class="mm-emoji">💪</span><span class="mm-name">Ejercicios</span><span class="mm-num">04</span></div>
+        <div class="module-mini"><span class="mm-emoji">🎨</span><span class="mm-name">Portfolio</span><span class="mm-num">05</span></div>
+        <div class="module-mini"><span class="mm-emoji">🖼️</span><span class="mm-name">Imágenes AI</span><span class="mm-num">06</span></div>
+        <div class="module-mini"><span class="mm-emoji">🤖</span><span class="mm-name">Chatbot</span><span class="mm-num">07</span></div>
+        <div class="module-mini"><span class="mm-emoji">✨</span><span class="mm-name">IA Avanzada</span><span class="mm-num">08</span></div>
+      </div>
+    </div>
+
+    <div class="pbar"></div>
+    <div class="pcnt">1 / 5</div>
+  </section>
+
+
+  <!-- ═══════════════ SLIDE 2 — ROADMAP ═══════════════ -->
+  <section class="slide" id="s2">
+    <div class="bg"></div>
+    <div class="orb o1"></div>
+
+    <div class="logo"><div class="logo-icon">H</div><span class="logo-name">Hostinger Horizons</span></div>
+
+    <div class="content">
+      <h2 class="afu" style="animation-delay:.05s">La ruta <span class="grad">completa</span></h2>
+      <p class="lead afu" style="animation-delay:.12s">Avanzamos de proyectos simples a aplicaciones con IA y base de datos</p>
+
+      <div class="roadmap-grid">
+        <div class="rm-card basic">
+          <span class="rm-num">01</span>
+          <div class="rm-icon">🪒</div>
+          <div class="rm-info">
+            <div class="rm-title">Barbería</div>
+            <div class="rm-sub">Landing page + reservas</div>
+            <div class="rm-level">
+              <div class="lvl-dot on basic"></div>
+              <div class="lvl-dot"></div>
+              <div class="lvl-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rm-card basic">
+          <span class="rm-num">02</span>
+          <div class="rm-icon">💳</div>
+          <div class="rm-info">
+            <div class="rm-title">Suscripciones</div>
+            <div class="rm-sub">SaaS landing + pricing</div>
+            <div class="rm-level">
+              <div class="lvl-dot on basic"></div>
+              <div class="lvl-dot"></div>
+              <div class="lvl-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rm-card advanced">
+          <span class="rm-num">03</span>
+          <div class="rm-icon">☕</div>
+          <div class="rm-info">
+            <div class="rm-title">Café POS</div>
+            <div class="rm-sub">Punto de venta + base de datos</div>
+            <div class="rm-level">
+              <div class="lvl-dot on advanced"></div>
+              <div class="lvl-dot on advanced"></div>
+              <div class="lvl-dot on advanced"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rm-card medium">
+          <span class="rm-num">04</span>
+          <div class="rm-icon">💪</div>
+          <div class="rm-info">
+            <div class="rm-title">Ejercicios</div>
+            <div class="rm-sub">Fitness tracker + auth</div>
+            <div class="rm-level">
+              <div class="lvl-dot on medium"></div>
+              <div class="lvl-dot on medium"></div>
+              <div class="lvl-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rm-card basic">
+          <span class="rm-num">05</span>
+          <div class="rm-icon">🎨</div>
+          <div class="rm-info">
+            <div class="rm-title">Portfolio</div>
+            <div class="rm-sub">Landing personal + dominio</div>
+            <div class="rm-level">
+              <div class="lvl-dot on basic"></div>
+              <div class="lvl-dot"></div>
+              <div class="lvl-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rm-card medium">
+          <span class="rm-num">06</span>
+          <div class="rm-icon">🖼️</div>
+          <div class="rm-info">
+            <div class="rm-title">Imágenes AI</div>
+            <div class="rm-sub">Generador con API externa</div>
+            <div class="rm-level">
+              <div class="lvl-dot on medium"></div>
+              <div class="lvl-dot on medium"></div>
+              <div class="lvl-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rm-card medium">
+          <span class="rm-num">07</span>
+          <div class="rm-icon">🤖</div>
+          <div class="rm-info">
+            <div class="rm-title">Chatbot</div>
+            <div class="rm-sub">Chat con LLM integrado</div>
+            <div class="rm-level">
+              <div class="lvl-dot on medium"></div>
+              <div class="lvl-dot on medium"></div>
+              <div class="lvl-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rm-card advanced">
+          <span class="rm-num">08</span>
+          <div class="rm-icon">✨</div>
+          <div class="rm-info">
+            <div class="rm-title">IA Avanzada</div>
+            <div class="rm-sub">Features avanzadas de Horizons</div>
+            <div class="rm-level">
+              <div class="lvl-dot on advanced"></div>
+              <div class="lvl-dot on advanced"></div>
+              <div class="lvl-dot on advanced"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-legend afu" style="animation-delay:.7s">
+        <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Básico</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--yellow)"></div>Medio</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--pink)"></div>Avanzado</div>
+      </div>
+    </div>
+
+    <div class="pbar"></div>
+    <div class="pcnt">2 / 5</div>
+  </section>
+
+
+  <!-- ═══════════════ SLIDE 3 — MÓDULOS 01-04 ═══════════════ -->
+  <section class="slide detail-slide" id="s3">
+    <div class="bg"></div>
+    <div class="orb o1"></div>
+
+    <div class="logo"><div class="logo-icon">H</div><span class="logo-name">Hostinger Horizons</span></div>
+
+    <div class="content">
+      <h2 class="afu">Módulos <span class="grad">01 — 04</span></h2>
+      <p class="lead afu" style="animation-delay:.1s">Empieza con proyectos de negocio real desde el primer día</p>
+
+      <div class="detail-grid">
+
+        <!-- 01 Barbería -->
+        <div class="dc basic">
+          <div class="dc-head">
+            <div class="dc-icon">🪒</div>
+            <span class="dc-num">01</span>
+          </div>
+          <div class="dc-title">Barbería</div>
+          <div class="dc-sub">Landing page completa con sistema de citas para negocio local</div>
+          <div class="dc-features">
+            <div class="dc-feat hl">
+              <div class="dc-dot accent"></div>
+              <span>Diseño previo con Google Stitch</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Hero + galería de servicios y precios</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Formulario de reservas con fecha y hora</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Diseño mobile-first + deploy Hostinger</span>
+            </div>
+          </div>
+          <div class="dc-badge basic"><span>Básico</span></div>
+        </div>
+
+        <!-- 02 Suscripciones -->
+        <div class="dc basic">
+          <div class="dc-head">
+            <div class="dc-icon">💳</div>
+            <span class="dc-num">02</span>
+          </div>
+          <div class="dc-title">Suscripciones</div>
+          <div class="dc-sub">SaaS landing page con pricing table y checkout integrado</div>
+          <div class="dc-features">
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Hero persuasivo + propuesta de valor</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Pricing table: Free / Pro / Enterprise</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>FAQ accordion + testimonios</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Integración de pago con Stripe</span>
+            </div>
+          </div>
+          <div class="dc-badge basic"><span>Básico</span></div>
+        </div>
+
+        <!-- 03 Café POS -->
+        <div class="dc advanced">
+          <div class="dc-head">
+            <div class="dc-icon">☕</div>
+            <span class="dc-num">03</span>
+          </div>
+          <div class="dc-title">Café POS</div>
+          <div class="dc-sub">Punto de venta funcional con base de datos real para negocio físico</div>
+          <div class="dc-features">
+            <div class="dc-feat">
+              <div class="dc-dot advanced"></div>
+              <span>Menú dinámico + carrito en tiempo real</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot advanced"></div>
+              <span>Panel de admin para gestionar productos</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot advanced"></div>
+              <span>Base de datos nativa de Horizons</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot advanced"></div>
+              <span>Dashboard de ventas del día</span>
+            </div>
+          </div>
+          <div class="dc-badge advanced"><span>Avanzado</span></div>
+        </div>
+
+        <!-- 04 Ejercicios -->
+        <div class="dc medium">
+          <div class="dc-head">
+            <div class="dc-icon">💪</div>
+            <span class="dc-num">04</span>
+          </div>
+          <div class="dc-title">Ejercicios</div>
+          <div class="dc-sub">App de fitness con login, gráficas de progreso y timer de descanso</div>
+          <div class="dc-features">
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Login de usuario + auth nativa Horizons</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Registro de ejercicios y rutinas guardadas</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Gráfica de progreso + historial por fecha</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Temporizador de descanso</span>
+            </div>
+          </div>
+          <div class="dc-badge medium"><span>Medio</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pbar"></div>
+    <div class="pcnt">3 / 5</div>
+  </section>
+
+
+  <!-- ═══════════════ SLIDE 4 — MÓDULOS 05-08 ═══════════════ -->
+  <section class="slide detail-slide" id="s4">
+    <div class="bg"></div>
+    <div class="orb o1"></div>
+
+    <div class="logo"><div class="logo-icon">H</div><span class="logo-name">Hostinger Horizons</span></div>
+
+    <div class="content">
+      <h2 class="afu">Módulos <span class="grad">05 — 08</span></h2>
+      <p class="lead afu" style="animation-delay:.1s">Conectamos APIs externas, integramos IA y dominamos las features avanzadas</p>
+
+      <div class="detail-grid">
+
+        <!-- 05 Portfolio -->
+        <div class="dc basic">
+          <div class="dc-head">
+            <div class="dc-icon">🎨</div>
+            <span class="dc-num">05</span>
+          </div>
+          <div class="dc-title">Portfolio</div>
+          <div class="dc-sub">Landing page personal para diseñadores y creadores de contenido</div>
+          <div class="dc-features">
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Hero con foto, bio y links a redes</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Grid de proyectos + sección de skills</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Modo dark / light toggle</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot basic"></div>
+              <span>Deploy con dominio propio de Hostinger</span>
+            </div>
+          </div>
+          <div class="dc-badge basic"><span>Básico</span></div>
+        </div>
+
+        <!-- 06 Imágenes AI -->
+        <div class="dc medium">
+          <div class="dc-head">
+            <div class="dc-icon">🖼️</div>
+            <span class="dc-num">06</span>
+          </div>
+          <div class="dc-title">Imágenes AI</div>
+          <div class="dc-sub">Herramienta web para generar imágenes con inteligencia artificial</div>
+          <div class="dc-features">
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Integración API: DALL-E / Stability AI</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Selector de estilo + input de prompt</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Galería de resultados + descarga</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Historial de prompts usados</span>
+            </div>
+          </div>
+          <div class="dc-badge medium"><span>Medio</span></div>
+        </div>
+
+        <!-- 07 Chatbot -->
+        <div class="dc medium">
+          <div class="dc-head">
+            <div class="dc-icon">🤖</div>
+            <span class="dc-num">07</span>
+          </div>
+          <div class="dc-title">Chatbot</div>
+          <div class="dc-sub">Chatbot con personalidad propia, embebible en cualquier sitio web</div>
+          <div class="dc-features">
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Integración Claude API o GPT-4</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>System prompt personalizable por negocio</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>UI de chat con typing indicator</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot medium"></div>
+              <span>Widget embebible en otras páginas</span>
+            </div>
+          </div>
+          <div class="dc-badge medium"><span>Medio</span></div>
+        </div>
+
+        <!-- 08 IA Avanzada -->
+        <div class="dc advanced">
+          <div class="dc-head">
+            <div class="dc-icon">✨</div>
+            <span class="dc-num">08</span>
+          </div>
+          <div class="dc-title">IA Avanzada</div>
+          <div class="dc-sub">Recorrido completo de todas las capacidades avanzadas de Horizons</div>
+          <div class="dc-features">
+            <div class="dc-feat">
+              <div class="dc-dot advanced"></div>
+              <span>AI debugging + regenerar componentes</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot advanced"></div>
+              <span>DB nativa + auth built-in de Horizons</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot advanced"></div>
+              <span>Integración completa con Hostinger</span>
+            </div>
+            <div class="dc-feat">
+              <div class="dc-dot advanced"></div>
+              <span>Límites honestos + roadmap futuro</span>
+            </div>
+          </div>
+          <div class="dc-badge advanced"><span>Avanzado</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pbar"></div>
+    <div class="pcnt">4 / 5</div>
+  </section>
+
+
+  <!-- ═══════════════ SLIDE 5 — FLUJO ═══════════════ -->
+  <section class="slide" id="s5">
+    <div class="bg bg-center"></div>
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+
+    <div class="logo"><div class="logo-icon">H</div><span class="logo-name">Hostinger Horizons</span></div>
+
+    <div class="content">
+      <h2 class="afu" style="animation-delay:.05s">El flujo del <span class="grad">creador moderno</span></h2>
+      <p class="lead afu" style="animation-delay:.15s">Aplicado desde el Módulo 01 con la Barbería</p>
+
+      <div class="flow-steps">
+
+        <div class="flow-step">
+          <div class="flow-icon">🎨</div>
+          <div class="flow-step-num">Paso 01</div>
+          <div class="flow-tool">Google Stitch</div>
+          <div class="flow-desc">Visualiza tu app antes de construirla. Genera wireframes y UI con IA en minutos.</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="flow-step hl">
+          <div class="flow-icon">⚡</div>
+          <div class="flow-step-num">Paso 02</div>
+          <div class="flow-tool">Hostinger Horizons</div>
+          <div class="flow-desc">Describe lo que quieres y la IA genera tu app completa, funcional y lista para usar.</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="flow-step">
+          <div class="flow-icon">🌐</div>
+          <div class="flow-step-num">Paso 03</div>
+          <div class="flow-tool">Hostinger Hosting</div>
+          <div class="flow-desc">Deploy automático con URL real, dominio propio y SSL incluido. Tu app, en vivo.</div>
+        </div>
+
+      </div>
+
+      <div class="flow-note">
+        ✦ &nbsp; Desde el Módulo 01 diseñarás en Stitch antes de construir en Horizons &nbsp; ✦
+      </div>
+    </div>
+
+    <div class="pbar"></div>
+    <div class="pcnt">5 / 5</div>
+  </section>
+
+</div><!-- /deck -->
+</div><!-- /scaler -->
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let cur = 0;
+
+  function show(n) {
+    slides[cur].classList.remove('active');
+    cur = (n + total) % total;
+    slides[cur].classList.add('active');
+    update();
+  }
+
+  function next() { show(cur + 1); }
+  function prev() { show(cur - 1); }
+
+  function update() {
+    const pct = ((cur + 1) / total) * 100;
+    document.querySelectorAll('.pbar').forEach(b => b.style.width = pct + '%');
+    document.querySelectorAll('.pcnt').forEach(c => c.textContent = (cur + 1) + ' / ' + total);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp') { e.preventDefault(); prev(); }
+  });
+
+  let touchX = 0;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) dx < 0 ? next() : prev();
+  }, { passive: true });
+
+  update();
+
+  function scale() {
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.getElementById('scaler').style.transform = `translate(-50%, -50%) scale(${s})`;
+  }
+  window.addEventListener('resize', scale);
+  scale();
+</script>
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Café Aurora | Hostinger Horizons</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:      #C9A84C;
+      --gold-dim:  rgba(201,168,76,0.18);
+      --gold-line: rgba(201,168,76,0.28);
+      --bg:        #050505;
+      --text:      rgba(255,255,255,0.90);
+      --muted:     rgba(255,255,255,0.42);
+      --faint:     rgba(255,255,255,0.07);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      user-select: none;
+      position: relative;
+    }
+
+    #scaler {
+      position: absolute; top: 50%; left: 50%;
+      width: 1920px; height: 1080px;
+      transform-origin: center center;
+      background: var(--bg);
+    }
+    #deck { width: 1920px; height: 1080px; position: relative; background: var(--bg); }
+
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.5s ease;
+      background: var(--bg);
+    }
+    .slide.active { opacity: 1; pointer-events: all; }
+
+    .logo {
+      position: absolute; top: 52px; left: 80px; z-index: 10;
+    }
+    .logo-img {
+      height: 20px; width: auto; display: block;
+      filter: brightness(0) invert(1); opacity: 0.5;
+    }
+
+    .pbar {
+      position: absolute; bottom: 0; left: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.5s ease; z-index: 20;
+    }
+    .pcounter {
+      position: absolute; bottom: 44px; right: 80px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
+      color: var(--muted); z-index: 10;
+    }
+
+    .nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0;
+      transition: opacity 0.3s, border-color 0.2s;
+      z-index: 200;
+    }
+    body:hover .nav { opacity: 1; }
+    .nav:hover { border-color: rgba(201,168,76,0.55); }
+    .nav svg { width: 18px; height: 18px; fill: rgba(201,168,76,0.7); }
+    .nav-l { left: 28px; } .nav-r { right: 28px; }
+
+    @keyframes fade-up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+
+    .afu { opacity:0; animation: fade-up 0.6s ease forwards; }
+    .afi { opacity:0; animation: fade-in 0.5s ease forwards; }
+
+    .wm {
+      position: absolute; right: 60px; bottom: 40px;
+      font-size: 440px; font-weight: 900; line-height: 1;
+      letter-spacing: -0.06em;
+      color: rgba(201,168,76,0.035);
+      pointer-events: none; user-select: none; z-index: 0;
+    }
+
+    .label {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .gradient-gold {
+      background: linear-gradient(135deg, #C9A84C, #E8D5A3);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+
+    /* ════════════════════════════
+       SLIDE 1 — PORTADA
+    ════════════════════════════ */
+    #s1 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+    }
+    #s1 .icon { font-size: 52px; margin-bottom: 48px; opacity:0; animation: fade-in .5s ease .1s forwards; }
+    #s1 h1 {
+      font-size: 130px; font-weight: 300; letter-spacing: 0.08em; line-height: 1;
+      margin-bottom: 0; opacity:0; animation: fade-up .7s ease .2s forwards;
+    }
+    #s1 h1 strong { font-weight: 800; }
+    #s1 .rule { width: 80px; height: 1px; background: var(--gold-line); margin: 44px auto; opacity:0; animation: fade-in .5s ease .5s forwards; }
+    #s1 .subtitle { font-size: 26px; font-weight: 300; color: var(--muted); letter-spacing: 0.02em; margin-bottom: 52px; opacity:0; animation: fade-up .6s ease .55s forwards; }
+    #s1 .tags { display: flex; align-items: center; gap: 28px; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.28); opacity:0; animation: fade-in .5s ease .75s forwards; }
+    #s1 .tags span { color: rgba(201,168,76,0.5); }
+
+
+    /* ════════════════════════════
+       SLIDE 2 — ANTES VS DESPUÉS
+    ════════════════════════════ */
+    #s2 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 140px; gap: 44px; z-index: 1;
+    }
+    #s2 .header { display: flex; flex-direction: column; gap: 14px; }
+    #s2 h2 { font-size: 56px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.0; }
+    #s2 .sub { font-size: 20px; color: var(--muted); font-weight: 300; max-width: 700px; line-height: 1.6; }
+
+    .compare-wrap { display: flex; gap: 40px; align-items: stretch; }
+    .compare-col  { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+
+    .cc-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+    .cc-label.bad  { color: rgba(248,113,113,0.6); }
+    .cc-label.good { color: var(--gold); }
+
+    .cc-block { padding: 28px 32px; border-left: 1px solid; }
+    .cc-block.bad  { border-color: rgba(248,113,113,0.2); }
+    .cc-block.good { border-color: var(--gold-line); }
+
+    .cc-text { font-size: 22px; line-height: 1.6; font-style: italic; }
+    .cc-block.bad  .cc-text { color: rgba(255,255,255,0.28); }
+    .cc-block.good .cc-text { color: rgba(255,255,255,0.88); font-style: normal; }
+
+    .cc-result { font-size: 15px; color: var(--muted); padding-top: 14px; border-top: 1px solid var(--faint); }
+    .cc-result.bad  em { color: rgba(248,113,113,0.65); font-style: normal; font-weight: 600; }
+    .cc-result.good em { color: var(--gold);            font-style: normal; font-weight: 600; }
+
+    .compare-vs { width: 1px; background: var(--faint); display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; }
+    .compare-vs span { position: absolute; background: var(--bg); padding: 8px 0; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; color: rgba(255,255,255,0.16); }
+
+
+    /* ════════════════════════════
+       SLIDE 3 — LA FÓRMULA
+    ════════════════════════════ */
+    #s3 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 180px; gap: 56px; z-index: 1;
+    }
+    #s3 .header { display: flex; flex-direction: column; gap: 14px; }
+    #s3 h2 { font-size: 72px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.0; }
+
+    .formula-list { display: flex; flex-direction: column; }
+    .fi {
+      display: flex; align-items: baseline; gap: 40px;
+      padding: 22px 0; border-bottom: 1px solid var(--faint);
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .fi:first-child { border-top: 1px solid var(--faint); }
+    .fi.visible { opacity: 1; transform: translateY(0); }
+    .fi-n    { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); flex-shrink: 0; width: 32px; }
+    .fi-name { font-size: 26px; font-weight: 600; flex-shrink: 0; width: 380px; letter-spacing: -0.01em; }
+    .fi-detail { font-size: 20px; color: var(--muted); font-weight: 300; }
+
+
+    /* ════════════════════════════
+       SLIDE 4 — PROMPT PARTE 1
+       (Qué crear + Cómo debe verse)
+    ════════════════════════════ */
+    #s4 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 180px; gap: 0; z-index: 1;
+    }
+
+    .pb {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--faint);
+      display: flex; flex-direction: column; gap: 22px;
+    }
+    .pb:first-child { border-top: 1px solid var(--faint); }
+
+    .pb-header {
+      display: flex; align-items: center; gap: 0;
+    }
+    .pb-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); flex-shrink: 0; margin-right: 20px;
+    }
+    .pb-num {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      color: rgba(201,168,76,0.4); flex-shrink: 0; margin-right: 20px;
+    }
+    .pb-line { flex: 1; height: 1px; background: var(--faint); }
+
+    .pb-text {
+      font-size: 34px; font-weight: 300;
+      color: rgba(255,255,255,0.85); line-height: 1.5;
+      letter-spacing: -0.01em;
+    }
+    .pb-text em {
+      font-style: normal; font-weight: 600;
+      color: rgba(255,255,255,0.95);
+    }
+
+
+    /* ════════════════════════════
+       SLIDE 5 — PROMPT PARTE 2
+       (Qué incluir + Qué lograr)
+    ════════════════════════════ */
+    #s5 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 180px; gap: 0; z-index: 1;
+    }
+
+    /* Bloque de secciones */
+    .pb-secs-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+      padding-top: 4px;
+    }
+    .pbs {
+      display: flex; align-items: baseline; gap: 20px;
+      padding: 13px 0; border-bottom: 1px solid var(--faint);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .pbs:nth-child(1), .pbs:nth-child(2) { border-top: 1px solid var(--faint); }
+    .pbs.visible { opacity: 1; transform: translateY(0); }
+    .pbs-n     { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); flex-shrink: 0; width: 28px; }
+    .pbs-title { font-size: 22px; font-weight: 500; color: rgba(255,255,255,0.82); }
+
+
+    /* ════════════════════════════
+       SLIDE 6 — CIERRE
+    ════════════════════════════ */
+    #s6 .content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 0 220px;
+    }
+    #s6 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 52px; opacity:0; animation: fade-in .5s ease .1s forwards; }
+    #s6 h2 { font-size: 96px; font-weight: 300; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 0; opacity:0; animation: fade-up .7s ease .2s forwards; }
+    #s6 h2 strong { font-weight: 800; }
+    #s6 .rule { width: 80px; height: 1px; background: var(--gold-line); margin: 52px auto; opacity:0; animation: fade-in .4s ease .55s forwards; }
+    #s6 .sub { font-size: 24px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 900px; opacity:0; animation: fade-up .6s ease .6s forwards; }
+  </style>
+</head>
+<body>
+
+<div class="nav nav-l" onclick="prevSlide()">
+  <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+</div>
+<div class="nav nav-r" onclick="nextSlide()">
+  <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+</div>
+
+<div id="scaler">
+<div id="deck">
+
+<!-- ══════════════════════════════════
+     SLIDE 1 — PORTADA
+══════════════════════════════════ -->
+<section class="slide active" id="s1">
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+  <div class="content">
+    <div class="icon">☕</div>
+    <h1>CAFÉ <strong class="gradient-gold">AURORA</strong></h1>
+    <div class="rule"></div>
+    <p class="subtitle">Las palabras correctas lo cambian todo</p>
+    <div class="tags">Sin código <span>·</span> 1 prompt <span>·</span> 8 secciones <span>·</span> Responsive</div>
+  </div>
+  <div class="pbar"></div>
+  <div class="pcounter">01 / 06</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 2 — ANTES VS DESPUÉS
+══════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+  <div class="wm">I</div>
+  <div class="content">
+    <div class="header afu">
+      <div class="label">El problema</div>
+      <h2>No es lo mismo<br/>pedir que describir</h2>
+      <p class="sub">La diferencia entre un resultado genérico y uno profesional está en cómo escribes el prompt.</p>
+    </div>
+    <div class="compare-wrap afu" style="animation-delay:.2s">
+      <div class="compare-col">
+        <div class="cc-label bad">✕ &nbsp;Prompt vago</div>
+        <div class="cc-block bad">
+          <div class="cc-text">"crea una página web"</div>
+        </div>
+        <div class="cc-result bad"><em>Resultado:</em> página genérica, sin personalidad ni estructura. La IA adivina lo que quieres.</div>
+      </div>
+      <div class="compare-vs"><span>VS</span></div>
+      <div class="compare-col">
+        <div class="cc-label good">✓ &nbsp;Prompt completo</div>
+        <div class="cc-block good">
+          <div class="cc-text">"Crea el diseño de una landing page profesional para una cafetería moderna llamada Café Aurora. La página debe tener un estilo elegante, cálido y minimalista..."</div>
+        </div>
+        <div class="cc-result good"><em>Resultado:</em> experiencia visual completa, con secciones definidas, estilo coherente y orientada a convertir.</div>
+      </div>
+    </div>
+  </div>
+  <div class="pbar"></div>
+  <div class="pcounter">02 / 06</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 3 — LA FÓRMULA
+══════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+  <div class="wm">II</div>
+  <div class="content">
+    <div class="header afu">
+      <div class="label">La técnica</div>
+      <h2>La fórmula del buen prompt</h2>
+    </div>
+    <div class="formula-list">
+      <div class="fi"><span class="fi-n">01</span><span class="fi-name">Qué quiero crear</span><span class="fi-detail">El tipo de producto, su nombre y categoría</span></div>
+      <div class="fi"><span class="fi-n">02</span><span class="fi-name">Para quién es</span><span class="fi-detail">La audiencia o el cliente al que va dirigido</span></div>
+      <div class="fi"><span class="fi-n">03</span><span class="fi-name">Cómo debe verse</span><span class="fi-detail">Estilo visual, colores, tipografía y tono</span></div>
+      <div class="fi"><span class="fi-n">04</span><span class="fi-name">Qué debe incluir</span><span class="fi-detail">Las secciones, funciones o elementos clave</span></div>
+      <div class="fi"><span class="fi-n">05</span><span class="fi-name">Qué objetivo cumplir</span><span class="fi-detail">El resultado o la acción que se busca lograr</span></div>
+    </div>
+  </div>
+  <div class="pbar"></div>
+  <div class="pcounter">03 / 06</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 4 — EL PROMPT, PARTE 1
+     La intención y el estilo
+══════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+  <div class="wm">III</div>
+  <div class="content">
+
+    <div class="pb afu" style="animation-delay:.05s">
+      <div class="pb-header">
+        <span class="pb-num">01</span>
+        <span class="pb-tag">Qué quiero crear</span>
+        <span class="pb-line"></span>
+      </div>
+      <div class="pb-text">
+        <em>Crea el diseño de una landing page profesional</em> para una cafetería moderna llamada <em>Café Aurora.</em>
+      </div>
+    </div>
+
+    <div class="pb afu" style="animation-delay:.2s">
+      <div class="pb-header">
+        <span class="pb-num">03</span>
+        <span class="pb-tag">Cómo debe verse</span>
+        <span class="pb-line"></span>
+      </div>
+      <div class="pb-text">
+        La página debe tener un <em>estilo elegante, cálido y minimalista,</em> con una estética premium pero cercana. Usa <em>colores suaves, tipografía moderna</em> y una composición visual limpia.
+      </div>
+    </div>
+
+  </div>
+  <div class="pbar"></div>
+  <div class="pcounter">04 / 06</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 5 — EL PROMPT, PARTE 2
+     La estructura y el objetivo
+══════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+  <div class="wm">IV</div>
+  <div class="content">
+
+    <div class="pb afu" style="animation-delay:.05s">
+      <div class="pb-header">
+        <span class="pb-num">04</span>
+        <span class="pb-tag">Qué debe incluir</span>
+        <span class="pb-line"></span>
+      </div>
+      <div class="pb-secs-grid">
+        <div class="pbs"><span class="pbs-n">01</span><span class="pbs-title">Hero principal</span></div>
+        <div class="pbs"><span class="pbs-n">05</span><span class="pbs-title">Testimonios de clientes</span></div>
+        <div class="pbs"><span class="pbs-n">02</span><span class="pbs-title">Acerca de Café Aurora</span></div>
+        <div class="pbs"><span class="pbs-n">06</span><span class="pbs-title">Ubicación y reservación</span></div>
+        <div class="pbs"><span class="pbs-n">03</span><span class="pbs-title">Beneficios</span></div>
+        <div class="pbs"><span class="pbs-n">07</span><span class="pbs-title">Preguntas frecuentes</span></div>
+        <div class="pbs"><span class="pbs-n">04</span><span class="pbs-title">Menú destacado</span></div>
+        <div class="pbs"><span class="pbs-n">08</span><span class="pbs-title">Footer</span></div>
+      </div>
+    </div>
+
+    <div class="pb afu" style="animation-delay:.25s">
+      <div class="pb-header">
+        <span class="pb-num">05</span>
+        <span class="pb-tag">Qué objetivo cumplir</span>
+        <span class="pb-line"></span>
+      </div>
+      <div class="pb-text">
+        El diseño debe verse <em>profesional, responsive</em> y pensado para <em>convertir visitantes en clientes.</em>
+      </div>
+    </div>
+
+  </div>
+  <div class="pbar"></div>
+  <div class="pcounter">05 / 06</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SLIDE 6 — CIERRE
+══════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="logo"><img src="assets/logo-2.svg" class="logo-img" alt="Hostinger Horizons" /></div>
+  <div class="content">
+    <div class="eyebrow">La clave del resultado</div>
+    <h2>No pidas una página.<br/><strong class="gradient-gold">Describe una experiencia.</strong></h2>
+    <div class="rule"></div>
+    <p class="sub">Mientras más clara sea la intención en tu prompt — el qué, para quién, cómo debe verse y para qué — mejor será lo que Horizons construya para ti.</p>
+  </div>
+  <div class="pbar"></div>
+  <div class="pcounter">06 / 06</div>
+</section>
+
+</div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const pbars  = document.querySelectorAll('.pbar');
+  const total  = slides.length;
+  let cur = 0;
+
+  function animateItems(slide) {
+    slide.querySelectorAll('.fi, .pbs').forEach((el, i) => {
+      el.classList.remove('visible');
+      setTimeout(() => el.classList.add('visible'), 160 + i * 90);
+    });
+  }
+
+  function go(n) {
+    slides[cur].querySelectorAll('.fi, .pbs').forEach(el => el.classList.remove('visible'));
+    slides[cur].classList.remove('active');
+    cur = ((n % total) + total) % total;
+    slides[cur].classList.add('active');
+    const pct = ((cur + 1) / total * 100) + '%';
+    pbars.forEach(b => b.style.width = pct);
+    animateItems(slides[cur]);
+  }
+
+  function nextSlide() { go(cur + 1); }
+  function prevSlide() { go(cur - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); nextSlide(); }
+    if (['ArrowLeft','ArrowUp'].includes(e.key))        { e.preventDefault(); prevSlide(); }
+  });
+
+  function scaleToFit() {
+    const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.getElementById('scaler').style.transform =
+      `translate(-50%, -50%) scale(${scale})`;
+  }
+  window.addEventListener('resize', scaleToFit);
+  scaleToFit();
+
+  pbars.forEach(b => b.style.width = (1 / total * 100) + '%');
+</script>
+</body>
+</html>
