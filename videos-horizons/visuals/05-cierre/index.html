@@ -1,0 +1,376 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;">
+<div id="visual-05-cierre" data-composition-id="visual-05-cierre" data-start="0" data-width="1920" data-height="1080">
+
+<style>
+#visual-05-cierre {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  background: #1A0533;
+  overflow: hidden;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+/* ---------- Background ---------- */
+.bg-glow-pos-1 {
+  position: absolute;
+  top: 30%;
+  left: 20%;
+  pointer-events: none;
+}
+#bg-glow-1 {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(103,61,230,0.30) 0%, rgba(103,61,230,0.0) 65%);
+  top: -400px;
+  left: -400px;
+}
+.bg-glow-pos-2 {
+  position: absolute;
+  top: 70%;
+  left: 75%;
+  pointer-events: none;
+}
+#bg-glow-2 {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(155,114,242,0.18) 0%, rgba(155,114,242,0.0) 65%);
+  top: -300px;
+  left: -300px;
+}
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(103,61,230,0.05) 1px, rgba(103,61,230,0.0) 1px),
+    linear-gradient(90deg, rgba(103,61,230,0.05) 1px, rgba(103,61,230,0.0) 1px);
+  background-size: 120px 120px;
+  pointer-events: none;
+}
+
+/* ---------- Structural ---------- */
+#line-top {
+  position: absolute;
+  top: 58px;
+  left: 80px;
+  right: 80px;
+  height: 2px;
+  background: #673DE6;
+  transform-origin: left center;
+}
+#line-bottom {
+  position: absolute;
+  bottom: 58px;
+  left: 80px;
+  right: 80px;
+  height: 1px;
+  background: rgba(103,61,230,0.30);
+  transform-origin: left center;
+}
+
+/* ---------- LEFT: Summary ---------- */
+.left-col {
+  position: absolute;
+  left: 120px;
+  top: 100px;
+  width: 860px;
+  height: 880px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 40px;
+  box-sizing: border-box;
+}
+
+#summary-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 300;
+  color: #9B72F2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+#main-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 96px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  margin-bottom: 56px;
+}
+.title-accent { color: #673DE6; }
+
+/* Takeaway items */
+.takeaway {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  margin-bottom: 36px;
+}
+.takeaway-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 300;
+  color: #673DE6;
+  letter-spacing: 0.06em;
+  padding-top: 6px;
+  flex-shrink: 0;
+  width: 32px;
+}
+.takeaway-body {}
+.takeaway-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.takeaway-desc {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 300;
+  color: rgba(155,114,242,0.75);
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+/* ---------- RIGHT: CTA panel ---------- */
+.right-col {
+  position: absolute;
+  right: 80px;
+  top: 100px;
+  width: 740px;
+  height: 880px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#cta-panel {
+  width: 640px;
+  background: rgba(103,61,230,0.08);
+  border: 2px solid rgba(103,61,230,0.40);
+  border-radius: 16px;
+  padding: 60px 56px;
+}
+
+#cta-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 300;
+  color: #9B72F2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+#cta-main {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 56px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  margin-bottom: 32px;
+}
+.cta-accent { color: #673DE6; }
+
+#cta-body {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: #C4A8FF;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  margin-bottom: 44px;
+}
+
+#cta-button {
+  display: inline-block;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  background: #673DE6;
+  padding: 18px 44px;
+  border-radius: 8px;
+  letter-spacing: -0.01em;
+}
+
+/* Vertical separator */
+#v-sep {
+  position: absolute;
+  left: 1000px;
+  top: 130px;
+  width: 1px;
+  height: 820px;
+  background: rgba(103,61,230,0.18);
+  transform-origin: top center;
+}
+
+/* ---------- Bottom bar ---------- */
+.bottom-bar {
+  position: absolute;
+  bottom: 70px;
+  left: 80px;
+  right: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#brand-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(155,114,242,0.65);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  color: rgba(196,168,255,0.35);
+  letter-spacing: 0.05em;
+}
+</style>
+
+<!-- BG -->
+<div class="grid-overlay"></div>
+<div class="bg-glow-pos-1"><div id="bg-glow-1"></div></div>
+<div class="bg-glow-pos-2"><div id="bg-glow-2"></div></div>
+
+<!-- Structure -->
+<div id="line-top"></div>
+<div id="v-sep"></div>
+<div id="line-bottom"></div>
+
+<!-- LEFT: Summary -->
+<div class="left-col">
+  <div id="summary-label">En resumen</div>
+  <div id="main-title">Lo que<br>aprendiste<span class="title-accent">.</span></div>
+
+  <div class="takeaway" id="t-1">
+    <div class="takeaway-num">01</div>
+    <div class="takeaway-body">
+      <div class="takeaway-title">Horizons = IA para apps</div>
+      <div class="takeaway-desc">Sin instalar, sin configurar, directo al resultado</div>
+    </div>
+  </div>
+
+  <div class="takeaway" id="t-2">
+    <div class="takeaway-num">02</div>
+    <div class="takeaway-body">
+      <div class="takeaway-title">Prompt → App funcional</div>
+      <div class="takeaway-desc">Describes tu idea, la IA genera el código real</div>
+    </div>
+  </div>
+
+  <div class="takeaway" id="t-3">
+    <div class="takeaway-num">03</div>
+    <div class="takeaway-body">
+      <div class="takeaway-title">Sin saber programar</div>
+      <div class="takeaway-desc">Emprendedores, creadores y equipos de negocio</div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT: CTA -->
+<div class="right-col">
+  <div id="cta-panel">
+    <div id="cta-eyebrow">Siguiente paso</div>
+    <div id="cta-main">Empieza<br>a <span class="cta-accent">crear</span></div>
+    <div id="cta-body">En este curso aprenderás a sacarle el máximo potencial a Horizons</div>
+    <div id="cta-button">Continúa el curso →</div>
+  </div>
+</div>
+
+<!-- Bottom -->
+<div class="bottom-bar">
+  <div id="brand-name">Hostinger Horizons</div>
+  <div id="section-num">04 / Resumen</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+const TOTAL = 12;
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+
+// Two glows animate independently
+tl.fromTo("#bg-glow-1",
+  { scale: 0.85 },
+  { scale: 1.18, duration: TOTAL / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+tl.fromTo("#bg-glow-2",
+  { scale: 1.1 },
+  { scale: 0.82, duration: TOTAL / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+// Structural
+tl.fromTo("#line-top",   { scaleX: 0 }, { scaleX: 1, duration: 0.75, ease: "expo.out" }, 0.1);
+tl.fromTo("#v-sep",      { scaleY: 0 }, { scaleY: 1, duration: 0.9,  ease: "power2.out" }, 0.25);
+tl.fromTo("#line-bottom",{ scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "power3.out" }, 0.35);
+
+// LEFT: summary label + title
+tl.fromTo("#summary-label",
+  { x: -30, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 0.6);
+tl.fromTo("#main-title",
+  { y: 30, opacity: 0, scale: 0.95 },
+  { y: 0, opacity: 1, scale: 1, duration: 0.65, ease: "expo.out" }, 0.8);
+
+// Takeaways stagger
+tl.fromTo("#t-1",
+  { x: -40, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 1.7);
+tl.fromTo("#t-2",
+  { x: -40, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 2.1);
+tl.fromTo("#t-3",
+  { x: -40, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 2.5);
+
+// RIGHT: CTA panel
+tl.fromTo("#cta-panel",
+  { x: 60, opacity: 0, scale: 0.95 },
+  { x: 0, opacity: 1, scale: 1, duration: 0.7, ease: "expo.out" }, 1.4);
+tl.fromTo("#cta-eyebrow", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, ease: "sine.out" }, 2.3);
+tl.fromTo("#cta-main",    { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.55);
+tl.fromTo("#cta-body",    { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 3.05);
+tl.fromTo("#cta-button",
+  { scale: 0.88, opacity: 0 },
+  { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.6)" }, 3.55);
+
+// CTA button pulse
+tl.to("#cta-button", { scale: 1.03, duration: 1.4, ease: "sine.inOut", yoyo: true,
+  repeat: Math.ceil((TOTAL - 5) / 2.8) }, 5);
+
+// Brand bar
+tl.fromTo("#brand-name", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.45, ease: "sine.out" }, 4.2);
+tl.fromTo("#section-num",{ opacity: 0 },        { opacity: 1,       duration: 0.35, ease: "sine.out" }, 4.45);
+
+window.__timelines["visual-05-cierre"] = tl;
+
+if (typeof window.__hyperframes === "undefined") tl.play();
+</script>
+</div>
+</body>
+</html>

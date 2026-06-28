@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;">
+<div data-hf-id="hf-crob" id="visual-01-hook" data-composition-id="visual-01-hook" data-start="0" data-width="1920" data-height="1080">
+
+<style>
+#visual-01-hook {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  background: #1A0533;
+  overflow: hidden;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+/* ---------- Background ---------- */
+.bg-glow-pos {
+  position: absolute;
+  top: 50%;
+  left: 42%;
+  pointer-events: none;
+}
+#bg-glow {
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(103,61,230,0.36) 0%, rgba(103,61,230,0.0) 68%);
+  top: -450px;
+  left: -450px;
+}
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(103,61,230,0.05) 1px, rgba(103,61,230,0.0) 1px),
+    linear-gradient(90deg, rgba(103,61,230,0.05) 1px, rgba(103,61,230,0.0) 1px);
+  background-size: 120px 120px;
+  pointer-events: none;
+}
+.bg-ghost {
+  position: absolute;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 540px;
+  font-weight: 800;
+  color: rgba(103,61,230,0.05);
+  right: -40px;
+  bottom: -100px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ---------- Structural ---------- */
+#line-top {
+  position: absolute;
+  top: 58px;
+  left: 80px;
+  right: 80px;
+  height: 2px;
+  background: #673DE6;
+  transform-origin: left center;
+}
+#line-bottom {
+  position: absolute;
+  bottom: 58px;
+  left: 80px;
+  right: 80px;
+  height: 1px;
+  background: rgba(103,61,230,0.30);
+  transform-origin: left center;
+}
+#v-sep {
+  position: absolute;
+  left: 959px;
+  top: 100px;
+  width: 1px;
+  height: 880px;
+  background: rgba(103,61,230,0.20);
+  transform-origin: top center;
+}
+
+/* ---------- LEFT side ---------- */
+.left-outer {
+  position: absolute;
+  left: 120px;
+  top: 100px;
+  height: 840px;
+  display: flex;
+  align-items: center;
+}
+#left-content {
+  padding-bottom: 50px;
+}
+.pre-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 22px;
+  font-weight: 300;
+  color: #9B72F2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+.headline-idea {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 152px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+}
+.idea-q { color: #673DE6; }
+
+/* ---------- Arrow (center) ---------- */
+.arrow-pos {
+  position: absolute;
+  left: 959px;
+  top: 0;
+  height: 1080px;
+  display: flex;
+  align-items: center;
+  margin-left: -95px;
+}
+.arrow-wrap {
+  display: flex;
+  align-items: center;
+  margin-top: -50px;
+}
+#arrow-line {
+  width: 168px;
+  height: 4px;
+  background: #673DE6;
+  border-radius: 2px;
+  transform-origin: left center;
+}
+#arrow-head {
+  width: 0;
+  height: 0;
+  border-top: 13px solid rgba(103,61,230,0);
+  border-bottom: 13px solid rgba(103,61,230,0);
+  border-left: 22px solid #673DE6;
+}
+
+/* ---------- RIGHT side ---------- */
+.right-outer {
+  position: absolute;
+  right: 120px;
+  top: 100px;
+  width: 760px;
+  height: 840px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+#right-content {
+  text-align: right;
+  padding-bottom: 50px;
+}
+.result-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 22px;
+  font-weight: 300;
+  color: #9B72F2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+.headline-app {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 152px;
+  font-weight: 800;
+  color: #673DE6;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+}
+.app-sub {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: #C4A8FF;
+  letter-spacing: 0.01em;
+  margin-top: 16px;
+  line-height: 1;
+}
+
+/* ---------- Chips ---------- */
+.chips-row {
+  position: absolute;
+  bottom: 138px;
+  left: 120px;
+  display: flex;
+  gap: 14px;
+}
+.chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 400;
+  color: #9B72F2;
+  border: 1.5px solid rgba(103,61,230,0.42);
+  padding: 9px 20px;
+  border-radius: 4px;
+  background: rgba(103,61,230,0.09);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Bottom bar ---------- */
+.bottom-bar {
+  position: absolute;
+  bottom: 70px;
+  left: 80px;
+  right: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#brand-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(155,114,242,0.68);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#course-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  color: rgba(196,168,255,0.38);
+  letter-spacing: 0.05em;
+}
+</style>
+
+<!-- BG -->
+<div data-hf-id="hf-gycn" class="grid-overlay"></div>
+<div data-hf-id="hf-cyws" class="bg-glow-pos"><div data-hf-id="hf-isbq" id="bg-glow"></div></div>
+<div data-hf-id="hf-2kpv" class="bg-ghost">HH</div>
+
+<!-- Structure -->
+<div data-hf-id="hf-vsjt" id="line-top"></div>
+<div data-hf-id="hf-e3mq" id="v-sep"></div>
+<div data-hf-id="hf-un41" id="line-bottom"></div>
+
+<!-- LEFT: IDEA -->
+<div data-hf-id="hf-ekel" class="left-outer">
+  <div data-hf-id="hf-gka2" id="left-content">
+    <div data-hf-id="hf-j57d" class="pre-label">¿Tienes una</div>
+    <div data-hf-id="hf-yzhj" class="headline-idea">IDEA<span data-hf-id="hf-9sef" class="idea-q">?</span></div>
+  </div>
+</div>
+
+<!-- ARROW -->
+<div data-hf-id="hf-r8he" class="arrow-pos">
+  <div data-hf-id="hf-t3rs" class="arrow-wrap">
+    <div data-hf-id="hf-r6pv" id="arrow-line"></div>
+    <div data-hf-id="hf-obvv" id="arrow-head"></div>
+  </div>
+</div>
+
+<!-- RIGHT: APP -->
+<div data-hf-id="hf-ep1o" class="right-outer">
+  <div data-hf-id="hf-duu1" id="right-content">
+    <div data-hf-id="hf-xrbb" class="result-label">resultado</div>
+    <div data-hf-id="hf-49dp" class="headline-app">APP</div>
+    <div data-hf-id="hf-h2t9" class="app-sub">funcional</div>
+  </div>
+</div>
+
+<!-- Chips -->
+<div data-hf-id="hf-7bg2" class="chips-row">
+  <div data-hf-id="hf-t0zm" class="chip" id="chip-1">landing page</div>
+  <div data-hf-id="hf-k5px" class="chip" id="chip-2">dashboard</div>
+  <div data-hf-id="hf-xyqy" class="chip" id="chip-3">herramienta</div>
+  <div data-hf-id="hf-u881" class="chip" id="chip-4">chatbot · juego · app</div>
+</div>
+
+<!-- Bottom -->
+<div data-hf-id="hf-tmht" class="bottom-bar">
+  <div data-hf-id="hf-4au3" id="brand-name">Hostinger Horizons</div>
+  <div data-hf-id="hf-o7fk" id="course-tag">Curso completo · 2025</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+const TOTAL = 14;
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+
+// BG glow breathing — anchors composition duration
+tl.fromTo("#bg-glow",
+  { scale: 0.88 },
+  { scale: 1.22, duration: TOTAL / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+// Structural lines draw in
+tl.fromTo("#line-top",    { scaleX: 0 }, { scaleX: 1, duration: 0.75, ease: "expo.out" }, 0.1);
+tl.fromTo("#line-bottom", { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "power3.out" }, 0.3);
+tl.fromTo("#v-sep",       { scaleY: 0 }, { scaleY: 1, duration: 0.85, ease: "power2.out" }, 0.4);
+
+// LEFT: entrance (container handles x/scale/opacity; children ride along)
+tl.fromTo("#left-content",
+  { x: -90, opacity: 0, scale: 0.93 },
+  { x: 0, opacity: 1, scale: 1, duration: 0.65, ease: "expo.out" }, 0.7);
+
+// Chips cascade
+tl.fromTo("#chip-1", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.36, ease: "back.out(1.5)" }, 1.9);
+tl.fromTo("#chip-2", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.36, ease: "back.out(1.5)" }, 2.1);
+tl.fromTo("#chip-3", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.36, ease: "back.out(1.5)" }, 2.3);
+tl.fromTo("#chip-4", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.36, ease: "back.out(1.5)" }, 2.5);
+
+// Arrow draws left → right
+tl.fromTo("#arrow-line", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "power3.out" }, 3.8);
+tl.fromTo("#arrow-head", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.2, ease: "power2.out" }, 4.14);
+
+// RIGHT: entrance from the right
+tl.fromTo("#right-content",
+  { x: 80, opacity: 0, scale: 0.93 },
+  { x: 0, opacity: 1, scale: 1, duration: 0.65, ease: "expo.out" }, 4.4);
+
+// Brand bar fades in
+tl.fromTo("#brand-name", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.45, ease: "sine.out" }, 5.4);
+tl.fromTo("#course-tag", { opacity: 0 },        { opacity: 1,       duration: 0.35, ease: "sine.out" }, 5.65);
+
+// Ambient float (y only, no conflict with x/scale entrance)
+tl.to("#left-content",  { y: -10, duration: 3.2, ease: "sine.inOut", yoyo: true,
+  repeat: Math.ceil((TOTAL - 7) / 6.4) }, 7);
+tl.to("#right-content", { y:   8, duration: 3.8, ease: "sine.inOut", yoyo: true,
+  repeat: Math.ceil((TOTAL - 7.5) / 7.6) }, 7.5);
+
+window.__timelines["visual-01-hook"] = tl;
+
+// Autoplay when opened directly in the browser (not via HyperFrames player)
+if (typeof window.__hyperframes === "undefined") tl.play();
+</script>
+</div>
+</body>
+</html>

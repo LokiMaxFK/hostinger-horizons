@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;">
+<div data-hf-id="hf-4dgb" id="visual-02-que-es" data-composition-id="visual-02-que-es" data-start="0" data-width="1920" data-height="1080">
+
+<style>
+#visual-02-que-es {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  background: #1A0533;
+  overflow: hidden;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+/* ---------- Background ---------- */
+.bg-glow-pos {
+  position: absolute;
+  top: 30%;
+  left: 68%;
+  pointer-events: none;
+}
+#bg-glow {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(103,61,230,0.32) 0%, rgba(103,61,230,0.0) 70%);
+  top: -350px;
+  left: -350px;
+}
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(103,61,230,0.045) 1px, rgba(103,61,230,0.0) 1px),
+    linear-gradient(90deg, rgba(103,61,230,0.045) 1px, rgba(103,61,230,0.0) 1px);
+  background-size: 120px 120px;
+  pointer-events: none;
+}
+.bg-quote {
+  position: absolute;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 640px;
+  font-weight: 800;
+  color: rgba(103,61,230,0.06);
+  left: -20px;
+  top: -140px;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ---------- Structural ---------- */
+#line-top {
+  position: absolute;
+  top: 58px;
+  left: 80px;
+  right: 80px;
+  height: 2px;
+  background: #673DE6;
+  transform-origin: left center;
+}
+#line-bottom {
+  position: absolute;
+  bottom: 58px;
+  left: 80px;
+  right: 80px;
+  height: 1px;
+  background: rgba(103,61,230,0.30);
+  transform-origin: left center;
+}
+#v-accent {
+  position: absolute;
+  left: 80px;
+  top: 100px;
+  width: 4px;
+  height: 880px;
+  background: linear-gradient(to bottom, #673DE6, rgba(103,61,230,0.0));
+  transform-origin: top center;
+}
+
+/* ---------- Section tag ---------- */
+#section-tag {
+  position: absolute;
+  top: 72px;
+  left: 80px;
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(155,114,242,0.65);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---------- Main content ---------- */
+.main-content {
+  position: absolute;
+  left: 140px;
+  top: 130px;
+  width: 1060px;
+}
+
+#eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 300;
+  color: #9B72F2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+#main-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  margin-bottom: 48px;
+}
+.title-accent { color: #673DE6; }
+
+#def-block {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 34px;
+  font-weight: 300;
+  color: #C4A8FF;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  max-width: 980px;
+  margin-bottom: 44px;
+}
+.def-highlight {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+/* Highlighted phrase pill */
+#phrase-pill {
+  display: inline-block;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: #ffffff;
+  background: #673DE6;
+  padding: 16px 36px;
+  border-radius: 6px;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 52px;
+}
+
+/* Feature chips */
+.features-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.feat-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 400;
+  color: #9B72F2;
+  border: 1.5px solid rgba(103,61,230,0.42);
+  padding: 9px 20px;
+  border-radius: 4px;
+  background: rgba(103,61,230,0.09);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Right side decorative panel ---------- */
+.right-panel {
+  position: absolute;
+  right: 80px;
+  top: 130px;
+  width: 580px;
+  height: 820px;
+  border: 1px solid rgba(103,61,230,0.18);
+  border-radius: 8px;
+  background: rgba(103,61,230,0.04);
+  overflow: hidden;
+}
+.panel-header {
+  padding: 24px 32px;
+  border-bottom: 1px solid rgba(103,61,230,0.18);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot-r { background: rgba(255,100,100,0.5); }
+.dot-y { background: rgba(255,200,0,0.5); }
+.dot-g { background: rgba(100,220,100,0.5); }
+.panel-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  color: rgba(155,114,242,0.55);
+  letter-spacing: 0.05em;
+  margin-left: 8px;
+}
+.panel-body {
+  padding: 36px 32px;
+}
+.code-line {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  color: rgba(196,168,255,0.55);
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+}
+.code-kw  { color: #9B72F2; }
+.code-str { color: rgba(255,200,120,0.75); }
+.code-comment { color: rgba(155,114,242,0.35); }
+.code-accent { color: #C4A8FF; }
+
+/* AI icon */
+.ai-badge {
+  position: absolute;
+  right: 140px;
+  bottom: 160px;
+  text-align: center;
+}
+#ai-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(103,61,230,0.15);
+  border: 2px solid rgba(103,61,230,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.ai-icon-text {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+  color: #673DE6;
+  letter-spacing: -0.02em;
+}
+.ai-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  color: rgba(155,114,242,0.55);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------- Bottom bar ---------- */
+.bottom-bar {
+  position: absolute;
+  bottom: 70px;
+  left: 80px;
+  right: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#brand-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(155,114,242,0.65);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  color: rgba(196,168,255,0.35);
+  letter-spacing: 0.05em;
+}
+</style>
+
+<!-- BG -->
+<div data-hf-id="hf-gycn" class="grid-overlay"></div>
+<div data-hf-id="hf-cyws" class="bg-glow-pos"><div data-hf-id="hf-isbq" id="bg-glow"></div></div>
+<div data-hf-id="hf-z3w8" class="bg-quote">"</div>
+
+<!-- Structure -->
+<div data-hf-id="hf-vsjt" id="line-top"></div>
+<div data-hf-id="hf-wt5g" id="v-accent"></div>
+<div data-hf-id="hf-un41" id="line-bottom"></div>
+<div data-hf-id="hf-mecu" id="section-tag">Qué es</div>
+
+<!-- Main content -->
+<div data-hf-id="hf-aeb3" class="main-content">
+  <div data-hf-id="hf-c84h" id="eyebrow">Herramienta de IA</div>
+  <div data-hf-id="hf-t7d0" id="main-title">Hostinger<br data-hf-id="hf-x5px"><span data-hf-id="hf-0ybs" class="title-accent">Horizons</span></div>
+  <div data-hf-id="hf-ul94" id="def-block">Una plataforma que convierte <span data-hf-id="hf-61lm" class="def-highlight">instrucciones en código</span>.<br data-hf-id="hf-rsrt">Describes lo que quieres construir, la IA lo genera.</div>
+  <div data-hf-id="hf-n3ds" id="phrase-pill">"Como tener un dev dentro de Hostinger"</div>
+  <div data-hf-id="hf-2ana" class="features-row">
+    <div data-hf-id="hf-l7h7" class="feat-chip" id="fc-1">Sin código</div>
+    <div data-hf-id="hf-vkgo" class="feat-chip" id="fc-2">IA integrada</div>
+    <div data-hf-id="hf-efsk" class="feat-chip" id="fc-3">Chat + voz</div>
+    <div data-hf-id="hf-mmjr" class="feat-chip" id="fc-4">Multiidioma</div>
+  </div>
+</div>
+
+<!-- Right decorative panel -->
+<div data-hf-id="hf-z8ws" class="right-panel" id="right-panel">
+  <div data-hf-id="hf-pi5w" class="panel-header">
+    <div data-hf-id="hf-sd9x" class="dot dot-r"></div>
+    <div data-hf-id="hf-4vse" class="dot dot-y"></div>
+    <div data-hf-id="hf-paew" class="dot dot-g"></div>
+    <span data-hf-id="hf-lu84" class="panel-title">horizons — prompt.txt</span>
+  </div>
+  <div data-hf-id="hf-bp6z" class="panel-body">
+    <div data-hf-id="hf-pnna" class="code-line"><span data-hf-id="hf-u7eb" class="code-comment">// Tu prompt:</span></div>
+    <div data-hf-id="hf-tl3r" class="code-line code-accent">"Crea una landing page</div>
+    <div data-hf-id="hf-daum" class="code-line code-accent"> para mi barbería"</div>
+    <div data-hf-id="hf-2esa" class="code-line">&#160;</div>
+    <div data-hf-id="hf-2t3b" class="code-line"><span data-hf-id="hf-21dq" class="code-comment">// Horizons genera:</span></div>
+    <div data-hf-id="hf-vdvj" class="code-line"><span data-hf-id="hf-wbby" class="code-kw">✓</span> HTML + CSS + JS</div>
+    <div data-hf-id="hf-fml7" class="code-line"><span data-hf-id="hf-8rwi" class="code-kw">✓</span> Diseño responsivo</div>
+    <div data-hf-id="hf-txix" class="code-line"><span data-hf-id="hf-967j" class="code-kw">✓</span> Base de datos</div>
+    <div data-hf-id="hf-p3un" class="code-line"><span data-hf-id="hf-dmho" class="code-kw">✓</span> Deploy automático</div>
+  </div>
+</div>
+
+<!-- AI badge -->
+<div data-hf-id="hf-l2nw" class="ai-badge">
+  <div data-hf-id="hf-l1nc" id="ai-circle">
+    <span data-hf-id="hf-3tkv" class="ai-icon-text">IA</span>
+  </div>
+  <div data-hf-id="hf-lxad" class="ai-label">powered</div>
+</div>
+
+<!-- Bottom -->
+<div data-hf-id="hf-tmht" class="bottom-bar">
+  <div data-hf-id="hf-4au3" id="brand-name">Hostinger Horizons</div>
+  <div data-hf-id="hf-ouk6" id="section-num">01 / Introducción</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+const TOTAL = 18;
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+
+// BG glow anchors duration
+tl.fromTo("#bg-glow",
+  { scale: 0.85 },
+  { scale: 1.18, duration: TOTAL / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+// Structural
+tl.fromTo("#line-top",   { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "expo.out" }, 0.1);
+tl.fromTo("#v-accent",   { scaleY: 0 }, { scaleY: 1, duration: 1.1, ease: "power2.out" }, 0.2);
+tl.fromTo("#line-bottom",{ scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, 0.35);
+tl.fromTo("#section-tag",{ opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.out" }, 0.5);
+
+// Title block builds
+tl.fromTo("#eyebrow",
+  { x: -40, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 0.7);
+tl.fromTo("#main-title",
+  { y: 30, opacity: 0, scale: 0.95 },
+  { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: "expo.out" }, 0.9);
+
+// Definition text
+tl.fromTo("#def-block",
+  { y: 25, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.65, ease: "power2.out" }, 1.8);
+
+// Highlighted phrase
+tl.fromTo("#phrase-pill",
+  { scale: 0.88, opacity: 0, x: -20 },
+  { scale: 1, opacity: 1, x: 0, duration: 0.55, ease: "back.out(1.4)" }, 2.9);
+
+// Feature chips
+tl.fromTo("#fc-1", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: "back.out(1.5)" }, 3.8);
+tl.fromTo("#fc-2", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: "back.out(1.5)" }, 3.97);
+tl.fromTo("#fc-3", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: "back.out(1.5)" }, 4.14);
+tl.fromTo("#fc-4", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: "back.out(1.5)" }, 4.31);
+
+// Right panel slides in
+tl.fromTo("#right-panel",
+  { x: 60, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 1.4);
+
+// AI badge
+tl.fromTo("#ai-circle",
+  { scale: 0, opacity: 0 },
+  { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.8)" }, 5.2);
+tl.to("#ai-circle", { scale: 1.06, duration: 1.8, ease: "sine.inOut", yoyo: true,
+  repeat: Math.ceil((TOTAL - 6) / 3.6) }, 6);
+
+// Brand bar
+tl.fromTo("#brand-name", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.45, ease: "sine.out" }, 5.0);
+tl.fromTo("#section-num",{ opacity: 0 },        { opacity: 1,       duration: 0.35, ease: "sine.out" }, 5.25);
+
+window.__timelines["visual-02-que-es"] = tl;
+
+if (typeof window.__hyperframes === "undefined") tl.play();
+</script>
+</div>
+</body>
+</html>

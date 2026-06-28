@@ -1,0 +1,342 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;">
+<div id="visual-04-que-crear" data-composition-id="visual-04-que-crear" data-start="0" data-width="1920" data-height="1080">
+
+<style>
+#visual-04-que-crear {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  background: #1A0533;
+  overflow: hidden;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+/* ---------- Background ---------- */
+.bg-glow-pos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+}
+#bg-glow {
+  position: absolute;
+  width: 1200px;
+  height: 1200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(103,61,230,0.22) 0%, rgba(103,61,230,0.0) 60%);
+  top: -600px;
+  left: -600px;
+}
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(103,61,230,0.04) 1px, rgba(103,61,230,0.0) 1px),
+    linear-gradient(90deg, rgba(103,61,230,0.04) 1px, rgba(103,61,230,0.0) 1px);
+  background-size: 120px 120px;
+  pointer-events: none;
+}
+
+/* ---------- Structural ---------- */
+#line-top {
+  position: absolute;
+  top: 58px;
+  left: 80px;
+  right: 80px;
+  height: 2px;
+  background: #673DE6;
+  transform-origin: left center;
+}
+#line-bottom {
+  position: absolute;
+  bottom: 58px;
+  left: 80px;
+  right: 80px;
+  height: 1px;
+  background: rgba(103,61,230,0.30);
+  transform-origin: left center;
+}
+
+/* ---------- Header ---------- */
+#section-tag {
+  position: absolute;
+  top: 72px;
+  left: 80px;
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(155,114,242,0.65);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#page-title {
+  position: absolute;
+  top: 108px;
+  left: 80px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 64px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.title-accent { color: #673DE6; }
+
+#page-subtitle {
+  position: absolute;
+  top: 182px;
+  right: 80px;
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 300;
+  color: rgba(155,114,242,0.6);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Grid ---------- */
+.cards-grid {
+  position: absolute;
+  top: 250px;
+  left: 80px;
+  right: 80px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 20px;
+  height: 740px;
+}
+
+.card {
+  background: rgba(103,61,230,0.06);
+  border: 1.5px solid rgba(103,61,230,0.20);
+  border-radius: 8px;
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(103,61,230,0.0);
+  transition: none;
+}
+.card.featured {
+  border-color: rgba(103,61,230,0.45);
+  background: rgba(103,61,230,0.10);
+}
+.card.featured::before {
+  background: #673DE6;
+}
+
+.card-icon {
+  font-size: 36px;
+  margin-bottom: 14px;
+  line-height: 1;
+}
+.card-name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.card-desc {
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(155,114,242,0.7);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+/* ---------- Bottom bar ---------- */
+.bottom-bar {
+  position: absolute;
+  bottom: 70px;
+  left: 80px;
+  right: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#brand-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(155,114,242,0.65);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  color: rgba(196,168,255,0.35);
+  letter-spacing: 0.05em;
+}
+</style>
+
+<!-- BG -->
+<div class="grid-overlay"></div>
+<div class="bg-glow-pos"><div id="bg-glow"></div></div>
+
+<!-- Structure -->
+<div id="line-top"></div>
+<div id="line-bottom"></div>
+<div id="section-tag">¿Qué puedes crear?</div>
+<div id="page-title">Posibilidades <span class="title-accent">∞</span></div>
+<div id="page-subtitle">sin límite de ideas</div>
+
+<!-- Grid of 12 cards -->
+<div class="cards-grid">
+  <div class="card featured" id="c-1">
+    <div class="card-icon">🌐</div>
+    <div class="card-name">Landing Page</div>
+    <div class="card-desc">barbería · restaurante · marca</div>
+  </div>
+  <div class="card" id="c-2">
+    <div class="card-icon">👤</div>
+    <div class="card-name">Portafolio</div>
+    <div class="card-desc">personal o profesional</div>
+  </div>
+  <div class="card" id="c-3">
+    <div class="card-icon">📊</div>
+    <div class="card-name">Dashboard</div>
+    <div class="card-desc">visualiza tus datos</div>
+  </div>
+  <div class="card" id="c-4">
+    <div class="card-icon">✅</div>
+    <div class="card-name">App de Tareas</div>
+    <div class="card-desc">gestión y productividad</div>
+  </div>
+
+  <div class="card" id="c-5">
+    <div class="card-icon">🏃</div>
+    <div class="card-name">Tracker</div>
+    <div class="card-desc">hábitos · ejercicio · finanzas</div>
+  </div>
+  <div class="card featured" id="c-6">
+    <div class="card-icon">🤖</div>
+    <div class="card-name">Chatbot IA</div>
+    <div class="card-desc">asistente con inteligencia artificial</div>
+  </div>
+  <div class="card" id="c-7">
+    <div class="card-icon">🧮</div>
+    <div class="card-name">Calculadora</div>
+    <div class="card-desc">personalizada a tu negocio</div>
+  </div>
+  <div class="card" id="c-8">
+    <div class="card-icon">📝</div>
+    <div class="card-name">Quiz</div>
+    <div class="card-desc">interactivo y personalizable</div>
+  </div>
+
+  <div class="card" id="c-9">
+    <div class="card-icon">🏢</div>
+    <div class="card-name">Herramienta interna</div>
+    <div class="card-desc">para tu equipo o negocio</div>
+  </div>
+  <div class="card" id="c-10">
+    <div class="card-icon">🎮</div>
+    <div class="card-name">Juego web</div>
+    <div class="card-desc">entretenimiento interactivo</div>
+  </div>
+  <div class="card featured" id="c-11">
+    <div class="card-icon">🍅</div>
+    <div class="card-name">Pomodoro</div>
+    <div class="card-desc">personalizado a tu estilo</div>
+  </div>
+  <div class="card" id="c-12">
+    <div class="card-icon">✨</div>
+    <div class="card-name">Lo que imagines</div>
+    <div class="card-desc">cualquier app funcional</div>
+  </div>
+</div>
+
+<!-- Bottom -->
+<div class="bottom-bar">
+  <div id="brand-name">Hostinger Horizons</div>
+  <div id="section-num">03 / Posibilidades</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+const TOTAL = 20;
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+
+// BG glow
+tl.fromTo("#bg-glow",
+  { scale: 0.85 },
+  { scale: 1.15, duration: TOTAL / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+// Structural
+tl.fromTo("#line-top",    { scaleX: 0 }, { scaleX: 1, duration: 0.75, ease: "expo.out" }, 0.1);
+tl.fromTo("#line-bottom", { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "power3.out" }, 0.3);
+tl.fromTo("#section-tag", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 0.5);
+tl.fromTo("#page-title",
+  { y: -25, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 0.65);
+tl.fromTo("#page-subtitle",
+  { opacity: 0, x: 20 },
+  { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 0.9);
+
+// Cards appear in 3 waves (rows)
+// Row 1: c-1 to c-4
+const row1Delay = 1.4;
+[1,2,3,4].forEach((n, i) => {
+  tl.fromTo(`#c-${n}`,
+    { y: 35, opacity: 0, scale: 0.94 },
+    { y: 0, opacity: 1, scale: 1, duration: 0.42, ease: "back.out(1.3)" },
+    row1Delay + i * 0.1);
+});
+
+// Row 2: c-5 to c-8
+const row2Delay = 2.2;
+[5,6,7,8].forEach((n, i) => {
+  tl.fromTo(`#c-${n}`,
+    { y: 35, opacity: 0, scale: 0.94 },
+    { y: 0, opacity: 1, scale: 1, duration: 0.42, ease: "back.out(1.3)" },
+    row2Delay + i * 0.1);
+});
+
+// Row 3: c-9 to c-12
+const row3Delay = 3.0;
+[9,10,11,12].forEach((n, i) => {
+  tl.fromTo(`#c-${n}`,
+    { y: 35, opacity: 0, scale: 0.94 },
+    { y: 0, opacity: 1, scale: 1, duration: 0.42, ease: "back.out(1.3)" },
+    row3Delay + i * 0.1);
+});
+
+// Brand bar
+tl.fromTo("#brand-name", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.45, ease: "sine.out" }, 4.2);
+tl.fromTo("#section-num",{ opacity: 0 },        { opacity: 1,       duration: 0.35, ease: "sine.out" }, 4.45);
+
+// Featured cards subtle pulse glow
+tl.to("#c-1",  { scale: 1.015, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: Math.ceil((TOTAL-6)/5) }, 6);
+tl.to("#c-6",  { scale: 1.015, duration: 3.0, ease: "sine.inOut", yoyo: true, repeat: Math.ceil((TOTAL-6.5)/6) }, 6.5);
+tl.to("#c-11", { scale: 1.015, duration: 2.8, ease: "sine.inOut", yoyo: true, repeat: Math.ceil((TOTAL-7)/5.6) }, 7);
+
+window.__timelines["visual-04-que-crear"] = tl;
+
+if (typeof window.__hyperframes === "undefined") tl.play();
+</script>
+</div>
+</body>
+</html>
