@@ -18,6 +18,20 @@
 
 📎 **Adjuntar:** `login_registro.png` + `login_registro_minimalista_mobile.png`
 
+**✅ Al terminar este prompt deberías tener:**
+- Pantalla de login visible con fondo negro, logo GYMTRACKER en verde neón y subtítulo POWER & PRECISION
+- Toggle funcional entre "Iniciar sesión" y "Registrarse" con sus campos correspondientes
+- Botón "ENTRAR" en verde neón
+- Sidebar izquierdo generado con los 4 tabs (aunque las pantallas aún estén vacías)
+- En móvil: navegación inferior con los 4 tabs
+- La app ya tiene colores, tipografía y estructura base correctos
+
+**🚫 No continúes si:**
+- El fondo no es oscuro (#0D0D0D)
+- El acento no es verde neón (#AAFF00)
+- El sidebar no aparece en desktop
+- El nombre dice algo diferente a GYMTRACKER
+
 ```
 Construye una app web llamada GymTracker. Replica el diseño de la 
 imagen desktop adjunta de forma exacta. Usa la imagen móvil solo 
@@ -49,6 +63,19 @@ arriba, campos con estilo línea inferior, botón ancho completo.
 
 📎 **Adjuntar:** `dashboard.png` + `dashboard_mobile.png`
 
+**✅ Al terminar este prompt deberías tener:**
+- Número de racha grande en verde neón con texto "DÍAS SEGUIDOS"
+- Tarjeta de próxima sesión con lista de ejercicios y botón "EMPEZAR ENTRENAMIENTO"
+- Dos tarjetas inferiores: "ESTA SEMANA" con barra de progreso y "ÚLTIMO PR"
+- Cita motivacional al fondo
+- Perfil de usuario visible al fondo del sidebar
+- En móvil: layout de una columna con nav inferior
+
+**🚫 No continúes si:**
+- El botón "EMPEZAR ENTRENAMIENTO" no es visible o no tiene el estilo correcto
+- Las tarjetas inferiores no aparecen lado a lado
+- El sidebar no muestra el tab "Dashboard" activo
+
 ```
 Mantén el estilo visual ya establecido. Construye la pantalla 
 Dashboard replicando la imagen desktop adjunta exactamente. 
@@ -77,6 +104,20 @@ MÓVIL: layout de una columna según imagen móvil adjunta.
 ## PROMPT 3 — Hoy: Entrenamiento del día
 
 📎 **Adjuntar:** `hoy_entrenamiento_en_curso.png` + `hoy_entrenamiento_mobile.png`
+
+**✅ Al terminar este prompt deberías tener:**
+- Lista de ejercicios con chips de músculo y descanso, campo de peso editable y botón circular de check
+- Cronómetro visible en la esquina superior derecha
+- Contador "X / N ejercicios completados" en tiempo real
+- Campo de notas al fondo
+- Botón "FINALIZAR ENTRENAMIENTO" en verde neón
+- Enlace "DESCARTAR SESIÓN" debajo del botón
+- En móvil: ejercicio activo destacado con sets editables por fila
+
+**🚫 No continúes si:**
+- El campo de peso no es editable
+- El check no marca el ejercicio como completado visualmente
+- El cronómetro no aparece
 
 ```
 Mantén el estilo visual ya establecido. Construye la pantalla "Hoy" 
@@ -109,6 +150,21 @@ destacado con campos KG y REPS editables por serie.
 ## PROMPT 4 — Historial: Sesiones
 
 📎 **Adjuntar:** `historial_sesiones.png` + `historial_sesiones_mobile.png`
+
+**✅ Al terminar este prompt deberías tener:**
+- Toggle "Sesiones / Progreso" en la parte superior
+- Lista de sesiones a la izquierda con fecha, duración, nombre y estado (completo/parcial)
+- Al hacer clic en una sesión, el panel derecho muestra el detalle con tabla de sets editables
+- Campos de PESO y REPS editables por set en el detalle
+- Campo de notas editable con texto de ejemplo
+- Botones "GUARDAR CAMBIOS" y "ELIMINAR SESIÓN" visibles
+- VOLUMEN TOTAL visible en el encabezado del detalle
+- En móvil: lista en pantalla completa, detalle como pantalla separada
+
+**🚫 No continúes si:**
+- El panel de detalle no se abre al hacer clic en una sesión
+- Los campos de peso/reps no son editables
+- El toggle no alterna entre Sesiones y Progreso
 
 ```
 Mantén el estilo visual ya establecido. Construye la pantalla 
@@ -145,6 +201,20 @@ pantalla con botón "← Volver".
 
 📎 **Adjuntar:** `historial_progreso.png` + `historial_progreso_mobile.png`
 
+**✅ Al terminar este prompt deberías tener:**
+- Sub-vista "Progreso" accesible desde el toggle de Historial
+- Chips de ejercicios en la parte superior (Press Banca, Sentadilla, Peso Muerto, Dominadas, Remo)
+- Gráfica de línea verde neón mostrando evolución de peso
+- Badge "+X%" y texto "Empezaste con X kg · Ahora levantas X kg"
+- "1 RM ESTIMADO" visible junto a los últimos registros
+- Lista de últimos 5 registros con fecha, peso y reps
+- En móvil: grid 2×2 de métricas arriba, gráfica debajo
+
+**🚫 No continúes si:**
+- La gráfica no aparece o está vacía
+- Los chips no cambian el ejercicio mostrado
+- El sidebar sigue mostrando "IRON FOCUS" en lugar de "GYMTRACKER"
+
 ```
 Mantén el estilo visual ya establecido. Construye la sub-vista 
 "Progreso" dentro de la pantalla Historial replicando la imagen 
@@ -177,6 +247,20 @@ imagen móvil adjunta.
 ## PROMPT 6 — Rutinas
 
 📎 **Adjuntar:** `rutinas.png` + `rutinas_mobile.png`
+
+**✅ Al terminar este prompt deberías tener:**
+- Rutina activa destacada (Arnold Split) con chip "ACTIVA", barra de progreso y botón "CONTINUAR DÍA X"
+- Sección "BIBLIOTECAS DISPONIBLES" con PPL, Full Body 3 días y Upper/Lower
+- Cada rutina disponible con chip "DISPONIBLE" e información de días/nivel
+- Tarjeta "¿Quieres una rutina personalizada?" con botón "COPIAR PROMPT" al fondo
+- Botón "IMPORTAR" visible en la parte superior derecha
+- Ícono de estrella en la rutina activa
+- En móvil: layout de una columna según imagen móvil
+
+**🚫 No continúes si:**
+- No aparecen las 4 rutinas por defecto
+- El botón "IMPORTAR" no es visible
+- El botón "COPIAR PROMPT" no aparece en la tarjeta inferior
 
 ```
 Mantén el estilo visual ya establecido. Construye la pantalla 
@@ -212,6 +296,20 @@ MÓVIL: según imagen móvil adjunta.
 
 📎 **Adjuntar:** `importar_rutina.png` + `importar_rutina_mobile.png`
 
+**✅ Al terminar este prompt deberías tener:**
+- Pantalla independiente accesible desde "IMPORTAR" en Rutinas
+- Área de texto grande con ejemplo de formato Markdown visible
+- Badge "IA AUTO-PARSING ACTIVADO" visible
+- Botón "IMPORTAR AHORA" en verde neón
+- Sección "GUÍA DE FORMATO" con 3 tarjetas: Estructura, Ejercicios, Series/Reps
+- El tab "Rutinas" sigue activo en el sidebar
+- En móvil: editor en pantalla completa con botón "IMPORT NOW" al fondo
+
+**🚫 No continúes si:**
+- La pantalla no es accesible desde el botón "IMPORTAR" de Rutinas
+- El área de texto no acepta input
+- La guía de formato no aparece
+
 ```
 Mantén el estilo visual ya establecido. Construye la pantalla 
 "Importar Rutina" replicando la imagen desktop exactamente. 
@@ -240,6 +338,19 @@ MÓVIL: editor en pantalla completa según imagen móvil adjunta.
 ## PROMPT 8 — Datos de ejemplo
 
 📎 **Sin imágenes**
+
+**✅ Al terminar este prompt deberías tener:**
+- Arnold Split con ejercicios reales cargados en el backend (3 días tipo: Pecho/Espalda, Hombros/Brazos, Piernas/Core)
+- Las otras 3 rutinas con su estructura básica de días y ejercicios
+- 12 sesiones en el historial con fechas reales de las últimas 6 semanas
+- Racha de 15 días visible en el Dashboard
+- Dashboard mostrando "Día 12 — [nombre del día]" como próxima sesión
+- Las gráficas de Progreso con datos reales que muestran curva ascendente
+
+**🚫 No continúes si:**
+- El Dashboard no muestra datos (sigue en estado vacío)
+- El Historial no tiene sesiones listadas
+- La gráfica de Progreso está vacía
 
 ```
 Mantén el estilo visual ya establecido. Agrega datos de ejemplo 
@@ -273,6 +384,20 @@ USUARIO DE EJEMPLO: nombre Alex Rivera, email alex@gymtracker.com
 ## PROMPT 9 — Funcionalidad y conexiones
 
 📎 **Sin imágenes**
+
+**✅ Al terminar este prompt deberías tener:**
+- "EMPEZAR ENTRENAMIENTO" en el Dashboard carga la sesión del día en la pantalla Hoy
+- Finalizar entrenamiento guarda la sesión y actualiza la racha en el Dashboard
+- La racha se resetea a 0 si pasan más de 36 horas sin entrenar
+- "COPIAR PROMPT" en Rutinas copia el texto de generación de rutinas al portapapeles
+- El VOLUMEN TOTAL en Historial se recalcula al editar pesos
+- "Último PR" en Dashboard se actualiza cuando se supera un peso máximo
+- La app completa es navegable de punta a punta sin errores
+
+**🚫 La app NO está lista si:**
+- El flujo Login → Dashboard → Hoy → Historial no funciona completo
+- Finalizar un entrenamiento no aparece en el Historial
+- La racha no se actualiza tras completar un entrenamiento
 
 ```
 Mantén el estilo visual ya establecido. Conecta toda la 
