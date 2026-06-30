@@ -22,7 +22,10 @@
     html, body {
       width: 100%; height: 100%;
       overflow: hidden;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(201,168,76,0.10), transparent 30%),
+        radial-gradient(circle at 82% 82%, rgba(255,255,255,0.035), transparent 34%),
+        var(--bg);
       font-family: 'Inter', sans-serif;
       color: var(--text);
       user-select: none;
@@ -33,15 +36,22 @@
       position: absolute; top: 50%; left: 50%;
       width: 1920px; height: 1080px;
       transform-origin: center center;
-      background: var(--bg);
+      background: transparent;
     }
-    #deck { width: 1920px; height: 1080px; position: relative; background: var(--bg); }
+    #deck {
+      width: 1920px; height: 1080px; position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(201,168,76,0.10), transparent 30%),
+        radial-gradient(circle at 82% 82%, rgba(255,255,255,0.035), transparent 34%),
+        var(--bg);
+    }
 
     .slide {
       position: absolute; inset: 0;
       opacity: 0; pointer-events: none;
       transition: opacity 0.5s ease;
-      background: var(--bg);
+      background: transparent;
     }
     .slide.active { opacity: 1; pointer-events: all; }
 
@@ -193,32 +203,48 @@
     #s4 .content {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; justify-content: center;
-      padding: 0 180px; gap: 0; z-index: 1;
+      padding: 0 190px; gap: 34px; z-index: 1;
+    }
+    #s4 .header {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    #s4 h2 {
+      font-size: 52px; font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.02;
+    }
+    #s4 .sub {
+      font-size: 18px; color: var(--muted);
+      font-weight: 300; max-width: 720px; line-height: 1.55;
+    }
+    #s4 .prompt-blocks {
+      display: flex; flex-direction: column;
+      border-top: 1px solid var(--faint);
     }
 
     .pb {
-      padding: 48px 0;
+      padding: 24px 0;
       border-bottom: 1px solid var(--faint);
-      display: flex; flex-direction: column; gap: 22px;
+      display: grid; grid-template-columns: 230px 1fr;
+      align-items: start; gap: 42px;
     }
-    .pb:first-child { border-top: 1px solid var(--faint); }
 
     .pb-header {
-      display: flex; align-items: center; gap: 0;
+      display: flex; align-items: center; gap: 14px;
+      padding-top: 10px;
     }
     .pb-tag {
       font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--gold); flex-shrink: 0; margin-right: 20px;
+      color: var(--gold); flex-shrink: 0;
     }
     .pb-num {
       font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-      color: rgba(201,168,76,0.4); flex-shrink: 0; margin-right: 20px;
+      color: rgba(201,168,76,0.4); flex-shrink: 0;
     }
-    .pb-line { flex: 1; height: 1px; background: var(--faint); }
+    .pb-line { display: none; }
 
     .pb-text {
-      font-size: 34px; font-weight: 300;
-      color: rgba(255,255,255,0.85); line-height: 1.5;
+      font-size: 24px; font-weight: 300;
+      color: rgba(255,255,255,0.85); line-height: 1.45;
       letter-spacing: -0.01em;
     }
     .pb-text em {
@@ -365,25 +391,44 @@
   <div class="wm">III</div>
   <div class="content">
 
-    <div class="pb afu" style="animation-delay:.05s">
-      <div class="pb-header">
-        <span class="pb-num">01</span>
-        <span class="pb-tag">Qué quiero crear</span>
-        <span class="pb-line"></span>
-      </div>
-      <div class="pb-text">
-        <em>Crea el diseño de una landing page profesional</em> para una cafetería moderna llamada <em>Café Aurora.</em>
-      </div>
+    <div class="header afu">
+      <div class="label">El prompt, parte 1</div>
+      <h2>La intención y el estilo</h2>
+      <p class="sub">Aquí se define qué se va a construir y cómo debe sentirse visualmente.</p>
     </div>
 
-    <div class="pb afu" style="animation-delay:.2s">
-      <div class="pb-header">
-        <span class="pb-num">03</span>
-        <span class="pb-tag">Cómo debe verse</span>
-        <span class="pb-line"></span>
+    <div class="prompt-blocks">
+      <div class="pb afu" style="animation-delay:.12s">
+        <div class="pb-header">
+          <span class="pb-num">01</span>
+          <span class="pb-tag">Qué quiero crear</span>
+          <span class="pb-line"></span>
+        </div>
+        <div class="pb-text">
+          <em>Crea el diseño de una landing page profesional</em> para una cafetería moderna llamada <em>Café Aurora.</em>
+        </div>
       </div>
-      <div class="pb-text">
-        La página debe tener un <em>estilo elegante, cálido y minimalista,</em> con una estética premium pero cercana. Usa <em>colores suaves, tipografía moderna</em> y una composición visual limpia.
+
+      <div class="pb afu" style="animation-delay:.24s">
+        <div class="pb-header">
+          <span class="pb-num">02</span>
+          <span class="pb-tag">Para quién es</span>
+          <span class="pb-line"></span>
+        </div>
+        <div class="pb-text">
+          Prioriza una experiencia visual <em>clara, moderna y fácil de entender</em> para <em>usuarios principiantes.</em>
+        </div>
+      </div>
+
+      <div class="pb afu" style="animation-delay:.36s">
+        <div class="pb-header">
+          <span class="pb-num">03</span>
+          <span class="pb-tag">Cómo debe verse</span>
+          <span class="pb-line"></span>
+        </div>
+        <div class="pb-text">
+          La página debe tener un <em>estilo elegante, cálido y minimalista,</em> con una estética premium pero cercana. Usa <em>colores suaves, buena separación entre secciones, tipografía moderna</em> y una composición visual limpia.
+        </div>
       </div>
     </div>
 
